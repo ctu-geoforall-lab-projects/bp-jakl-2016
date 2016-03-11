@@ -2,10 +2,9 @@ import sys
 import urllib2
 import xmltodict
 
-def main():
+def main(alike):
 	xml_file = "http://opendata.iprpraha.cz/feed.xml"
 	data = parse_xml(xml_file)
-	alike = ''
 	if alike:
 		for item in data ['feed']['entry']:
 			exist=0 
@@ -15,7 +14,6 @@ def main():
 	else:
 		for item in data['feed']['entry']: 
 			item_print(item)
-	return 0
 
 
 def item_print(item):
@@ -25,7 +23,6 @@ def item_print(item):
 	if 'Ortofoto' not in item['title']: 
 		xml_item = downXML(item)
 		subdata = parse_xml(xml_item)
-		#print '    ',xml_item  # nebude
 		subitems_Links_print(subdata)
 
 
@@ -34,23 +31,18 @@ def subitems_Links_print(subdata):
 		for item in subdata['feed']['entry']: 
 			print '     ',item['category']['@label']
 			for links in item['link']:
-				print '          ',links['@href']#,'	',links['@title']
+				print '          ',links['@href']
 	else:
 		print '          ',subdata['feed']['entry']['category']['@label']
 		for links in subdata['feed']['entry']['link']:
-			print '          ',links['@href']#,'	',links['@title']
-	return 0 
-
+			print '          ',links['@href']
 
 
 def downXML(data):
 	for item in data['link']:
 		if item['@title'] in ('download','Download'):
 			xml_file = item['@href']
-			#print xml_file
-
 	return xml_file
-
 
 
 def parse_xml(xml_file):
@@ -64,6 +56,16 @@ def parse_xml(xml_file):
 	return obj
 
 
-main()
+
+if __name__ == "__main__":
+	if len(sys.argv) == 1:
+		alike =''
+	else:
+		alike = sys.argv[1]
+
+	sys.exit(main(alike))
+
+
+main(alike)
 
 
