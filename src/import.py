@@ -10,14 +10,18 @@ def main():
         print '\n',item['title']
 	if 'Ortofoto' in item['title']: print ('too much XMLs !!')
 	if 'Ortofoto' not in item['title']: 
-	    xml_item = downXML(item)
-            subdata = parse_xml(xml_item)
-	    print xml_item  # nebude
+		xml_item = downXML(item)
+		subdata = parse_xml(xml_item)
+		if isinstance(subdata['feed']['entry'],list):
+			for subitem in subdata['feed']['entry']:
+				print '     ',subitem['category']['@label']
+				for links in subitem['link']:
+					print '          ',links['@href']
+		else:
+			print '     ',subdata['feed']['entry']['category']['@label']
+			for links in subdata['feed']['entry']['link']:
+				print '          ',links['@href']
 
-	    for subitem in subdata['feed']['entry']:
-	    	print '          ',subitem['category']['@label']
-	    	for links in subitem['link']:
-		    print '                    ',links['@href']
     return 0
 
 
@@ -38,7 +42,4 @@ def parse_xml(xml_file):
     obj = xmltodict.parse(fd.read())
     fd.close()
     return obj
-
 main()
-
-
