@@ -18,9 +18,9 @@ def item_print(item,datum):
 	print '\n',item['title']
 	xml_item = downXML(item)
 	print xml_item
-	if 'Ortofoto' in item['title']: 
+	if '10 cm' in item['title']: 
 		print (' -- too much links to display !! --')
-	if 'Ortofoto' not in item['title']: 
+	if '10 cm' not in item['title']: 
 		subdata = parse_xml(xml_item)
 		subitems_Links(subdata['feed']['entry'],datum)
 
