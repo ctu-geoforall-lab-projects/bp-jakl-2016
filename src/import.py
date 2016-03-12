@@ -2,40 +2,49 @@ import sys
 import urllib2
 import xmltodict
 
-def main(alike):
+def main(alike,datum):
 	xml_file = "http://opendata.iprpraha.cz/feed.xml"
 	data = parse_xml(xml_file)
 	if alike:
 		for item in data ['feed']['entry']:
-			exist=0 
 			if (alike in item['title']):
-				exist=1
-				item_print(item)
+				item_print(item,datum)
 	else:
 		for item in data['feed']['entry']: 
-			item_print(item)
+			item_print(item,datum)
 
 
-def item_print(item):
+def item_print(item,datum):
 	print '\n',item['title']
+	xml_item = downXML(item)
+	print xml_item
 	if 'Ortofoto' in item['title']: 
 		print (' -- too much links to display !! --')
 	if 'Ortofoto' not in item['title']: 
-		xml_item = downXML(item)
 		subdata = parse_xml(xml_item)
-		subitems_Links_print(subdata)
+		subitems_Links(subdata['feed']['entry'],datum)
 
 
-def subitems_Links_print(subdata):
-	if isinstance(subdata['feed']['entry'],list):
-		for item in subdata['feed']['entry']: 
-			print '     ',item['category']['@label']
-			for links in item['link']:
-				print '          ',links['@href']
-	else:
-		print '          ',subdata['feed']['entry']['category']['@label']
-		for links in subdata['feed']['entry']['link']:
-			print '          ',links['@href']
+
+def subitems_Links(subdata,datum):
+	if isinstance(subdata,list):
+		if datum:
+			for item in subdata: 
+				if (datum in item['category']['@label']):
+					print_subItem(item)
+		else:
+			for item in subdata: 
+				print_subItem(item) 
+	else: 
+		item = subdata
+		print_subItem(item)
+
+
+def print_subItem(item):
+	print '     ',item['category']['@label']
+	for links in item['link']:
+		print '          ',links['@href'],'	',links['@title']
+
 
 
 def downXML(data):
@@ -59,13 +68,18 @@ def parse_xml(xml_file):
 
 if __name__ == "__main__":
 	if len(sys.argv) == 1:
-		alike =''
+		alike = ''
+		datum = ''
+	elif len(sys.argv) ==2:
+		alike = sys.argv[1]
+		datum = ''
 	else:
 		alike = sys.argv[1]
+		datum = sys.argv[2]
 
-	sys.exit(main(alike))
+	sys.exit(main(alike,datum))
 
 
-main(alike)
+main(alike,datum)
 
 
