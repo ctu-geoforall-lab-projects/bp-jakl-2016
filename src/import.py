@@ -16,19 +16,19 @@ import urllib2
 import xmltodict
 
 
-def main(alike=None, datum=None):
+def main(alike=None, crs=None):
     xml_file = "http://opendata.iprpraha.cz/feed.xml"
     data = parse_xml(xml_file)
     if alike:
         for item in data['feed']['entry']:
             if (alike in item['title']):
-                item_print(item, datum)
+                item_print(item, crs)
     else:
         for item in data['feed']['entry']:
-            item_print(item, datum)
+            item_print(item, crs)
 
 
-def item_print(item, datum):
+def item_print(item, crs):
     print '\n', item['title']
     xml_item = downXML(item)
     print xml_item
@@ -36,14 +36,14 @@ def item_print(item, datum):
         print (' -- too much links to display !! --')
     if '10 cm' not in item['title']:
         subdata = parse_xml(xml_item)
-        subitems_Links(subdata['feed']['entry'], datum)
+        subitems_Links(subdata['feed']['entry'], crs)
 
 
-def subitems_Links(subdata, datum):
+def subitems_Links(subdata, crs):
     if isinstance(subdata, list):
-        if datum:
+        if crs:
             for item in subdata:
-                if (datum in item['category']['@label']):
+                if (crs in item['category']['@label']):
                     print_subItem(item)
         else:
             for item in subdata:
@@ -82,6 +82,6 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         args['alike'] = sys.argv[1]
     if len(sys.argv) > 2:
-        args['datum'] = sys.argv[2]
+        args['crs'] = sys.argv[2]
 
     sys.exit(main(**args))
