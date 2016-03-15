@@ -1,3 +1,15 @@
+#########################################################################
+#
+# Command-line tool for downloading IPR data
+# http://www.iprpraha.cz/clanek/1313/otevrena-data-open-data (in Czech)
+#
+# 2016 (c) by Martin Jakl (OSGeoREL CTU in Prague)
+#
+# Licence: GNU GPL v2+
+#
+#########################################################################
+
+
 import sys
 import urllib2
 import xmltodict
