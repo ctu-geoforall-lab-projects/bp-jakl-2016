@@ -16,7 +16,7 @@ import urllib2
 import xmltodict
 
 
-def main(alike, datum):
+def main(alike=None, datum=None):
     xml_file = "http://opendata.iprpraha.cz/feed.xml"
     data = parse_xml(xml_file)
     if alike:
@@ -78,14 +78,10 @@ def parse_xml(xml_file):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        alike = ''
-        datum = ''
-    elif len(sys.argv) == 2:
-        alike = sys.argv[1]
-        datum = ''
-    else:
-        alike = sys.argv[1]
-        datum = sys.argv[2]
+    args = {}
+    if len(sys.argv) > 1:
+        args['alike'] = sys.argv[1]
+    if len(sys.argv) > 2:
+        args['datum'] = sys.argv[2]
 
-    sys.exit(main(alike, datum))
+    sys.exit(main(**args))
