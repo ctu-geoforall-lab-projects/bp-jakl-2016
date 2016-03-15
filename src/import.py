@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #########################################################################
 #
 # Command-line tool for downloading IPR data
