@@ -70,7 +70,7 @@ def parse_xml(xml_file):
     try:
         fd = urllib2.urlopen(xml_file)
     except urllib2.URLError as e:
-        sys.exit(e)
+        sys.exit('{}'.format(e))
 
     obj = xmltodict.parse(fd.read())
     fd.close()
