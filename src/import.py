@@ -78,8 +78,3 @@ if __name__ == "__main__":
 		datum = sys.argv[2]
 
 	sys.exit(main(alike,datum))
-
-
-main(alike,datum)
-
-
