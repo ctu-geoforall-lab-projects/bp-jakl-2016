@@ -14,49 +14,56 @@
 import sys
 import urllib2
 import xmltodict
+import argparse
+
 
 
 def main(alike=None, crs=None):
     xml_file = "http://opendata.iprpraha.cz/feed.xml"
     data = parse_xml(xml_file)
-    if alike:
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--alike" ,type=str,                     help = "search name title alike given string")
+    parser.add_argument("--crs"   ,type=str,default = "S-JTSK",  help = "specife coordinate system(WGS or S-JTSK > default = S-JTSK")
+    parser.add_argument("--form"  ,type=str,default = "shp",     help = "specife file format (default = *.shp)")
+    args = parser.parse_args()
+
+    if args.crs == "5514": args.crs="WGS"
+    if args.crs == "4326": args.crs="S-JTSK"
+
+    if args.alike:
         for item in data['feed']['entry']:
-            if (alike in item['title']):
-                item_print(item, crs)
+            if (args.alike in item['title']):
+                item_print(item, args.crs,args.form)
     else:
         for item in data['feed']['entry']:
-            item_print(item, crs)
-
-
-def item_print(item, crs):
-    print '\n', item['title']
+            xml_item = downXML(item)
+            print item['title']
+            
+           
+def item_print(item, crs, file_format):
     xml_item = downXML(item)
-    print xml_item
     if '10 cm' in item['title']:
         print (' -- too much links to display !! --')
     if '10 cm' not in item['title']:
         subdata = parse_xml(xml_item)
-        subitems_Links(subdata['feed']['entry'], crs)
+        subitems_Links(subdata['feed']['entry'], crs,file_format)
 
 
-def subitems_Links(subdata, crs):
+def subitems_Links(subdata, crs,file_format):
     if isinstance(subdata, list):
-        if crs:
-            for item in subdata:
-                if (crs in item['category']['@label']):
-                    print_subItem(item)
-        else:
-            for item in subdata:
-                print_subItem(item)
+        for item in subdata:
+            if (crs in item['category']['@label']):
+                    print_subItem(item,file_format)
     else:
         item = subdata
         print_subItem(item)
 
 
-def print_subItem(item):
-    print '     ', item['category']['@label']
+def print_subItem(item,file_format):
     for links in item['link']:
-        print '          ', links['@href'], '	', links['@title']
+        if file_format in links['@type']:
+            print links['@href']
 
 
 def downXML(data):
@@ -76,12 +83,4 @@ def parse_xml(xml_file):
     fd.close()
     return obj
 
-
-if __name__ == "__main__":
-    args = {}
-    if len(sys.argv) > 1:
-        args['alike'] = sys.argv[1]
-    if len(sys.argv) > 2:
-        args['crs'] = sys.argv[2]
-
-    sys.exit(main(**args))
+main()
