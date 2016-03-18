@@ -57,7 +57,7 @@ def subitems_Links(subdata, crs,file_format):
                     print_subItem(item,file_format)
     else:
         item = subdata
-        print_subItem(item)
+        print_subItem(item,file_format)
 
 
 def print_subItem(item,file_format):
