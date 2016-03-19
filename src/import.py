@@ -23,9 +23,10 @@ def main(alike=None, crs=None):
     data = parse_xml(xml_file)
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("--alike" ,type=str,                     help = "search name title alike given string")
-    parser.add_argument("--crs"   ,type=str,default = "S-JTSK",  help = "specife coordinate system(WGS or S-JTSK > default = S-JTSK")
-    parser.add_argument("--form"  ,type=str,default = "shp",     help = "specife file format (default = *.shp)")
+    parser.add_argument("--alike", type=str,                     help = "search name title alike given string")
+    parser.add_argument("--crs",   type=str,default = "S-JTSK",  help = "specife coordinate system(WGS or S-JTSK > default = S-JTSK")
+    parser.add_argument("--form",  type=str,default = "shp",     help = "specife file format (default = *.shp)")
+    parser.add_argument("--outdir",type=str,default = "./data/", help = "define the folder to save (default ./data/")
     args = parser.parse_args()
 
     if args.crs == "5514": args.crs="WGS"
@@ -84,3 +85,4 @@ def parse_xml(xml_file):
     return obj
 
 main()
+
