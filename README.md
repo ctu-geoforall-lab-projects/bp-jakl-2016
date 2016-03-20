@@ -1,7 +1,19 @@
-# Bakalářská práce Martin Jákl 2016
+# Bakalářská práce
 
-Téma: Začleňování geografických datových sad do OpenStreetMap
+## Název
 
-Zadáno: 22.2.2016
+**Začleňování geografických datových sad do OpenStreetMap**
 
-Termín odevzdání: 22.5.2015
+## Student
+
+Martin Jákl
+
+## Vedoucí
+
+Ing. Martin Landa, Ph.D.
+
+## Obhajoba
+
+06/2016
+
+## Text
