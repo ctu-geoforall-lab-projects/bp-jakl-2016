@@ -16,7 +16,8 @@ import urllib2
 import xmltodict
 import argparse
 
-
+from iprbase import IprDownloader
+# from iprpg   import IprDownloaderPg
 
 def main(alike=None, crs=None):
     xml_file = "http://opendata.iprpraha.cz/feed.xml"
@@ -27,6 +28,7 @@ def main(alike=None, crs=None):
     parser.add_argument("--crs",   type=str,default = "S-JTSK",       help = "specify coordinate system (WGS-84 or S-JTSK > default: S-JTSK")
     parser.add_argument("--format",type=str,default = "shp",          help = "specify file format (default: shp)")
     parser.add_argument("--outdir",type=str,default = "data",         help = "define the folder to save (default: data)")
+    parser.add_argument("--download", action='store_true', help = "download selected data")
     args = parser.parse_args()
 
     if args.crs == "5514":
@@ -41,6 +43,15 @@ def main(alike=None, crs=None):
     if args.crs not in ('S-JTSK', 'WGS 84'):
         sys.exit("Unsupported coordinate system: {0}. Valid options: S-JTSK, WGS-84".format(args.crs))
 
+    ipr = IprDownloader()
+    ipr.filter(args.alike, args.crs, args.format)
+
+    if args.download:
+        ipr.download()
+    else:
+        ipr.print_items()
+
+    # code bellow to moved into class
     if args.alike:
         for item in data['feed']['entry']:
             if (args.alike in item['title']):
