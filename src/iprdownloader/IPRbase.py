@@ -69,4 +69,5 @@ class IprDownloader:
         pass
 
     def print_items(self):
-        print self.IprItems
+        for item in self.IprItems:
+            print item
