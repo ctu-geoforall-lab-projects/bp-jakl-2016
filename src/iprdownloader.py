@@ -40,7 +40,8 @@ def main(alike=None, crs=None):
         for item in data['feed']['entry']:
             xml_item = downXML(item)
             print item['title']
-            
+
+    return 0
            
 def item_print(item, crs, file_format):
     xml_item = downXML(item)
@@ -84,5 +85,6 @@ def parse_xml(xml_file):
     fd.close()
     return obj
 
-main()
+if __name__ == "__main__":
+    sys.exit(main())
 
