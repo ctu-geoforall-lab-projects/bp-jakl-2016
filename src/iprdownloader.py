@@ -23,19 +23,28 @@ def main(alike=None, crs=None):
     data = parse_xml(xml_file)
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("--alike", type=str,                     help = "search name title alike given string")
-    parser.add_argument("--crs",   type=str,default = "S-JTSK",  help = "specife coordinate system(WGS or S-JTSK > default = S-JTSK")
-    parser.add_argument("--form",  type=str,default = "shp",     help = "specife file format (default = *.shp)")
-    parser.add_argument("--outdir",type=str,default = "./data/", help = "define the folder to save (default ./data/")
+    parser.add_argument("--alike", type=lambda s: unicode(s, 'utf8'), help = "search name title alike given string")
+    parser.add_argument("--crs",   type=str,default = "S-JTSK",       help = "specify coordinate system (WGS-84 or S-JTSK > default: S-JTSK")
+    parser.add_argument("--format",type=str,default = "shp",          help = "specify file format (default: shp)")
+    parser.add_argument("--outdir",type=str,default = "data",         help = "define the folder to save (default: data)")
     args = parser.parse_args()
 
-    if args.crs == "5514": args.crs="WGS"
-    if args.crs == "4326": args.crs="S-JTSK"
+    if args.crs == "5514":
+        args.crs = "S-JTSK"
+    elif args.crs == "4326":
+        args.crs = "WGS 84"
+    else:
+        args.crs = args.crs.upper()
+        if args.crs == 'WGS-84':
+            args.crs = args.crs.replace('-', ' ')
+
+    if args.crs not in ('S-JTSK', 'WGS 84'):
+        sys.exit("Unsupported coordinate system: {0}. Valid options: S-JTSK, WGS-84".format(args.crs))
 
     if args.alike:
         for item in data['feed']['entry']:
             if (args.alike in item['title']):
-                item_print(item, args.crs,args.form)
+                item_print(item, args.crs,args.format)
     else:
         for item in data['feed']['entry']:
             xml_item = downXML(item)
@@ -52,7 +61,7 @@ def item_print(item, crs, file_format):
         subitems_Links(subdata['feed']['entry'], crs,file_format)
 
 
-def subitems_Links(subdata, crs,file_format):
+def subitems_Links(subdata, crs, file_format):
     if isinstance(subdata, list):
         for item in subdata:
             if (crs in item['category']['@label']):
