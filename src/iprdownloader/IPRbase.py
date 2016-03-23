@@ -21,8 +21,8 @@ class IprDownloader:
                 xml_item = self.downXML(item)
                 self.IprItems += [item['title']]
 
-#        for item in self.itemURLs:
-#            print item
+        for item in self.itemURLs:
+            print item
 # print links to verify
 
     def item_print(self, item, crs, file_format):
@@ -91,8 +91,9 @@ class IprDownloader:
 
             filepath = os.path.join(outdir,filename)
             with open(filepath,"wb") as output:
+#                output.write(itemfile.read())
                 while True:
-                    data = itemfile.read(4096)
+                    data = itemfile.read(32768)
                     if data:
                         output.write(data)
                     else:
