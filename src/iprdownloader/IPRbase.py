@@ -81,15 +81,16 @@ class IprDownloader:
                 os.makedirs(outdir)
             except OSError:
                 print ' Cannot create file direcotry !! '
+        print outdir
 
         for itemURL in self.itemURLs:
             itemfile = urllib2.urlopen(itemURL)
             filename = itemURL.split('/')[-1]
 
             print "downloading " + filename
-# somewhere needs to be define direcotory 
 
-            with open(filename,"wb") as output:
+            filepath = os.path.join(outdir,filename)
+            with open(filepath,"wb") as output:
                 while True:
                     data = itemfile.read(4096)
                     if data:
