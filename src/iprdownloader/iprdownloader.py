@@ -44,7 +44,7 @@ def main(alike=None, crs=None):
     ipr.filter(args.alike, args.crs, args.format)
 
     if args.download:
-        ipr.download()# not yet
+        ipr.download(args.outdir)# not yet
     else:
         ipr.print_items()
 

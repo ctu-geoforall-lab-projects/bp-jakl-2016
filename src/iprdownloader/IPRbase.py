@@ -10,17 +10,19 @@ class IprDownloader:
         xml_file = "http://opendata.iprpraha.cz/feed.xml"
         data = self.parse_xml(xml_file)
 
-        self.links2down = []
+        self.itemURLs = []
         self.IprItems = []
         if alike:
             for item in data['feed']['entry']:
                 if (alike in item['title']):
-                    self.links2down += [self.item_print(item, crs, file_format)]
+                    self.itemURLs += [self.item_print(item, crs, file_format)]
         else:
             for item in data['feed']['entry']:
                 xml_item = self.downXML(item)
                 self.IprItems += [item['title']]
-#        print links2down
+
+#        for item in self.itemURLs:
+#            print item
 # print links to verify
 
     def item_print(self, item, crs, file_format):
@@ -65,9 +67,38 @@ class IprDownloader:
         return obj                
 
         
-    def download(self):
-        pass
+    def download(self,outdir):
+        import os
+        if outdir.endswith('/'):
+            pass
+        else:
+            outdir += '/'
+
+        if (os.path.isdir(outdir)):
+            pass
+        else:
+            try:
+                os.makedirs(outdir)
+            except OSError:
+                print ' Cannot create file direcotry !! '
+
+        for itemURL in self.itemURLs:
+            itemfile = urllib2.urlopen(itemURL)
+            filename = itemURL.split('/')[-1]
+
+            print "downloading " + filename
+# somewhere needs to be define direcotory 
+
+            with open(filename,"wb") as output:
+                while True:
+                    data = itemfile.read(4096)
+                    if data:
+                        output.write(data)
+                    else:
+                        break
+
 
     def print_items(self):
+#        self.
         for item in self.IprItems:
             print item
