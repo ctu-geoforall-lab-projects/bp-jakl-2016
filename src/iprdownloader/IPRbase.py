@@ -21,16 +21,12 @@ class IprDownloader:
                 xml_item = self.downXML(item)
                 self.IprItems += [item['title']]
 
-        for item in self.itemURLs:
-            print item
-# print links to verify
 
     def item_print(self, item, crs, file_format):
         xml_item = self.downXML(item)
         if '10 cm' in item['title']:
             pass
-#            print (' -- too much links to display !! --')
-        if '10 cm' not in item['title']:
+        else:
             subdata = self.parse_xml(xml_item)
             return self.subitems_Links(subdata['feed']['entry'], crs, file_format)
 
@@ -42,12 +38,14 @@ class IprDownloader:
                     return self.print_subItem(item,file_format)
         else:
             item = subdata
-            return self.print_subItem(item,file_format)
+            if (crs in item['category']['@label']):
+                return self.print_subItem(item,file_format)
 
 
     def print_subItem(self, item,file_format):
         for links in item['link']:
             if file_format in links['@type']:
+#                print links['@title'] ,'  \t', links['@href']#        will be deleted
                 return links['@href']
 
 
