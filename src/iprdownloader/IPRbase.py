@@ -14,7 +14,8 @@ class IprDownloader:
         self.IprItems = []
         if alike:
             for item in data['feed']['entry']:
-                if (alike in item['title']):
+                if (alike in item['title']): 
+                    self.IprItems += [item['title']]
                     self.itemURLs += [self.item_print(item, crs, file_format)]
         else:
             for item in data['feed']['entry']:
