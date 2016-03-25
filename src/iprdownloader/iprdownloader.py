@@ -17,7 +17,8 @@ import xmltodict
 import argparse
 
 from IPRbase import IprDownloader
-# from iprpg   import IprDownloaderPg
+from IprPg   import IprDownloaderPg
+
 
 def main(alike=None, crs=None):
     parser = argparse.ArgumentParser()
@@ -40,13 +41,14 @@ def main(alike=None, crs=None):
     if args.crs not in ('S-JTSK', 'WGS 84'):
         sys.exit("Unsupported coordinate system: {0}. Valid options: S-JTSK, WGS-84".format(args.crs))
 
-    ipr = IprDownloader()
+    ipr = IprDownloaderPg()
     ipr.filter(args.alike, args.crs, args.format)
 
     if args.download:
-        ipr.download(args.outdir+'/'+args.crs)
+        ipr.download(args.outdir)
     else:
         ipr.print_items()
+
 
     return 0
 
