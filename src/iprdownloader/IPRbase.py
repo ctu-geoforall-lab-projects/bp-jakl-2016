@@ -67,6 +67,7 @@ class IprDownloader:
         
     def download(self,outdir):
         import os
+
         if outdir.endswith('/'):
             pass
         else:
@@ -79,13 +80,17 @@ class IprDownloader:
                 os.makedirs(outdir)
             except OSError:
                 print ' Cannot create file direcotry !! '
-        print outdir
+        self.outdir = outdir
+#        print outdir#
+
+        self.filename = []
 
         for itemURL in self.itemURLs:
             itemfile = urllib2.urlopen(itemURL)
             filename = itemURL.split('/')[-1]
-
-            print "downloading " + filename
+            self.filename += [filename]
+             
+#            print "downloading " + filename
 
             filepath = os.path.join(outdir,filename)
             with open(filepath,"wb") as output:

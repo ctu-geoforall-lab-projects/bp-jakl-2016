@@ -46,6 +46,7 @@ def main(alike=None, crs=None):
 
     if args.download:
         ipr.download(args.outdir)
+        ipr.Ipr2Pg()
     else:
         ipr.print_items()
 
