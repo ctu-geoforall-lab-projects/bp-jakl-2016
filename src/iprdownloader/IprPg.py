@@ -1,6 +1,4 @@
 import sys
-import urllib2
-import xmltodict
 import zipfile
 import os
 from IPRbase import IprDownloader
@@ -17,15 +15,24 @@ class IprDownloaderPg(IprDownloader):
             if item.split('.')[-1] == 'zip':
 
                 with zipfile.ZipFile(self.outdir+item, "r") as z:
-                    itemDir = self.outdir +item.split('.')[-2]
-                    z.extractall(itemDir +'/')
+                    itemDir = item.split('.')[-2]  +'/'
+                    z.extractall(self.outdir +itemDir)
                 
                 format = itemDir.split('_')[-1]
-#            print format
+                format = format.split('/')[-2]
 
-#            out_driver = ogr.GetDriverByName( 'ESRI Shapefile' )
-#            out_ds = out_driver.CreateDataSource()
-#            out_srs = None
-#            out_layer = out_ds.CreateLayer("point", out_srs, ogr.wkbPoint)
-#            fd = ogr.FieldDefn('name',ogr.OFTString)
-#            out_layer.CreateField(fd)
+                inFile = itemDir.split('_'+format)[-2] +'.'+format
+                PgFile = itemDir.split('_'+format)[-2] +'.db'
+                inFilePath = self.outdir +itemDir +inFile
+
+                command = 'ogr2ogr -f PostgreSQL -nlt PROMOTE_TO_MULTI "PG:'
+
+                dbname  = 'pgis_osm_bp'
+                host    = 'geo102.fsv.cvut.cz'
+                user    = ''#modify
+                password= ''#modify
+
+                command += 'dbname=' +dbname +' host=' +host +' user=' +user +' password=' +password
+                command += '" ' +inFilePath +' -overwrite'
+
+                os.system(command)

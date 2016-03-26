@@ -12,13 +12,13 @@ class IprDownloader:
 
         self.itemURLs = []
         self.IprItems = []
-
+#        self.itemSizes= []
 
         if alike:
             for item in data['feed']['entry']:
                 if (alike in item['title']): 
                     self.IprItems += [item['title']]
-                    self.itemURLs += [self.item_print(item, crs, file_format)]
+                    self.item_print(item, crs, file_format)
         else:
             for item in data['feed']['entry']:
                 xml_item = self.downXML(item)
@@ -28,29 +28,34 @@ class IprDownloader:
     def item_print(self, item, crs, file_format):
         xml_item = self.downXML(item)
         subdata = self.parse_xml(xml_item)
-        return self.subitems_Links(subdata['feed']['entry'], crs, file_format)
+        self.subitems_Links(subdata['feed']['entry'], crs, file_format)
+        return 0
 
 
     def subitems_Links(self, subdata, crs, file_format):
         if isinstance(subdata, list):
             for item in subdata:
                 if (crs in item['category']['@label']):
-                    return self.print_subItem(item,file_format)
+                    self.print_subItem(item,file_format)
         else:
             item = subdata
             if (crs in item['category']['@label']):
-                return self.print_subItem(item,file_format)
+                self.print_subItem(item,file_format)
+        return 0
 
 
     def print_subItem(self, item, file_format):
         if isinstance(item['link'], list):
             for links in item['link']:
                 if file_format in links['@type']:
-                    return links['@href']
+                    self.itemURLs += [links['@href']]
+#                    self.itemSizes += [links['@title']]
         else:
             links = item['link']
             if file_format in links['@type']:
-                return links['@href']
+                self.itemURLs += [links['@href']]
+#                self.itemSizes += [links['@title']]
+        return 0
 
 
     def downXML(self, data):
