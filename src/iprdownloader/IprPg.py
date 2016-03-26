@@ -14,13 +14,13 @@ class IprDownloaderPg(IprDownloader):
     def Import2Pg(self):
 
         for item in self.filename:
-#            if item.split('.')[-1] == 'zip':
+            if item.split('.')[-1] == 'zip':
 
-            with zipfile.ZipFile(self.outdir+item, "r") as z:
-                itemDir = self.outdir +item.split('.')[-2]
-                z.extractall(itemDir +'/')
+                with zipfile.ZipFile(self.outdir+item, "r") as z:
+                    itemDir = self.outdir +item.split('.')[-2]
+                    z.extractall(itemDir +'/')
                 
-            format = itemDir.split('_')[-1]
+                format = itemDir.split('_')[-1]
 #            print format
 
 #            out_driver = ogr.GetDriverByName( 'ESRI Shapefile' )
