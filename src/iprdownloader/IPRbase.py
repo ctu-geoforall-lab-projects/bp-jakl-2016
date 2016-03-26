@@ -12,6 +12,8 @@ class IprDownloader:
 
         self.itemURLs = []
         self.IprItems = []
+
+
         if alike:
             for item in data['feed']['entry']:
                 if (alike in item['title']): 
@@ -25,11 +27,8 @@ class IprDownloader:
 
     def item_print(self, item, crs, file_format):
         xml_item = self.downXML(item)
-        if '10 cm' in item['title']:
-            pass
-        else:
-            subdata = self.parse_xml(xml_item)
-            return self.subitems_Links(subdata['feed']['entry'], crs, file_format)
+        subdata = self.parse_xml(xml_item)
+        return self.subitems_Links(subdata['feed']['entry'], crs, file_format)
 
 
     def subitems_Links(self, subdata, crs, file_format):
@@ -43,10 +42,14 @@ class IprDownloader:
                 return self.print_subItem(item,file_format)
 
 
-    def print_subItem(self, item,file_format):
-        for links in item['link']:
+    def print_subItem(self, item, file_format):
+        if isinstance(item['link'], list):
+            for links in item['link']:
+                if file_format in links['@type']:
+                    return links['@href']
+        else:
+            links = item['link']
             if file_format in links['@type']:
-#                print links['@title'] ,'  \t', links['@href']#        will be deleted
                 return links['@href']
 
 
@@ -55,6 +58,7 @@ class IprDownloader:
             if item['@title'] in ('download', 'Download'):
                 xml_file = item['@href']
         return xml_file
+
 
     def parse_xml(self, xml_file):
         try:
@@ -81,9 +85,8 @@ class IprDownloader:
                 os.makedirs(outdir)
             except OSError:
                 print ' Cannot create file direcotry !! '
-        self.outdir = outdir
-#        print outdir#
 
+        self.outdir = outdir
         self.filename = []
 
         for itemURL in self.itemURLs:
@@ -91,8 +94,6 @@ class IprDownloader:
             filename = itemURL.split('/')[-1]
             self.filename += [filename]
              
-#            print "downloading " + filename
-
             filepath = os.path.join(outdir,filename)
             with open(filepath,"wb") as output:
 #                output.write(itemfile.read())
@@ -105,6 +106,5 @@ class IprDownloader:
 
 
     def print_items(self):
-#        self.
         for item in self.IprItems:
             print item

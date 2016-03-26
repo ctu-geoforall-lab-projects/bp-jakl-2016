@@ -26,8 +26,9 @@ def main(alike=None, crs=None):
     parser.add_argument("--crs",   type=str,default = "S-JTSK",       help = "specify coordinate system (WGS-84 or S-JTSK > default: S-JTSK")
     parser.add_argument("--format",type=str,default = "shp",          help = "specify file format (default: shp) ..for rasters tiff,png..")
     parser.add_argument("--outdir",type=str,default = "data",         help = "define the folder to save (default: data)")
-    parser.add_argument("--download", action='store_true', help = "download selected data")
+    parser.add_argument("--download", action='store_true',            help = "download selected data")
     args = parser.parse_args()
+ 
 
     if args.crs == "5514":
         args.crs = "S-JTSK"
