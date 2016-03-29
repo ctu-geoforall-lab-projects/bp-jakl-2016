@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #########################################################################
 #
-# Command-line tool for downloading IPR data
+# Command-line tool for downloading IPR data and importing into PostGIS
 # http://www.iprpraha.cz/clanek/1313/otevrena-data-open-data (in Czech)
 #
 # 2016 (c) by Martin Jakl (OSGeoREL CTU in Prague)
@@ -27,6 +27,11 @@ def main(alike=None, crs=None):
     parser.add_argument("--format",type=str,default = "shp",          help = "specify file format (default: shp) ..for rasters tiff,png..")
     parser.add_argument("--outdir",type=str,default = "data",         help = "define the folder to save (default: data)")
     parser.add_argument("--download", action='store_true',            help = "download selected data")
+    parser.add_argument("--dbname",type=str,                          help = "DB name")
+    parser.add_argument("--dbhost",type=str,                          help = "DB hostname")
+    parser.add_argument("--dbuser",type=str,                          help = "DB username")
+    parser.add_argument("--dbpasswd",type=str,                        help = "DB password")
+    
     args = parser.parse_args()
  
 
