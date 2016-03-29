@@ -29,6 +29,7 @@ def main(alike=None, crs=None):
     parser.add_argument("--download", action='store_true',            help = "download selected data")
     parser.add_argument("--dbname",type=str,                          help = "DB name")
     parser.add_argument("--dbhost",type=str,                          help = "DB hostname")
+    parser.add_argument("--dbport",type=str,                          help = "DB port")
     parser.add_argument("--dbuser",type=str,                          help = "DB username")
     parser.add_argument("--dbpasswd",type=str,                        help = "DB password")
     
@@ -52,7 +53,7 @@ def main(alike=None, crs=None):
 
     if args.download:
         ipr.download(args.outdir)
-        ipr.Import2Pg()
+        ipr.import_data(args.dbname, args.dbhost, args.dbport, args.dbuser, args.dbpasswd)
     else:
         ipr.print_items()
 

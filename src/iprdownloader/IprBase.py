@@ -1,6 +1,12 @@
 import sys
 import urllib2
 import xmltodict
+import os
+import zipfile
+from osgeo import ogr
+
+class IprError(StandardError):
+    pass
 
 class IprDownloader:
     def __init__(self):
@@ -109,7 +115,23 @@ class IprDownloader:
                     else:
                         break
 
-
     def print_items(self):
         for item in self.IprItems:
             print item
+
+    def _unzip_file(self, item):
+        filename = os.path.join(self.outdir, item)
+        with zipfile.ZipFile(filename, "r") as z:
+            itemDir = os.path.splitext(filename)[0]
+            z.extractall(itemDir)
+            
+        return itemDir
+
+    def _import_gdal(self, dsn_input, dsn_output, format_output):
+         idsn = ogr.Open(dsn_input, False)
+         if not idsn:
+             raise IprError("Unable to open {}".format(dsn_input))
+
+         for idx in range(idsn.GetLayerCount()):
+             print idsn.GetLayer(idx).GetName()
+                            

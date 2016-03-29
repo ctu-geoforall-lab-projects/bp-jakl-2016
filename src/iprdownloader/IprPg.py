@@ -1,38 +1,26 @@
-import sys
-import zipfile
-import os
-from IPRbase import IprDownloader
-from osgeo import ogr
+from IprBase import IprDownloader
 
 class IprDownloaderPg(IprDownloader):
     def __init__(self):
         pass
 
+    def import_data(self, dbname, dbhost=None, dbport=None, dbuser=None, dbpasswd=None):
+        def conn_string(dbname, dbhost=None, dbport=None, dbuser=None, dbpasswd=None):
+            dbconn = 'PG:dbname={0}'.format(dbname)
+            if dbhost:
+                dbconn += ' host={0}'.format(dbhost)
+            if dbport:
+                dbconn += ' port={0}'.format(dbport)
+            if dbuser:
+                dbconn += ' user={0}'.format(dbuser)
+            if dbpasswd:
+                dbconn += ' password={0}'.format(dbpasswd)
 
-    def Import2Pg(self):
+            return dbconn
 
+        dsn_output = conn_string(dbname, dbhost, dbport, dbuser, dbpasswd)
         for item in self.filename:
-            if item.split('.')[-1] == 'zip':
-
-                with zipfile.ZipFile(self.outdir+item, "r") as z:
-                    itemDir = item.split('.')[-2]  +'/'
-                    z.extractall(self.outdir +itemDir)
-                
-                format = itemDir.split('_')[-1]
-                format = format.split('/')[-2]
-
-                inFile = itemDir.split('_'+format)[-2] +'.'+format
-                PgFile = itemDir.split('_'+format)[-2] +'.db'
-                inFilePath = self.outdir +itemDir +inFile
-
-                command = 'ogr2ogr -f PostgreSQL -nlt PROMOTE_TO_MULTI "PG:'
-
-                dbname  = 'pgis_osm_bp'
-                host    = 'geo102.fsv.cvut.cz'
-                user    = ''#modify
-                password= ''#modify
-
-                command += 'dbname=' +dbname +' host=' +host +' user=' +user +' password=' +password
-                command += '" ' +inFilePath +' -overwrite'
-
-                os.system(command)
+            if item.split('.')[-1] != 'zip':
+                continue
+            dsn_input = self._unzip_file(item)
+            self._import_gdal(dsn_input, dsn_output, format_output='PostgreSQL')
