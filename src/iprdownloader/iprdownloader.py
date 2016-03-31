@@ -16,7 +16,7 @@ import urllib2
 import xmltodict
 import argparse
 
-from IPRbase import IprDownloader
+from IprBase import IprDownloader, IprError
 from IprPg   import IprDownloaderPg
 
 
@@ -51,9 +51,14 @@ def main(alike=None, crs=None):
     ipr = IprDownloaderPg()
     ipr.filter(args.alike, args.crs, args.format)
 
-    if args.download:
+    if args.download or args.dbname:
         ipr.download(args.outdir)
-        ipr.import_data(args.dbname, args.dbhost, args.dbport, args.dbuser, args.dbpasswd)
+        if args.dbname:
+            try:
+                ipr.import_data(args.dbname, args.dbhost, args.dbport,
+                                args.dbuser, args.dbpasswd)
+            except IprError as e:
+                sys.exit('ERROR: {}'.format(e))
     else:
         ipr.print_items()
 

@@ -128,10 +128,30 @@ class IprDownloader:
         return itemDir
 
     def _import_gdal(self, dsn_input, dsn_output, format_output):
-         idsn = ogr.Open(dsn_input, False)
-         if not idsn:
-             raise IprError("Unable to open {}".format(dsn_input))
+        def import_layer(layer, odsn, overwrite=False):
+            options = ['PRECISION=NO', 'GEOMETRY_NAME=geom']
+            if overwrite:
+                options.append('OVERWRITE=YES')
 
-         for idx in range(idsn.GetLayerCount()):
-             print idsn.GetLayer(idx).GetName()
+            # force input srs (5514 or 4326)
+            # TODO layer.set... 5514
+
+            # copy input layer to output data source
+            olayer = odsn.CopyLayer(layer, layer.GetName() , options)
+            if olayer is None:
+                raise IprError("Unable to copy layer {}".format(layer.GetName()))
+            
+        # open input data source (directory with shapefile/gml/... files)
+        idsn = ogr.Open(dsn_input, False) # read
+        if not idsn:
+            raise IprError("Unable to open {}".format(dsn_input))
+
+        # open output data source (PostGIS/SpatiaLite)
+        odsn = ogr.Open(dsn_output, True) # write
+        if not odsn:
+            raise IprError("Unable to open {}".format(dsn_output))
+        
+        for idx in range(idsn.GetLayerCount()):
+            # process shp/gml file
+            import_layer(idsn.GetLayer(idx), odsn)
                             
