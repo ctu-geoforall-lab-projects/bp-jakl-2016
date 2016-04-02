@@ -4,7 +4,7 @@ class IprDownloaderPg(IprDownloader):
     def __init__(self):
         pass
 
-    def import_data(self, dbname, dbhost=None, dbport=None, dbuser=None, dbpasswd=None):
+    def import_data(self, dbname, overwrite, dbhost=None, dbport=None, dbuser=None, dbpasswd=None):
         def conn_string(dbname, dbhost=None, dbport=None, dbuser=None, dbpasswd=None):
             dbconn = 'PG:dbname={0}'.format(dbname)
             if dbhost:
@@ -23,4 +23,4 @@ class IprDownloaderPg(IprDownloader):
             if item.split('.')[-1] != 'zip':
                 continue
             dsn_input = self._unzip_file(item)
-            self._import_gdal(dsn_input, dsn_output, format_output='PostgreSQL')
+            self._import_gdal(dsn_input, dsn_output, overwrite, format_output='PostgreSQL')

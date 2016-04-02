@@ -127,11 +127,13 @@ class IprDownloader:
             
         return itemDir
 
-    def _import_gdal(self, dsn_input, dsn_output, format_output):
-        def import_layer(layer, odsn, overwrite=False):
+    def _import_gdal(self, dsn_input, dsn_output, overwrite, format_output):
+        def import_layer(layer, odsn, overwrite):
             options = ['PRECISION=NO', 'GEOMETRY_NAME=geom']
             if overwrite:
                 options.append('OVERWRITE=YES')
+            else:
+                options.append('OVERWRITE=NO') 
 
             # force input srs (5514 or 4326)
             # TODO layer.set... 5514
@@ -153,5 +155,5 @@ class IprDownloader:
         
         for idx in range(idsn.GetLayerCount()):
             # process shp/gml file
-            import_layer(idsn.GetLayer(idx), odsn)
+            import_layer(idsn.GetLayer(idx), odsn, overwrite)
                             

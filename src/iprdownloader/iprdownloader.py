@@ -32,6 +32,7 @@ def main(alike=None, crs=None):
     parser.add_argument("--dbport",type=str,                          help = "DB port")
     parser.add_argument("--dbuser",type=str,                          help = "DB username")
     parser.add_argument("--dbpasswd",type=str,                        help = "DB password")
+    parser.add_argument("--overwrite", action='store_true',           help = "overwrite existing file")
     
     args = parser.parse_args()
  
@@ -55,7 +56,7 @@ def main(alike=None, crs=None):
         ipr.download(args.outdir)
         if args.dbname:
             try:
-                ipr.import_data(args.dbname, args.dbhost, args.dbport,
+                ipr.import_data(args.dbname, args.overwrite, args.dbhost, args.dbport,
                                 args.dbuser, args.dbpasswd)
             except IprError as e:
                 sys.exit('ERROR: {}'.format(e))
