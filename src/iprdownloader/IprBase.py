@@ -54,11 +54,13 @@ class IprDownloader:
         if isinstance(item['link'], list):
             for links in item['link']:
                 if file_format in links['@type']:
+                    print links['@href']#
                     self.itemURLs += [links['@href']]
 #                    self.itemSizes += [links['@title']]
         else:
             links = item['link']
             if file_format in links['@type']:
+#                print links['@href']#
                 self.itemURLs += [links['@href']]
 #                self.itemSizes += [links['@title']]
         return 0
@@ -83,11 +85,6 @@ class IprDownloader:
         
     def download(self,outdir):
         import os
-
-        if outdir.endswith('/'):
-            pass
-        else:
-            outdir += '/'
 
         if (os.path.isdir(outdir)):
             pass
@@ -137,6 +134,8 @@ class IprDownloader:
 
             # force input srs (5514 or 4326)
             # TODO layer.set... 5514
+
+            
 
             # copy input layer to output data source
             olayer = odsn.CopyLayer(layer, layer.GetName() , options)
