@@ -57,7 +57,8 @@ def main(alike=None, crs=None):
         ipr.download(args.outdir)
         if args.dbname:
             try:
-                ipr.import_data(args.dbname, args.overwrite, args.dbhost, args.dbport,
+                ipr.import_data(args.crs,
+                                args.dbname, args.overwrite, args.dbhost, args.dbport,
                                 args.dbuser, args.dbpasswd)
             except IprError as e:
                 sys.exit('ERROR: {}'.format(e))

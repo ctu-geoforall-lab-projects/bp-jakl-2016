@@ -3,7 +3,7 @@ import urllib2
 import xmltodict
 import os
 import zipfile
-from osgeo import ogr
+from osgeo import ogr,osr
 
 class IprError(StandardError):
     pass
@@ -124,21 +124,35 @@ class IprDownloader:
             
         return itemDir
 
-    def _import_gdal(self, dsn_input, dsn_output, overwrite, format_output):
-        def import_layer(layer, odsn, overwrite):
-            options = ['PRECISION=NO', 'GEOMETRY_NAME=geom']
+    def _import_gdal(self, dsn_input, dsn_output, overwrite, crs, format_output):
+        def import_layer(layer, odsn, overwrite, crs):
+            options = ['PRECISION=NO','GEOMETRY_NAME=geom','FID=id']
             if overwrite:
                 options.append('OVERWRITE=YES')
+
+
+#       Rewrite existing prj file with correct EPGS
+            DIR = dsn_input.split('/')[-1]
+            prjFile = DIR.rsplit('_',1)[0] +".prj"
+
+            os.remove(os.path.join(dsn_input,prjFile))
+            prj = open(os.path.join(dsn_input,prjFile), "w")
+
+            spatialRef = osr.SpatialReference()
+
+            if crs == 'S-JTSK':
+                spatialRef.ImportFromEPSG(5514)
             else:
-                options.append('OVERWRITE=NO') 
+                spatialRef.ImportFromEPSG(4326)
 
-            # force input srs (5514 or 4326)
-            # TODO layer.set... 5514
+#            spatialRef.MorphToESRI()
 
-            
+            prj.write(spatialRef.ExportToWkt())
+            prj.close()
 
             # copy input layer to output data source
             olayer = odsn.CopyLayer(layer, layer.GetName() , options)
+
             if olayer is None:
                 raise IprError("Unable to copy layer {}".format(layer.GetName()))
             
@@ -151,8 +165,7 @@ class IprDownloader:
         odsn = ogr.Open(dsn_output, True) # write
         if not odsn:
             raise IprError("Unable to open {}".format(dsn_output))
-        
+
         for idx in range(idsn.GetLayerCount()):
             # process shp/gml file
-            import_layer(idsn.GetLayer(idx), odsn, overwrite)
-                            
+            import_layer(idsn.GetLayer(idx), odsn, overwrite, crs)
