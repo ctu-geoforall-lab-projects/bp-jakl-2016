@@ -27,7 +27,7 @@ dat, který lze ale snížit kompresí.
 
 Každý prvek má vlastní XML soubor. 
 
-příklad linie:
+příklad XML souboru pro linii:
 ...
 .
 .
@@ -73,7 +73,7 @@ jsou zahrnuty do společné relace Dálnice D1. Nebo turistická trasa
 (rozcestníky, vyhlídky, apod. ).
 
 U atributů popsaných na osmwiki je vždy uvedeno, k jaké třídě je 
-vhodné a nevhodné je použít (dle komunity). Pokud se stane, že je použit 
+vhodné a nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit 
 na~jinou než povolenou třídu, nemusí to hlásit chybu, ale může být následně 
 problém v některých vykreslovačích. 
 
@@ -109,16 +109,19 @@ Nejvíce tato změna licencí ohrozila data v zemích jako je Polsko a Nový Zé
 
 \section{Opendata}
 \label{opendata}
-Základní myšlenka otevřených dat vznikla v USA, kde pokud vzniknou 
-geografická data z veřejných peněz, měla by tedy být přístupná 
-veřejně. Díky tomuto byly zprvu k dispozici satelitní snímky povrchu 
+Základní myšlenka otevřených dat vznikla v USA z iniciativy vlády Barracka Obamy. 
+Tedy, pokud vzniknou geografická data z veřejných peněz, měla by tedy být přístupná 
+veřejně. Mělo to kladný efekt na tamní ekonomiku.
+Díky tomuto byly zprvu k dispozici satelitní snímky povrchu 
 Země a digitální model terénu s rozlišením 30x30 m od NASA (pro 
-pozdější vykreslení vrstevnic). Tento trend se začal rozšiřovat zprvu 
-do západních Evropy. 
+pozdější vykreslení vrstevnic). 
+
+Tento trend se začal rozšiřovat zprvu do zemí západních Evropy,
+jmenovitě Anglie, Francie, ale i jiné země mimo Evropu..  
 
 V ČR se tomuto věnuje fond otevrenadata.cz, který založil Otakar 
 Motejl. Teto fond spolupracuje s nadací Sociery Fund Praha. V rámci 
-těchto uskupení je vyvíjen tlak na zveřejňování smluv s ..???.. a dat 
+těchto uskupení je vyvíjen tlak na zveřejňování smluv a dat 
 státních institucí, jelikož jejich získání a údržba bylo placeno 
 z~veřejných zdrojů.
 
@@ -130,8 +133,8 @@ sběrem dat. Sběr dat ve smyslu měřením vlastní GNSS (GPS, Glonass)
 přijímačem a znalost místních poměrů (uzavřené silnice, stezky atd.). 
 Toto mapové dílo z těchto dat mohli volně užívat k vlastním užití. 
 Komunita přispěvatelů se zprvu pomalu, ale později rychle rozrostla a 
-dnes čítá přes 10 milionů [??] registrovaných uživatelů a ..xx.. 
-pravidelných přispěvatelů.
+dnes čítá 3,7 milionů registrovaných uživatelů s alespoň jednou 
+vytvořenou změnou v OSM a 2,7 milionů účtů aktivních přispěvatelů.
 
 Tyto mapové podklady byly velice vhodné i pro další projekt, dnes již 
 velice rozšířený a známý jako Geocashing (GC). Projekt GC začal mapové 
@@ -164,11 +167,11 @@ dat. Data v nich jsou důkladně spravována už proto, že je využívá stát.
 \section{Vykreslovače}
 \label{vykreslovače}
 Na hlavní stránce OSM je pět „základních“ přednastavených vrstev vykreslených 
-dat z OSM. Využívá aplikaci OpenLayers založenou na konceptu AJAX.
+z~dat z OSM. Využívá aplikaci OpenLayers založenou na konceptu AJAX.
 
 \begin{itemize}
 
-  \item Standardní vrstva - vykresluje všechny prvky přiměřeně).
+  \item Standardní vrstva - vykresluje všechny prvky přiměřeně.
   \item Cyklomapa - vykresluje cyklostezky, výškopis. 
   \item Dopravní mapa - vykresluje silniční a železniční sítě.
   \item MapQuest Open vznikla jako podkladová mapa právě pro potřeby 
@@ -178,9 +181,9 @@ Geocaching.
 
 \end{itemize}
 
-Existují další stránky jež se zabývají vykreslením různých dat. 
-Například mapu turistických a cyklistických tras vykresluje mtbmap.cz 
-a to pro celou Evropu.
+Existují další stránky jež se zabývají vlastní kompozicí a vykreslením
+různých dat. Například mapu turistických a cyklistických tras vykresluje
+ mtbmap.cz a to pro celou Evropu. 
  
 Zajímavými projekty jsou, které k 2D mapě přidává „třetí“ rozměr a 
 vytváří tzv. 2.5D mapu. Většinou jde o 3D zobrazení budov, mostů (dle 
