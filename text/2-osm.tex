@@ -49,8 +49,8 @@ příklad XML souboru pro linii:
 .
 .
 
-Třídy prvků v OSM jsou rozděleny na uzel (node), cesta (way), polygon
-(polygon) a všechny tyto prvky lze dále spojit do relace (relation).
+Třídy prvků v OSM jsou rozděleny na uzel (node), cesta (way) a 
+relace (relation).
 
 Uzel je definován jedinečným identifikátorem (node id=). Jeho 
 souřadnice jsou ve WGS~­84. Je také ukládána verze (version) a kdy 
@@ -62,8 +62,9 @@ Linie je spojení dvou a více uzlů a má taky svůj identifikátor (way~
 id=). Hlavičku má shodnou s bodem. Ale obsahuje také seznam id uzlů, 
 jež ji tvoří. Liniím lze jí taktéž přiřadit atributy.  
 
-Polygon je tvořen uzavřenou linií. Lze mu přiřadit jak liniové  atributy tak 
-také atributy pro plochy. 
+Linie lze ještě rozdělit na neuzavřené a uravřené. Uzaveným liniím lze připojit 
+i atributy určené jen pro plochy. Například les (landuse=forest).
+V případě, když přidává-li se atribut jež je v základu pro linieale chceme ho použít pro plochy přidává se atribut area=yes.
 
 Speciálním příkladem jsou relace (relation=*), do které lze zahrnout 
 jeden a více prvků. Lze do nich spojit prvky stejné nebo odlišné třídy 
