@@ -1,4 +1,4 @@
-FILE=martin-jakl-bp
+FILE=martin-jakl-bp-2016
 
 all:
 	pdflatex $(FILE)
