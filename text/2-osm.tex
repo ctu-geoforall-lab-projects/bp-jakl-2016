@@ -28,31 +28,28 @@ dat, který lze ale snížit kompresí.
 Každý prvek má vlastní XML soubor. 
 
 příklad XML souboru pro linii:
-...
-.
-.
-%\lstset{language=XML}
-%\begin{lstlisting}
-%<osm version="0.6" generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)"copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
-%    <way id="87249754" visible="true" version="2" changeset="34489106" timestamp="2015-10-07T11:52:41Z" user="Petr Dlouhý" uid="17615">
-%        <nd ref="1014526199"/>
-%        <nd ref="1014525941"/>
-%        <nd ref="1014526337"/>
-%        <nd ref="1014526022"/>
-%        <nd ref="1014526277"/>
-%        <nd ref="1014525984"/>
-%        <tag k="highway" v="path"/>
-%        <tag k="source" v="bing:ortofoto"/>
-%    </way>
-%</osm>
-%\end{lstlisting}
-.
-.
+
+{\scriptsize
+\begin{lstlisting}
+<osm version="0.6" generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)"copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+   <way id="87249754" visible="true" version="2" changeset="34489106" timestamp="2015-10-07T11:52:41Z" user="Petr Dlouhý" uid="17615">
+       <nd ref="1014526199"/>
+       <nd ref="1014525941"/>
+       <nd ref="1014526337"/>
+       <nd ref="1014526022"/>
+       <nd ref="1014526277"/>
+       <nd ref="1014525984"/>
+       <tag k="highway" v="path"/>
+       <tag k="source" v="bing:ortofoto"/>
+   </way>
+</osm>
+\end{lstlisting}
+}
 
 Třídy prvků v OSM jsou rozděleny na uzel (node), cesta (way) a 
 relace (relation).
 
-Uzel je definován jedinečným identifikátorem (node id=). Jeho 
+Uzel je definován jedinečným identifikátorem ({\tt node id=}). Jeho 
 souřadnice jsou ve WGS~­84. Je také ukládána verze (version) a kdy 
 byl do databáze přidán a v jaké změně to bylo provedeno (changeset=). 
 Dále k bodu je možná připojit různé atributy s klíčem a hodnotou (tag~

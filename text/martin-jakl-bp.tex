@@ -49,6 +49,13 @@
 \counterwithout{footnote}{chapter}
 
 \usepackage{acronym}
+\usepackage{listings}
+\lstset{language=XML,
+  literate={ý}{{\'y}}1,
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}}
 
 \usepackage[
     unicode,                
