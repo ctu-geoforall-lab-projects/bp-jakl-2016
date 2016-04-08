@@ -17,6 +17,7 @@
 
 \usepackage[czech, english]{babel}	% použití češtiny, angličtiny
 \usepackage[utf8x]{inputenc}		% Kódování zdrojových souborů je UTF8
+\PrerenderUnicode{č}
 
 \usepackage[square,sort,comma,numbers]{natbib}
 
@@ -33,6 +34,8 @@
 
 \usepackage[dvips]{graphicx}   
 \usepackage{color}
+\definecolor{purple}{rgb}{0.4,0.0,0.4}
+
 \usepackage{transparent}
 \usepackage{wrapfig}
 \usepackage{float} 
@@ -51,11 +54,12 @@
 \usepackage{acronym}
 \usepackage{listings}
 \lstset{language=XML,
+  breaklines=true,
   literate={ý}{{\'y}}1,
-  stringstyle=\color{black},
-  identifierstyle=\color{darkblue},
-  keywordstyle=\color{cyan},
-  morekeywords={xmlns,version,type}}
+  stringstyle=\color{blue},
+  identifierstyle=\color{black},
+  keywordstyle=\color{purple}\bf,
+  morekeywords={osm,way,nd,tag}}
 
 \usepackage[
     unicode,                
@@ -92,7 +96,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Název práce
-\nazev{název práce}{ EN title}
+\nazev{Začleňování geografických datových sad do OpenStreetMap}{ Integration of geographic datasets into OpenStreetMap}
 
 %% Jméno a příjmení autora
 \autor{Martin}{Jákl}
@@ -104,7 +108,7 @@
 \oborstudia{Geodézie, kartografie a geoinformatika}{}
 
 %% Označení ústavu
-\ustav{Katedra geomatiky  }{}
+\ustav{Katedra geomatiky }{}
 
 %% Rok obhajoby
 \rok{2016}
@@ -177,7 +181,7 @@
 	\vspace{1em}
 		%\noindent
 	\par\hspace{2ex}
-	{Chtěl bych poděkovat vedoucímu mé bakalářské práce, Ing. Martinu Landovi, PhD. ,
+	{Chtěl bych poděkovat vedoucímu mé bakalářské práce, Ing. Martinu Landovi, Ph.D. ,
 	za odborné rady a~pomoc při zpracování této práce. Dále bych chtěl 
 	poděkovat své rodině za projevenou podporu a~trpělivost.}
 }
@@ -193,10 +197,8 @@
 
 % jednotlivé kapitoly
 \include{1-uvod}
-\include{2-osm}
-\include{3-import}
-
-%\include{9-zaver}
+\include{2-teorie}
+\include{3-praktic}
 
 % Vysázení seznamu zkratek
 %\include{zkratky}
@@ -205,7 +207,7 @@
 \nocite{*}
 \def\refname{Literatura}
 \bibliographystyle{mystyle}
-%\bibliography{literatura}
+\bibliography{literatura}
 
 
 % Začátek příloh
