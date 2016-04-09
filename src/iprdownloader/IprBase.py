@@ -54,7 +54,7 @@ class IprDownloader:
         if isinstance(item['link'], list):
             for links in item['link']:
                 if file_format in links['@type']:
-                    print links['@href']#
+#                    print links['@href']#
                     self.itemURLs += [links['@href']]
 #                    self.itemSizes += [links['@title']]
         else:
