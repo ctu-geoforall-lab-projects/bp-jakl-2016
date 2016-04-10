@@ -1,16 +1,22 @@
 \chapter{Praktická část}
 \label{3-Praktická část}
 
-Jak již bylo řečeno tak IPR distibuje svá data a datové soubory přímo na své 
-stránce. Data tam jsou distribuována možností odkazů kde stažení nebo je
-k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}). 
-Pomocí něho se lze také dostat všem distribuovaným datům 
+\section{server PostGIS}
+\label{server PostGIS}
+.."popsat školní server PostGIS"..
+
+.."popsat jak se na něj nahravají data z OSM"..
 
 
 \section{IprDownloader}
 \label{Iprdownloader}
-Jelikož by bylo zdlouhavé stahovat všechny tyto soubory ručně, byl vytvořen 
-program, který umožňuje stahování a import dat. Skript byl napsán 
+Jak již bylo řečeno tak IPR distibuje svá data a datové soubory přímo na své 
+stránce. Data tam jsou distribuována možností odkazů kde stažení nebo je
+k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}). 
+Pomocí něho se lze také dostat všem distribuovaným datům. 
+
+Jelikož by bylo zdlouhavé stahovat všechny tyto soubory ručně, proto byl
+vytvořen program, který umožňuje stahování a import dat. Skript byl napsán 
 v~programovacím jazyce Python a využívá knihovny GDAL. 
 
 Je rozdělen na tři soubory 
@@ -103,4 +109,26 @@ Příklad:
 
 {\tt \$ iprdownloader.py ---alike 'Technická mapa' ---dbname pgis\_osm\_jakl ---dbhost geo102.fsv.cvut.cz  ---dbport 5432 } 
  
+
+\section{IPR data}
+\label{IPR data}
+.."popsat data která IPR zveřejňuje, jaké zobrazení, jaké formáty
+
+.. který zobrazení je vhodný (wgs84) protože OSM je taky ve Wgs84
+
+.."popsat projití distribuovaných dat z IPR a která z nich se jeví jako vhodná 
+pro import do OSM a proč.
+
+\section{Vhodná data pro OSM}
+\label{Vhodná data pro OSM}
+.."porovnání stavu těchto dat s daty s OSM a .. uvést výsledek která data se 
+jeví jako nejvíce vhodná a proč.
+
+\section{Vlastní Návrh}
+\label{Vlastní Návrh}
+..vlastní návrh tagování importovaných dat. s pomocí české OSM "features:cs"..
+napsat že to bylo vnešeno do diskuze na talk-cz ... a čekání na reakci ...
+ 
+
+
 
