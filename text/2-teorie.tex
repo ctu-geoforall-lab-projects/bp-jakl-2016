@@ -52,20 +52,20 @@ generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)" copyright="OpenStree
 
 
 Uzel je definován jedinečným identifikátorem ({\tt node id=}). Jeho 
-souřadnice jsou ve WGS~­84. Je také ukládána verze (version) a kdy 
-byl do databáze přidán a v jaké změně to bylo provedeno (changeset=). 
-Dále k bodu je možná připojit různé atributy s klíčem a hodnotou (tag~
-k=~~v=~~). 
+souřadnice jsou ve WGS~­84. Je také ukládána verze ({\tt version= }) a kdy 
+byl do databáze přidán a v jaké změně to bylo provedeno ({\tt changeset=}). 
+Dále k bodu je možná připojit různé atributy s klíčem a hodnotou ({\tt tag~
+k=~~v=~~}). 
 
-Linie je spojení dvou a více uzlů a má taky svůj identifikátor (way~
-id=). Hlavičku má shodnou s bodem. Ale obsahuje také seznam id uzlů, 
+Linie je spojení dvou a více uzlů a má taky svůj identifikátor ({\tt way~
+id= }). Hlavičku má shodnou s bodem. Ale obsahuje také seznam id uzlů, 
 jež ji tvoří. Liniím lze jí taktéž přiřadit atributy.  
 
 Linie lze ještě rozdělit na neuzavřené a uravřené. Uzaveným liniím lze připojit 
-i atributy určené jen pro plochy. Například les (landuse=forest).
-V případě, když přidává-li se atribut jež je v základu pro linieale chceme ho použít pro plochy přidává se atribut area=yes.
+i atributy určené jen pro plochy. Například les ({\tt landuse=forest}).
+V případě, když přidává-li se atribut jež je v základu pro linieale chceme ho použít pro plochy přidává se atribut {\tt area=yes}.
 
-Speciálním příkladem jsou relace (relation=*), do které lze zahrnout 
+Speciálním příkladem jsou relace ({\tt relation= }), do které lze zahrnout 
 jeden a více prvků. Lze do nich spojit prvky stejné nebo odlišné třídy 
 nebo i jiné relace. Pro příklad dálnice je tvořena mnoha liniemi a ty 
 jsou zahrnuty do společné relace Dálnice D1. Nebo turistická trasa 
@@ -144,9 +144,9 @@ Přispěvatelé dat do OSM musí respektovat, že OSM je pod licencí OdbL.
 Tudíž i jejich zdroj dat musí splňovat tuto licenci. Proto by měli 
 všechny svoje změny, které v OSM vytvoří, řádně ozdrojovat atributem 
 s~klíčem 
-source=*
+{\tt source= }
 V případě vlastním sběrem dat se vyplňuje hodnotou 
-source=survey
+{\tt source=survey}
 případně uvést zdroj, odkud čerpali. Pokud tuto povinnost poruší a 
 použijí zdroj, jež není kompatibilní z politikou OSM, tak samotné OSM 
 jejich změnu, aby předešel sporům, sám vymaže. Bohužel musí vymazat 
