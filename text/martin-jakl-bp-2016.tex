@@ -10,14 +10,14 @@
 \documentclass[%
   12pt,         			% Velikost základního písma je 12 bodů
   a4paper,      			% Formát papíru je A4
-  twoside,       			% Oboustranný tisk
+  oneside,       			% jednostranný tisk
   pdftex				    % překlad bude proveden programem 'pdftex' do PDF
 ]{report}       			% Dokument třídy 'zpráva'
 %
 
 \usepackage[czech, english]{babel}	% použití češtiny, angličtiny
-\usepackage[utf8x]{inputenc}		% Kódování zdrojových souborů je UTF8
-\PrerenderUnicode{č}
+\usepackage[utf8x]{inputenc}		% Kódování zdrojových souborů je UTF8x
+\PrerenderUnicode{č}            % přidání vyjímky pro znaky s diakritikou
 
 \usepackage[square,sort,comma,numbers]{natbib}
 
@@ -52,7 +52,7 @@
 \counterwithout{footnote}{chapter}
 
 \usepackage{acronym}
-\usepackage{listings}
+\usepackage{listings} % nastavení barev pro XML
 \lstset{language=XML,
   breaklines=true,
   literate={ý}{{\'y}}1,
@@ -90,6 +90,7 @@
 
 \renewcommand{\figurename}{Obrázek}
 \def\figurename{Obrázek}
+\pagestyle{empty} % vypne číslování stránek
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%% Definice informací o dokumentu  %%%%%%%%%%%%%%%%%%%%%
@@ -161,7 +162,7 @@
 % Vysázení listu zadani
 \stranka{}%
 	{\sffamily\Huge\centering\ ZDE VLOŽIT LIST ZADÁNÍ}%
-	{\sffamily\centering Z~důvodu správného číslování stránek}
+%	{\sffamily\centering Z~důvodu správného číslování stránek}
 
 % Vysázení stránky s abstraktem
 \vytvorabstrakt
@@ -196,6 +197,7 @@
 %\seznamtabulek
 
 % jednotlivé kapitoly
+\setcounter{page}{1}  % nastaví čítač stránek znovu od jedné
 \include{1-uvod}
 \include{2-teorie}
 \include{3-praktic}
