@@ -11,9 +11,9 @@
 \section{IprDownloader}
 \label{Iprdownloader}
 Jak již bylo řečeno tak IPR distibuje svá data a datové soubory přímo na své 
-stránce. Data tam jsou distribuována možností odkazů kde stažení nebo je
+stránce. Data tam jsou distribuována možností odkazů ke stažení nebo je
 k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}). 
-Pomocí něho se lze také dostat všem distribuovaným datům. 
+Pomocí něho se lze také dostat ke všem distribuovaným datům. 
 
 Jelikož by bylo zdlouhavé stahovat všechny tyto soubory ručně, proto byl
 vytvořen program, který umožňuje stahování a import dat. Skript byl napsán 
@@ -24,15 +24,15 @@ Je rozdělen na tři soubory
 
 
 \subsection{{\tt IprDownloader.py}}
-Na primární skript {\tt IprDowloader.py}, který parseruje vstupní údaje a 
-zpracovává je k~dalšímu použití ve sriptu. Těmito základními údaji jsou 
-({\tt --alike, --crs, --format, --outdir --d}). Dalšími vstupními údaji mohou 
+Na primární skript {\tt IprDowloader.py}, který parseruje vstupní údaje a
+zpracovává je k~dalšímu použití ve sriptu. Těmito základními údaji jsou
+({\tt --alike, --crs, --format, --outdir --d}). Dalšími vstupními údaji mohou
 údaje o databázi, kam se mají data importovat. Těmi to vstupy jsou 
 ({\tt --dbname --dbhost --dbport --dbuser --dbpassword}).
 
 Skript hlídá vstupní formát kartografických souřadnic a pokud se neshodují 
-s~možnými oznámí chybu o špatném vstupu. Pokud uživatel vloží kartografické 
-zobreazení ve formě EPGS kodu program jej převede na jeho název. 
+s~možnými, oznámí chybu o špatném vstupu. Pokud uživatel vloží kartografické 
+zobrazení ve formě EPGS kodu, program jej převede na jeho název. 
 
 
 \subsection{{\tt IprBase.py}}
@@ -49,7 +49,7 @@ a stáhne jej do definovaného adresáře.
 Skript {\tt IprPg.py } definuje třídou {\tt IprDownloaderPg }, která dědí 
 všechny funkce od třídy {\tt IprDownloader } a definuje další funkce potřebné pro 
 správný import stažených dat do databáze PostgreSQL. 
-Přesněji stežený sboubor zkontroluje jeslit není v kompresován v archivu 
+Přesněji stažený soubor zkontroluje, jestli není v kompresován v archivu 
 {\tt *.zip} , jeslit ano, extrahuje ho do nové složky se stejným jménem jako
 archýv ve stejném adresáři jako archiv. Následně složí string pro PostgreSQL 
 ze~vstupních údajů. Pro soubory ve formátu ESRI Shapefile opravý definici 
@@ -60,10 +60,10 @@ kartografického zobrazení uloženou v souboru {\tt *.prj }.
 Při pouhém spuštění skriptu vypíše všechna nalezená data, která IPR dává 
 k~dispozici. Pro hledání a označení, která data se mají stánout slouží 
 {\tt ---alike }. Za toto uživatel připojí slovo nebo frázi, jež chce v~datech
-hledat. Pro~sousloví, které obsahuje mezeru je vhodné jej umístit do uvozovek. 
+hledat. Pro~sousloví, které obsahuje mezeru, je vhodné jej umístit do uvozovek. 
 Program rozlišuje velká~x~malá písmena a háčky a čárky.
 
-Příkad:
+příklad:
 
 {\tt \$ iprdownloader.py ---alike 'Technická mapa'}
   
@@ -76,7 +76,7 @@ Dále jsou k dispozici nastavení.
      Přednastavené zobrazení je S-JTSK.
     \item datová formát souborů {\tt ---format} .
     
-    Pro vektorvé soubory je možné zvolit pro vektorová data:
+    Pro vektorové soubory je možné zvolit pro vektorová data:
         \subitem {\tt json }  ..   
         \subitem {\tt dxf  }  ..   
         \subitem {\tt gml  }  ..                    
@@ -84,8 +84,8 @@ Dále jsou k dispozici nastavení.
         
     Je předdefinován formát {\tt shp} .
          
-    Pokud uživatel chce stahovat rasterová data je potřeba změnit předdefinovaný
-    formát souboru na adekvártní rastrový formát ({\tt tif,...})
+    Pokud uživatel chce stahovat rasterová data, je potřeba změnit předdefinovaný
+    formát souboru na adekvártní rastrový formát např. ({\tt tif}) atd.
     
     \item adresu adresáře na místním počítači. Je předdefinován adresář 
     {\tt /data/} ve~složce, kde je uložen samotný program.     
@@ -93,17 +93,17 @@ Dále jsou k dispozici nastavení.
 
 Pro stažení dat stačí přidat parametr {\tt --download} .
 
-Příklad:
+příklad:
 
 {\tt \$ iprdownloader.py ---alike 'Technická mapa' ---crs 4326 ---format gmp ---outdir IPR}
 
-Pro možnost stážené datov souboury rovnou importovat do databáze PostGIS je 
+Pro možnost stahované datové souboury importovat rovnou do databáze PostGIS, je 
 minimálně nutné zadat název databáze {\tt ---dbname }. To v případě pokud je
 databáze PostGIS umístěna v lokální líti. Pokud je databáze umístěna na jiném
-serveru je nutné zadat adresu {\tt ---dbhost} a port {\tt ---dbport} . Pokud je
-ještě vyžadován autorizovaný přístup použije sepřístupové jméno {\tt ---dbuser} a
+serveru, je nutné zadat adresu {\tt ---dbhost} a port {\tt ---dbport} . Pokud je
+ještě vyžadován autorizovaný přístup, použije se přístupové jméno {\tt ---dbuser} a
 heslo {\tt ---dbpassword} . 
-Pokud je vložen název databáze není již potřeba používat parametr {\tt ---download} .
+Pokud je vložen název databáze, není již potřeba používat parametr {\tt ---download} .
 
 Příklad:
 

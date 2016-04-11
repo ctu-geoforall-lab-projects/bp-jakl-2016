@@ -24,13 +24,12 @@ samotného OSM (zaměstnanců, běhu serverů atd.). \cite{wikiOSM}
 
 OSM data jsou ukládána ve formátu XML (verze 1.0). Jeho výhoda je jasná 
 struktura, snadná orientace v kódu pro člověka. Nevýhodou je ovšem větší objem 
-dat, který lze ale snížit kompresí. 
-Každý prvek má vlastní XML soubor. 
+dat, který lze ale snížit kompresí. Každý prvek má vlastní XML soubor. 
 
 Třídy prvků v OSM jsou rozděleny na uzel (node), cesta (way) a 
 relace (relation).
 
-Příklad XML souboru pro linii:
+Příklad XML souboru pro cestu:
 
 {\scriptsize
 \begin{lstlisting}
@@ -53,17 +52,17 @@ generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)" copyright="OpenStree
 
 Uzel je definován jedinečným identifikátorem ({\tt node id=}). Jeho 
 souřadnice jsou ve WGS~­84. Je také ukládána verze ({\tt version= }) a kdy 
-byl do databáze přidán a v jaké změně to bylo provedeno ({\tt changeset=}). 
-Dále k bodu je možná připojit různé atributy s klíčem a hodnotou ({\tt tag~
-k=~~v=~~}). 
+byl do databáze přidán a v jaké změně to bylo provedeno ({\tt changeset=~}). 
+Dále k bodu je možná připojit různé atributy s klíčem a hodnotou ({\tt tag~k=~v=~}). 
 
-Linie je spojení dvou a více uzlů a má taky svůj identifikátor ({\tt way~
-id= }). Hlavičku má shodnou s bodem. Ale obsahuje také seznam id uzlů, 
+Linie je spojení dvou a více uzlů a má taky svůj identifikátor ({\tt way~id=~}).
+Hlavičku XML souboru má shodnou s bodem. Ale dále obsahuje také seznam id uzlů, 
 jež ji tvoří. Liniím lze jí taktéž přiřadit atributy.  
 
-Linie lze ještě rozdělit na neuzavřené a uravřené. Uzaveným liniím lze připojit 
+Linie lze ještě rozdělit na neuzavřené a uzavřené. Uzaveným liniím lze připojit 
 i atributy určené jen pro plochy. Například les ({\tt landuse=forest}).
-V případě, když přidává-li se atribut jež je v základu pro linieale chceme ho použít pro plochy přidává se atribut {\tt area=yes}.
+V případě, když přidává-li se atribut, jenž je v základu pro linie, ale chceme
+ho použít pro plochy, přidává se atribut {\tt area=yes}.
 
 Speciálním příkladem jsou relace ({\tt relation= }), do které lze zahrnout 
 jeden a více prvků. Lze do nich spojit prvky stejné nebo odlišné třídy 
@@ -110,7 +109,7 @@ Nejvíce tato změna licencí ohrozila data v zemích jako je Polsko a Nový Zé
 \subsection{Opendata}
 \label{opendata}
 Základní myšlenka otevřených dat vznikla v USA z iniciativy vlády Barracka Obamy. 
-Tedy, pokud vzniknou geografická data z veřejných peněz, měla by tedy být 
+Tedy pokud vzniknou geografická data z veřejných peněz, měla by tedy být 
 přístupná veřejně. Mělo to kladný efekt na tamní ekonomiku. Díky tomuto byly 
 zprvu k~dispozici satelitní snímky povrchu Země a digitální model terénu 
 s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic). 
@@ -127,7 +126,7 @@ z~veřejných zdrojů.
 \subsection{Zdroje dat}
 \label{opendata}
 
-Jak bylo zmíněno, byla snaha aby mapová data tvořili jedinci, vlastním 
+Jak bylo zmíněno, byla snaha, aby mapová data tvořili jedinci, vlastním 
 sběrem dat. Sběr dat ve smyslu měřením vlastní GNSS (GPS, Glonass) 
 přijímačem a znalost místních poměrů (uzavřené silnice, stezky atd.). 
 Toto mapové dílo z těchto dat mohli volně užívat k vlastním užití. 
@@ -159,9 +158,9 @@ silničních síti z~leteckých nebo satelitních rastrů. V~jejich případě
 společnost Bing, jež nabídla k~dispozici letecké snímky většiny 
 obydlené pevniny. 
 
-Třetím zdrojem a zároveň postupně dominujícím co do obsahu dat, jsou 
+Třetím zdrojem a zároveň postupně dominujícím, co do obsahu dat, jsou 
 databáze ze státního sektoru. Tyto databáze jsou nejvhodnějším zdrojem 
-dat. Data v nich jsou důkladně spravována už proto, že je využívá stát. 
+dat.
 
 \subsection{Vykreslovače}
 \label{vykreslovače}
@@ -176,7 +175,7 @@ z~dat z OSM. Využívá aplikaci OpenLayers založenou na konceptu AJAX.
   \item MapQuest Open vznikla jako podkladová mapa právě pro potřeby 
 Geocaching.
   \item Humanitární mapa, která vykresluje služby (restaurace, banky, muzea, 
-  školy, kostely...)  a potlačuje ostatní prvky 
+  školy, kostely...)  a potlačuje ostatní prvky. 
 
 \end{itemize}
 
@@ -194,29 +193,29 @@ atributů) popřípadě i stromů.
 \label{Importy}
 Výraz import v tomto případe znamená začlenění většího množství datových sad 
 z~jednoho datového úložiště (databáze serveru) na jiný. Při velkých objemech dat
-se využívá výkonu výpočetní techniky, už z důvodu jejího, skoro, bezchybovosti a
-také z~důvodu časové náročnosti. Na člověku poté ale zbývá zvolit postup importu
+se využívá výkonu výpočetní techniky z důvodu její bezchybovosti, a také 
+z~důvodu časové náročnosti. Na člověku poté ale zbývá zvolit postup importu
 a naprogramovat skript nebo program, podle něhož technika samotný proces 
 provede. 
 
-Datové importy z veřejných databází do OSM jsou velmi cenné. Otevřené 
-geografické, ale i jiné, databáze státu a jeho veřejných institucí financovaných
-státem jsou komplexní. Komplexní v tom smyslu že obsahují celistvý soubor dat, 
-protože je daná instituce vyžaduje ke svém chodu. Jistá nevýhoda tu ale může 
-být, a to, že data nemusí být vždy úplně aktuální. Některá data mohou být 
-sbírána a zveřejněna i větším časovým odstupem.
+Datové importy z veřejných databází do databáze OSM jsou velmi cenné. 
+Otevřené geografické, ale i jiné, databáze státu a jeho veřejných institucí 
+financovaných státem jsou komplexní. Komplexní v tom smyslu že obsahují celistvý
+soubor dat, protože je daná instituce vyžaduje ke svém chodu. Jistá nevýhoda tu 
+ale může být, a to, že data nemusí být vždy úplně aktuální. Některá data mohou 
+být sbírána a zveřejněna i větším časovým odstupem.
 
 V rámci České Republiky proběhlo již několik hromadných datových importů. Jak 
 již bylo řečeno větší časová náročnost zabere samotná příprava na import. A to 
-v~případě importu do OSM nejen napsání skriptu ale i nutná diskuze tohoto záměru
+v~případě importu do OSM nejen napsání skriptu, ale i nutná diskuze tohoto záměru
 na~diskuzní konferenci Talk-cz. 
 
 \subsection{Talk-cz}
 \label{Talk-cz}
 Tato diskuze probíhá přes posílání emailových zpráv do společné konference. 
-Uživatelům chodí emaily s probíhajícíc diskuze a pokud na nějaký chtějí reagovat
+Uživatelům chodí emaily z probíhajícíc diskuze a pokud na nějaký chtějí reagovat,
 tak pošlou email na adresu serveru, na kterém diskuze běží, a musí do Předmětu 
-napsat Re: a předmět zprávy na kterou reagují. Server tyto zprávy pomocí 
+napsat Re: a předmět zprávy, na kterou reagují. Server tyto zprávy pomocí 
 předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách 
 
 {\tt http://lists.openstreetmap.org/listinfo/talk-cz} .
@@ -226,7 +225,7 @@ předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách
 IPR Praha je zkratka názvu Institut plánování a rozvoje a hlavního města Prahy. 
 Tento institut se věnuje urbanismu, architektury a rozvoje města Prahy. Hlavním
 úkolem IPR je tvorba územního plánu Prahy a významným úkolem IPR je zajišťovat
-zpracování geografických a informací. Spravuje data a mapy města Prahy. Od roku 
+zpracování geografických informací. Spravuje data a mapy města Prahy. Od roku 
 2002 poskytuje na svých stránkách zdarma webové aplikace bez limitu využití. 
 Po~rozvoji Pražského geoportálu došlo k jejich většímu využívání.  Na základě 
 platných Pravidel pro poskytování dat a  výstupů z datových soubor a datového 
@@ -245,15 +244,28 @@ webové služby. Tato data byla uveřejněna pod licencí CC-BY SA 3.0 \cite{IPR
 
 \section{Python}
 \label{Python}
-Programovací jazyk Python v vznikl v roce 1991. Jedná se o jednoduchý, beztypový 
- programovací jazyk využívající blokové struktury. Python umožňuje také 
- objektové programování. Je multiplatformní tedy lze jej použít na různých 
- operačních systémech. Je uživatelsky jednoduchý programovací jazyk vhodný pro 
- začínající programátory. \cite{python} 
- ...ještě rozšířit.
- 
+Programovací jazyk Python v vznikl v roce 1991. Navrhlo ho Guido van Rossum. 
+Je vyvíjen jako open source projekt. Inspiroval se hlavně programovacím jazykem
+ABS, který byl přímo vytvořen pro~vyuku začatečníků v programování. Python je 
+proto jeden z nevyhodnějších programovacích jazyků pro začínajícíc programátory,
+ale i přesto ho lze použít pro~praktické programování. 
+
+Jedná se tedy o jednoduchý programovací jazyk podporujícíc různá programovací 
+paradigmata, hlavně objektové, imperiativní, procedurální a omezené míře i 
+funkcionální. Je multiplatformní tedy lze jej použít na různých operačních 
+systémech. Klade velký důraz na syntaxi psaného kodu, využívá hlavně prázdné 
+znaky v~psaném kodu.  
+
 Programy nebo skripty v~něm lze psát v textovém editoru ale je vhodné použít 
-standartu PEP20, který kontroluje prázdné znaky a blokovou strukturu skriptu. 
+standartu PEP~8, který kontroluje prázdné znaky a správnou strukturu skriptu. 
+
+V současné době je vydána stabilní verze 3.5.7, která vůči předchozí verzi 2.x
+mění některá, již "zažitá" syntaxe. Například nejviditelnější je změna funkce 
+{\tt print } pro verzi 2.x stačilo  {\tt print "Ahoj"}  a pro verzi 3.x je již
+nutné string vložit do závorek  {\tt print("Ahoj")}  . Tyto dvě dnes používané 
+verze 2.x a 3.x navzájem nekompatibilní.
+\cite{python} 
+\cite{wikiPython} 
   
   
 \subsection{knihovna argparse}
@@ -268,7 +280,7 @@ standartu PEP20, který kontroluje prázdné znaky a blokovou strukturu skriptu.
 
 \subsection{knihovna GDAL/OGR}
 \label{GDAL/OGR}
-Jedná se knihovnu pro práci s geografickými dat a umožňuje jejich čtení a zápis.
+Jedná se o knihovnu pro práci s geografickými dat a umožňuje jejich čtení a zápis.
  Je psána v programovacím jazyce C++. Je považován za jeden z hlavních 
  open~source projektů a je hojně používán ve sféře GIS. Pracuje s vektorovými a 
  rastrovými datovými formáty. Podporuje velkou škálu souborových formátů a to 
