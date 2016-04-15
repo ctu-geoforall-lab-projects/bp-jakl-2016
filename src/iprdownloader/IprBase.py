@@ -18,7 +18,7 @@ class IprDownloader:
 
         self.itemURLs = []
         self.IprItems = []
-#        self.itemSizes= []
+        self.itemSizes= []
 
         if alike:
             for item in data['feed']['entry']:
@@ -40,9 +40,10 @@ class IprDownloader:
 
     def subitems_Links(self, subdata, crs, file_format):
         if isinstance(subdata, list):
-            for item in subdata:
-                if (crs in item['category']['@label']):
-                    self.print_subItem(item,file_format)
+#            for item in subdata:
+            item = subdata[0]# this will download only first item with all data
+            if (crs in item['category']['@label']):
+                self.print_subItem(item,file_format)
         else:
             item = subdata
             if (crs in item['category']['@label']):
@@ -54,15 +55,12 @@ class IprDownloader:
         if isinstance(item['link'], list):
             for links in item['link']:
                 if file_format in links['@type']:
-#                    print links['@href']#
                     self.itemURLs += [links['@href']]
-#                    self.itemSizes += [links['@title']]
+                    self.itemSizes += [links['@title']]
         else:
             links = item['link']
             if file_format in links['@type']:
-#                print links['@href']#
                 self.itemURLs += [links['@href']]
-#                self.itemSizes += [links['@title']]
         return 0
 
 
@@ -97,14 +95,20 @@ class IprDownloader:
         self.outdir = outdir
         self.filename = []
 
+        print ' Downloading:  '
+
+        i=0
         for itemURL in self.itemURLs:
+
             itemfile = urllib2.urlopen(itemURL)
             filename = itemURL.split('/')[-1]
             self.filename += [filename]
+
+            print self.itemSizes[i] + '\t' + filename
+            i += 1
              
             filepath = os.path.join(outdir,filename)
             with open(filepath,"wb") as output:
-#                output.write(itemfile.read())
                 while True:
                     data = itemfile.read(32768)
                     if data:
