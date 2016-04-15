@@ -112,23 +112,201 @@ Příklad:
 
 \section{IPR data}
 \label{IPR data}
-.."popsat data která IPR zveřejňuje, jaké zobrazení, jaké formáty
+IPR na svém webu\^1 zveřejǔne data. Celkem jich je na 96 a ta jsou rozdělena 
+do~kategorii. Těmito kategoriemi jsou
+ 
+\begin{itemize} 
+    \item   3D model - Obsahuje 3D modely budov a mostů v Praze a digitální 
+            model povrchu (DMP) a dále rastrově digitální model povrhu a 
+            terénu, absolutní a relativní výšky budov.
+    \item   Digitální technická mapa Prahy, kde jsou k dispozici v vektorové
+            podobě inženýrské sítě v Praze, technické budovy a hranice parcel.
+    \item   Doprava, obsahuje cyklistické trasy a značky, pěší trasy, 
+            parkovací zóny,automaty, P+R parkoviště a mapy zon PID (vektor)
+    \item   Geologie
+    \item   Hluk
+    \item   Kvalita životního prostředí
+    \item   Mapové podklady
+    \item   Občanská vybavenost
+    \item   Ochrana přírody a krajiny
+    \item   Ortofoto obsahují letecké snímky (rastr) Prahy až s rozlišením 5cm 
+            na~pixel jak ve~viditelném spektru světla tak i v infračerveném.
+    \item   Ovzduší, obsauje vektorové mapy znečištění ovzduší a také
+            zdoje znečištění
+    \item   Platný územní plán
+    \item   Socioekonomická data
+    \item   Technická infrastruktura - vodní hospodářství
+    \item   Urbanismus
+\end{itemize}
 
-.. který zobrazení je vhodný (wgs84) protože OSM je taky ve Wgs84
 
-.."popsat projití distribuovaných dat z IPR a která z nich se jeví jako vhodná 
-pro import do OSM a proč.
+U všech zveřejněných dat, které jsou ve vektorovém formátu jsou možnosti 
+souborvé formáty GeoJSON, DXF, GML nebo ESRI Shapefile. Dále je na výběr 
+mezi dvěma kartografickými zobrazeními S-JTSK nebo WGS 84. 
 
 \section{Vhodná data pro OSM}
 \label{Vhodná data pro OSM}
-.."porovnání stavu těchto dat s daty s OSM a .. uvést výsledek která data se 
-jeví jako nejvíce vhodná a proč.
 
-\section{Vlastní Návrh}
-\label{Vlastní Návrh}
+Po projití všech dat bylo vyhodnocena vhodna data pro začlenění do OSM. 
+\begin{itemize}
+    \item   Výstupy PID, obsahuje vstupy/výstupy z metra.
+    \item   Odpadní zařízení pro občany, dle IPR obsahuje sběrny odpadu. 
+    \item   Cyklistická doprava - značky, dle technické dokumentace by mělo 
+            obsahovat bodové značky stojanů Bikesharing.
+    \item   Veřejné toalety
+    \item   Parkovací automaty
+    \item   Záchytná parkoviště P+R
+\end{itemize}
+
+Všechna vybraná data byla pomocí IprDownloader.py stažena a naiportována 
+do~školní databáze PostGIS. Poté byl program QGIS připojen na školní databázi.
+Poté byla v programu QGIS pomocí SQL SELECTu filtrována data z aktuální
+verze OSM na školním serveru a z každého SELECTu byla vytvořena nová tabulka 
+v PostGIS databázi na školním severu. Data byla filtrována za použití doporučených
+atributů na české osm wiki. \cite{OSMfeatures}
+
+\subsection{Výstupy PID}
+\label{Výstupy PID}
+V datech od IPR bylo obsaženo celkem 353 záznamů. Jednalo se o vstupy/výstupy 
+z~metra (dveře, schodiště a výtahy). 
+
+V OSM databázi bylo hledání v tabulce {\tt osm.czech\_points} bylo použit
+atribut  
+\begin{verbatim}
+    railway=subway_entrance
+\end{verbatim}    
+Vytvořená tabulka z dat OSM obsahovala 236 prvků. 
+Po porovnání dat bylo zřejmé, že nejvíce jsou v OSM zmapovány 
+výstupy v centru, kde jsou posuny v řádech decimetrů až metr. V okrajových 
+částech města nejsou zmapovány všechny výstupy nebo chybí výstupy pro celé 
+stanice. Protože body vstupů do metra jsou většinou součástí linií, 
+není vhodné body mazat a vytvářet nové. Bylo potřeba najít mezi stávajícími body
+v~OSM a IPR adekvátní dvojce. To znamená, že se jedná o body, které reprezentují 
+stejnou věc v~realitě. 
+
+Ani editaci stávajících není příliš přínosné, když všechny vstupy do metra jsou
+minimálně 3 metry široké a všechny změny by byly v řádů cm až dm. 
+Bylo by ale vhodné přidat vsupy do metra tam, kde nejsou v databázi OSM.
+Jedná se o stanice Zličín, Luka, Kačerov, Rajská zahrada a Černý most. 
+Celkem se tedy jedná pouze o 26 bodů, které by bylo snadnější přidat ručně, 
+protože vstupy jsou dostatečně zmapované jen zde není na některém uzlu atribut
+{\tt railway=subway\_entrance}
+
+
+\subsection{Odpadní zařízení pro občany}
+\label{Odpadní zařízení pro občany}
+Data od IPR obsahují seznam 36 směrných dvorů s velmi detailním popsání co 
+jakou látku přijímá, otevírací dobu, zřizovatel. 
+
+Z OSM z tabulky {\tt osm.czech\_point} byly prvky vyfiltrovány podle hodnot 
+\begin{verbatim}
+    amenity=recycling
+    recycling_type=centre
+\end{verbatim}    
+Bylo nalezeno celkem 11 prvků, a z toho bylo 6 prvků z IPR ve vzdálenosti 
+100 metrů od prvků z OSM. Těchto 6 prvků bude vhodné pouze přesunout. Zbylé 
+prvky je nutné v databázi OSM nově vytvořit.
+
+Z dostupných dat z tabulky byly navrženy tyto atributy: 
+\begin{verbatim}
+    amenity = recycling
+    recycling_type = centre
+    opening_hours =
+    fee =
+    operator = 
+    source = 
+\end{verbatim}
+Tyto navržené atributy by se naplnily daty z tabulky dat z IPR.
+Otevírací doba by byla vložena do {\tt opening\_hours = }. U atributu {\tt fee=} 
+bylo navrženo mimo občany Prahy. Hodnota {operator} by byla ze stejnojmeného 
+sloupce z dat IPR. Atribut {\tt source = } by byl ze sloupce {\tt POSKYT }.
+
+Dále byly navrženy atributy:
+\begin{verbatim}
+    recycling:paper = yes
+    recycling:plastic = yes
+    recycling:metal = yes
+    recycling:wood = yes
+    recycling: ... = yes
+\end{verbatim}
+Podle toho co zde lze recyklovat, dle sloupce {\tt odpadprije }
+
+\subsection{Cyklistická doprava - značky}
+\label{Cyklistická doprava - značky}
+V případě dat Cyklistická doprava - značky, byla data prohledána, dle IPR 
+uváděné hodnoty {\tt 103} ve sloupci {\tt DRUH} pro Bikeshating, bohužel žádné 
+takové hodnoty neobsahovaly. Import dat z této tabulky nebyl dál brán v potaz.
+
+
+\subsection{Veřejné toalety}
+\label{Veřejné toalety}
+Datový soubor Veřejné toalety obsahuje jednu tabulku dat. V této tabulce je 
+celkem 247 záznamů. U každého záznamu je uvedena lokalita, provozovatel. 
+Dále je uvedena doba, po kterou je přístupný, zdali je nutné zaplatit poplatek,
+jestli je bezbariérový a zdroj těchto dat.
+
+Veřejné toalty byl v datech OSM byl vyhledán podle atribu
+\begin{verbatim}
+    amenity=toilets
+\end{verbatim}    
+
+bylo zjištěno, toho času, 185 záznamů. Překrytí dat IPR a OSM bylo většinou 
+jeden bod z OSM a z IPR na tomto místě bylo, buď jeden ale posunutý, nebo 
+více bodů v okruhu několika metru. Na některých místech, převážně mimo centrum 
+Prahy a mimo linky metra, chyběli body veřejných toaletet úplně. 
+Bylo tedy vhodné stávající data doplnit data z IPR.
+
+Na IPR dat z tabulky a základě doporučených atributů byly vybrány tyto atributy:
+\begin{verbatim}
+    acces = yes/permissive
+    fee = no/yes
+    wheelchair = yes/no 
+    opening_hours = 
+    operator = 
+    description = 
+    source = IPR
+    source:location = IPR
+\end{verbatim}
+Pokud by hodnota byla {\tt fee=yes} připojila by se značka
+\begin{verbatim}
+    fee:price = 
+\end{verbatim}    
+hodnota by byla uvedena v Kč.
+
+Hodnota u {\tt description= } by byla hodnota ze sloupce {\tt lokalita} .
+U atributu {\tt operator= } byla navržena hodnota {\tt Hlavní Město Praha} , 
+ale jen u~prvků, u~kterých je uvedeno HMP ve sloupci {\tt Operator}.
+Tam kde není žádná hodnota, by se tento atribut nepřidal.
+
+
+
+\subsection{Parkovací automaty}
+\label{Parkovací automaty}
+Soubor dat Parkovací automaty od IPR obsahovale celkem 452 záznamů parkovacích 
+automatů. Je zde uveden pouze TYP a Poskytovatel dat. Nelze tedy určit zdali
+automat přijímá mimo, asi klasické, mince i bankovky, cizí měnu nebo i umožňuje 
+platbu platebními kartami.
+Pro porovnání, byly vyhledány body z OSM s atributy:
+\begin{verbatim}
+    amenity=vendings\_machine
+    vending=parking\_tickets
+\end{verbatim}
+
+
+U nově přidaných uzlů byly navrženy tyto atributy:
+\begin{verbatim}
+    amenity=vendings_machine
+    vending=parking_tickets
+    source=
+\end{verbatim}
+Do hodnoty {\tt source=} by byla použita hodnota ze sloupce {\tt POSKYT}) 
+
+
+\subsection{Záchytná parkoviště P+R}
+\label{Záchytná parkoviště P+R}
+
 ..vlastní návrh tagování importovaných dat. s pomocí české OSM "features:cs"..
 napsat že to bylo vnešeno do diskuze na talk-cz ... a čekání na reakci ...
  
-
 
 
