@@ -79,9 +79,9 @@ problém v některých vykreslovačích. \cite{OSMfeatures}
 \subsection{Licence}
 \label{licence}
 
-Původní data OSM byla na distribuována pod licencí 
+Původní data OSM a generované grafické dlaždice
+byly na distribuovány pod licencí
 Creative~Commons~Allribution­Share~Alike 2.0 (CC~BY~­SA~2.0). 
-
 
 Tato licence umožňovala užití (distribuci ale i editaci) díla pod podmínkou, 
 že bude uveden zdroj OpenStreetMap.org ve viditelné části 
@@ -90,12 +90,13 @@ vytvořených mapových dlaždic \cite{OSMlicence}
   \begin{figure}[hbt]
     \centering
       \includegraphics{./pictures/attribution_example.png}
-      \caption{attribution example}
+      \caption{Příklad umístění licence}
       \label{fig:attribution_example}
   \end{figure} 
 
 Roku 2012 byla licence publikovaných dat změněna na Open Data Commons 
-Open Database Licence (OdbL). Tato změna licence přinesla problém 
+Open Database Licence (OdbL).
+Tato změna licence přinesla problém
 s~daty, které byly poskytnuty projektu v předchozí licencí 
 (CC­~BY~SA~2.0). Bylo nutné se dotázat každého z dřívějších 
 přispěvatelů dat, ať už právnických osob tak i fyzických osob, jestli 
@@ -104,27 +105,14 @@ nakládat. U přispěvatelů, kteří nedovolili užívání jejich díla
 pod novou licencí, nebo u těch, co se nevyjádřili, bylo nutné 
 z~databáze vymazat. Tato situace nastala pouze ve zlomku případů. 
 Nejvíce tato změna licencí ohrozila data v zemích jako je Polsko a Nový Zéland.
-\cite {OSMlicenceIssue} 
 
-\subsection{Opendata}
-\label{opendata}
-Základní myšlenka otevřených dat vznikla v USA z iniciativy vlády Barracka Obamy. 
-Tedy pokud vzniknou geografická data z veřejných peněz, měla by tedy být 
-přístupná veřejně. Mělo to kladný efekt na tamní ekonomiku. Díky tomuto byly 
-zprvu k~dispozici satelitní snímky povrchu Země a digitální model terénu 
-s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic). 
+V současnosti jsou tedy data OSM distibuovány pod licencí ODbL a
+generované grafické dlaždice pod licencí CC-BY SA 4.0
+\cite {OSMlicenceIssue}
 
-Tento trend se začal rozšiřovat zprvu do zemí západních Evropy,
-jmenovitě Anglie, Francie, ale i jiné země mimo Evropu..  
-
-V ČR se tomuto věnuje fond otevrenadata.cz, který založil Otakar 
-Motejl. Teto fond spolupracuje s nadací Sociery Fund Praha. V rámci 
-těchto uskupení je vyvíjen tlak na zveřejňování smluv a dat 
-státních institucí, jelikož jejich získání a údržba bylo placeno 
-z~veřejných zdrojů.
 
 \subsection{Zdroje dat}
-\label{opendata}
+\label{Zdroje dat}
 
 Jak bylo zmíněno, byla snaha, aby mapová data tvořili jedinci vlastním 
 sběrem dat. Sběr dat ve smyslu měřením vlastní GNSS (GPS, Glonass) 
@@ -132,7 +120,7 @@ přijímačem a znalost místních poměrů (uzavřené silnice, stezky atd.).
 Toto mapové dílo z těchto dat mohli volně užívat k vlastním užití. 
 Komunita přispěvatelů se zprvu pomalu, ale později rychle rozrostla a 
 dnes čítá 3,7 milionů registrovaných uživatelů s alespoň jednou 
-vytvořenou změnou v OSM a 2,7 milionů účtů aktivních přispěvatelů. \cite{OSMstats}
+vytvořenou změnou v OSM a 2,7 milionů účtů aktivních přispěvatelů.\cite{OSMstats}
 
 Tyto mapové podklady byly velice vhodné i pro další projekt, dnes již 
 velice rozšířený a známý jako Geocashing (GC). Projekt GC začal mapové 
@@ -151,8 +139,8 @@ použijí zdroj, jež není kompatibilní z politikou OSM, tak samotné OSM
 jejich změnu, aby předešel sporům, sám vymaže. Bohužel musí vymazat 
 celou sadu změn, byť by v něm byl jeden prvek, jenž toto poruší. 
 
-Druhým významným zdrojem dat jsou soukromé subjekty (společnosti). 
-V~tomto případě jde většinou o podkladové zdroje dat. Pro obkreslování 
+Druhým významným zdrojem dat jsou soukromé subjekty (společnosti) a
+většinou jde o podkladové zdroje dat, například ortofoto. Pro obkreslování
 silničních síti z~leteckých nebo satelitních rastrů. V~jejich případě 
 řešeno písemným svolením, nebo smlouvou. Jako významným zdrojem byla 
 společnost Bing, jež nabídla k~dispozici letecké snímky většiny 
@@ -163,9 +151,10 @@ databáze ze státního sektoru. Tyto databáze jsou nejvhodnějším zdrojem
 dat.
 
 \subsection{Vykreslovače}
-\label{vykreslovače}
+\label{Vykreslovače}
 Na hlavní stránce OSM je pět „základních“ přednastavených vrstev vykreslených 
 z~dat z OSM. Využívá aplikaci OpenLayers založenou na konceptu AJAX.
+Pro snadné vykreslení dat do grafických dlaždic se používá Mercatorovo zobrazení.
 
 \begin{itemize}
 
@@ -186,6 +175,24 @@ různých dat. Například mapu turistických a cyklistických tras vykresluje
 Zajímavými projekty jsou, které k 2D mapě přidává „třetí“ rozměr a 
 vytváří tzv. 2.5D mapu. Většinou jde o 3D zobrazení budov, mostů (dle 
 atributů) popřípadě i stromů. 
+
+\section{Opendata}
+\label{opendata}
+Základní myšlenka otevřených dat vznikla v USA z iniciativy vlády Barracka Obamy.
+Tedy pokud vzniknou geografická data z veřejných peněz, měla by tedy být
+přístupná veřejně. Mělo to kladný efekt na tamní ekonomiku. Díky tomuto byly
+zprvu k~dispozici satelitní snímky povrchu Země a digitální model terénu
+s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic).
+
+Tento trend se začal rozšiřovat zprvu do zemí západních Evropy,
+jmenovitě Anglie, Francie, ale i jiné země mimo Evropu..
+
+V ČR se tomuto věnuje fond Otevřená data\footnote{www.otevrenadata.cz}, který založil Otakar
+Motejl. Teto fond spolupracuje s nadací Sociery Fund Praha. V rámci
+těchto uskupení je vyvíjen tlak na transparentnost veřejné správy a
+zveřejňování smluv a dat
+státních institucí, jelikož jejich získání a údržba bylo placeno
+z~veřejných zdrojů.
 
 
 
@@ -216,9 +223,7 @@ Tato diskuze probíhá přes posílání emailových zpráv do společné konfer
 Uživatelům chodí emaily z probíhající diskuze a pokud na nějaký chtějí reagovat,
 tak pošlou email na adresu serveru, na kterém diskuze běží, a musí do Předmětu 
 napsat Re: a předmět zprávy, na kterou reagují. Server tyto zprávy pomocí 
-předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách 
-
-{\tt http://lists.openstreetmap.org/listinfo/talk-cz} .
+předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách.\footnote{http://lists.openstreetmap.org/listinfo/talk-cz}
 
 \section{IPR Praha}
 \label{IPR Praha}
@@ -230,17 +235,26 @@ zpracování geografických informací. Spravuje data a mapy města Prahy. Od ro
 Po~rozvoji Pražského geoportálu došlo k jejich většímu využívání.  Na základě 
 platných Pravidel pro poskytování dat a  výstupů z datových souborů a datového 
 skladu Geografického byla od dne 1.~4.~2015 zveřejněny datové soubory a další 
-webové služby. Tato data byla uveřejněna pod licencí CC-BY SA 3.0 \cite{IPR}
+webové služby. Tato data byla uveřejněna pod licencí CC-BY SA 4.0 \cite{IPR}
 
 
-\section{PosgreSQL}
+\section{PostgreSQL}
 \label{PostgreSQL}
-.."že Je to nadstavba SQL"
-
+PostgreSQL je Opensource databázový systém, který je vyvýjen déle než patnáct
+let. Za dlouhou dobu vývoje se stal robustní a také hojně využívaný.
+Postupem času získal svou spolehlivostní silnou reputaci.
+Lze s ním pracovat ve všech známých operačních systémech. ...
+\cite{PostgreSQL}
 
 \subsection{PostGIS}
 \label{PostGIS}
-.."nadstavba PostgreSQL"..
+PostGIS je objektově-relační nadstavba databázové struktury PostgreSQL.
+Rozšiřuje ji o funkce, které umožňují geometrické operace s objekty v ní uložené.
+
+...
+
+Je šířena pod GNU General Public License (GPLv2) licencí.
+
 
 \section{Python}
 \label{Python}
@@ -278,10 +292,10 @@ ho pro další použití v programu.
 \subsection{knihovna xmltodict}
 \label{xmltodict} 
 Tato knihovna umí číst soubory ve formátu XML a zpracovává je do snažší formu 
-dat, která je jednoduší číst pro samotný program. Data z XML zpracuje do formy 
-datové řady (array), kde každý člen této řady může být opět řada dat. 
-\cite{xmltodict}
-příklad parserování dat ve XML formátu 
+dat, která je jednoduší manipulaci pro samotný program. Data z XML zpracuje
+do formy datové řady (array), kde každý člen této řady může být opět řada dat.\cite{xmltodict}
+
+příklad parsování dat ve XML formátu
 
 {\scriptsize
 \begin{lstlisting}
@@ -292,7 +306,7 @@ příklad parserování dat ve XML formátu
 \end{lstlisting}
 }
 
-Po otevření a parserování se v Python(u) provede příkazem.
+Po otevření a parsování se v Python(u) provede příkazem.
 
 {\scriptsize
 \lstset{language=Python}
@@ -335,7 +349,14 @@ Umožňuje tedy komplexní operace s geografickými daty. \cite{GDAL}
 
 \section{QGIS}
 \label{QGIS}
-QGIS je program vytvořen za účelem prohlížení, editaci
+QGIS je program vytvořen za účelem prohlížení, editaci geografických dat.
+Jedná se o Opensource software. Je tedy možné aby na jeho vývoji spolupracoval
+kdokoli. Je možné si vytvářit novou funkci nebo přímo zásuvný modul do programu.
+Je možné je psát v jazyce C++ nebo Python.
+Tyto moduly si uživatelé mohou poté stáhnout a přidat do QGISu a využívat.
+QGIS také umožňuje využívat konzolově jazyk Python. Je možné si tak vytvářet
+vlastní jednoduché skripty v jazyce Python a spouštět je v QGISu.
 
-
-
+Od svého vzniku bylo vydáno již spoustu verzí programu.
+Dříve byly verze pojmenovávány podle planet později měsíců a nyní se dávají
+jména německých měst. V současnosti (duben 2016) je k dispozici verze 2.14 Essen

@@ -3,45 +3,134 @@
 
 \section{server PostGIS}
 \label{server PostGIS}
-.."popsat školní server PostGIS"..
+V rámci této bakalářské práce s daty byla zřízena databáze PostGIS na školním
+serveru. Do této databáze byla nahrána verze dat z OSM pro celou Českou
+Republiku. Tyto data jsou každý den pravidelně aktualizována.
+Data z OSM jsou do školní databáze nahrávána pomocí programu {\tt osm2pgsql.py}.\footnote{dostupné na http://wiki.openstreetmap.org/wiki/Osm2pgsql}
+Ten nejprve stáhne aktuální data pro celou evropu a následně ořeže
+jen na území ČR.
 
-.."popsat jak se na něj nahravají data z OSM"..
+Dále tato databáze bude používána pro analýzu a úpravu dat z~IPR a
+pro~import do~OSM.
+
+
+\section{IPR data}
+\label{IPR data}
+IPR na svém webu od jara roku 2015 zveřejǔne data.
+U všech zveřejněných dat, které jsou ve~vektorovém formátu jsou
+možnosti souborvé formáty GeoJSON, DXF, GML nebo ESRI Shapefile.
+Dále je na výběr mezi dvěma kartografickými zobrazeními S-JTSK nebo WGS 84.
+
+Celkem IPR zveřejňuje 96 druhů datových souborů a ty jsou rozděleny
+do~kategorii.\footnote{www.geoportalpraha.cz/cs/opendata}
+
+Pokud není řečeno jinak, jedná se o data ve vektorové formě.
+Těmito kategoriemi jsou:
+
+\begin{itemize}
+    \item   3D model - Obsahuje 3D modely budov a mostů v Praze a digitální
+            model povrchu (DMP) a dále rastrově digitální model povrhu a
+            terénu, absolutní a relativní výšky budov.
+    \item   Digitální technická mapa Prahy - jsou zde k dispozici v vektorové
+            podobě inženýrské sítě v Praze, technické budovy a hranice parcel.
+    \item   Doprava - obsahuje cyklistické trasy a značky, pěší trasy
+            parkovací zóny,automaty, P+R parkoviště a mapy zon PID (vektor)
+    \item   Geologie - obsahuje vektorové mapy radonového nebezpečí..
+    \item   Hluk - obsauhjí hlukové mapy a to ve dne a v noci v rasterové formě.
+    \item   Kvalita životního prostředí - ...
+    \item   Mapové podklady - obsahuje klady mapových listů
+            různých měřítek (1:500 až 1:10 000)
+    \item   Občanská vybavenost
+    \item   Ochrana přírody a krajiny
+    \item   Ortofoto obsahují letecké snímky (rastr) Prahy až s rozlišením 5cm
+            na~pixel jak ve~viditelném spektru světla tak i v infračerveném.
+    \item   Ovzduší, obsauje vektorové mapy znečištění ovzduší a také
+            zdoje znečištění
+    \item   Platný územní plán
+    \item   Socioekonomická data
+    \item   Technická infrastruktura - vodní hospodářství
+    \item   Urbanismus
+\end{itemize}
+
+
+
+
+\subsection{licenční problém}
+\label{licenční problém}
+Jak již bylo řečeno výše, IPR svá data zveřejnil a stále zveřejňuje pod licencí
+CC-BY SA 4.0 což uživateli umožňuje:
+\begin{itemize}
+    \item  .. něco
+    \item  .. něco
+\end{itemize}
+Podrobněji viz přesné znění na stránkách CraetiveCommmons.
+\footnote{https://creativecommons.org/licenses/by-sa/4.0/legalcode/}
+
+
+Jelikož jsou ale data OSM distribuována pod licencí ODbL,
+době tvorby této práce, neumožňuje jejich začlenění do databíze OSM.
+IPR byl kontaktován, zdali by mohla být jeho data použita do import.
+Dle vyjádření vyplinulo, že IPR by neměl problém s použitím svých dat, jelikož
+jsou šířena pod myšlenkou opendata. Byla navrhnuta možnost udělit od IPR vyjímku
+licenčního použití pro OSM, avšak toto by neřešilo problém, že by tato data byla
+k dispožici z OSM pro koncové uživatele pod licencí ODbL. Tedy co by někteý
+uživatel nemohl s daty, distribuovaných přímo od IPR, provádět mohl by si je
+obstarat z databáze OSM a pod licencí, která by jeho aktivitu neomezovala.
+
+Ve zkratce s daty pod licencí ODbL uživatel smí:
+\begin{itemize}
+    \item    kopírovat, distribuovat a užívat data
+    \item    vytvářet nová data z původních
+    \item    měnit původní data
+\end{itemize}
+
+S použitím ale uživatel musí ale uvést zdroj a licenci dat.
+Dále uživatel souhlasí, že nová data vytvořená z původních dat budou sířena
+také pod~licencí ODbL.
+Podrobněji viz přesné znění na stránkách OpenDatabase.\footnote{http://opendatacommons.org/licenses/odbl/1.0/}
+
+Dle vyjádření se tato situace bude ze strany IPR řešit tak, že se změní ???
+licence u distribuovaných dat.
+
+
 
 
 \section{IprDownloader}
 \label{Iprdownloader}
 Jak již bylo řečeno tak IPR distibuje svá data a datové soubory přímo na své 
 stránce. Data tam jsou distribuována možností odkazů ke stažení nebo je
-k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}). 
-Pomocí něho se lze také dostat ke všem distribuovaným datům. 
+k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}).
+Pomocí něho se lze také dostat ke všem distribuovaným datům.
 
 Jelikož by bylo zdlouhavé stahovat všechny tyto soubory ručně, proto byl
-vytvořen program, který umožňuje stahování a import dat. Skript byl napsán 
-v~programovacím jazyce Python a využívá knihovny GDAL. 
+vytvořen program, který umožňuje stahování a import dat. Skript byl napsán
+v~programovacím jazyce Python a využívá knihovny GDAL.
 
 Je rozdělen na tři soubory 
 {\tt , IprDownloader.py , IprBase.py} a {\tt IprPg.py}.
 
 
 \subsection{{\tt IprDownloader.py}}
-Na primární skript {\tt IprDowloader.py}, který parseruje vstupní údaje a
-zpracovává je k~dalšímu použití ve sriptu. Těmito základními údaji jsou
+Na primární skript {\tt IprDowloader.py}, který parsuje vstupní údaje a
+zpracovává je k~dalšímu použití ve sriptu, viz \ref{argparse} .
+Těmito základními údaji jsou
 ({\tt --alike, --crs, --format, --outdir --d}). Dalšími vstupními údaji mohou
-údaje o databázi, kam se mají data importovat. Těmi to vstupy jsou 
+údaje o databázi, kam se mají data importovat. Těmi to vstupy jsou
 ({\tt --dbname --dbhost --dbport --dbuser --dbpassword}).
 
-Skript hlídá vstupní formát kartografických souřadnic a pokud se neshodují 
-s~možnými, oznámí chybu o špatném vstupu. Pokud uživatel vloží kartografické 
-zobrazení ve formě EPGS kodu, program jej převede na jeho název. 
+Skript hlídá vstupní formát kartografických souřadnic a pokud se neshodují
+s~možnými, oznámí chybu o špatném vstupu. Pokud uživatel vloží kartografické
+zobrazení ve formě EPGS kodu, program jej převede na jeho název.
 
 
 \subsection{{\tt IprBase.py}}
 Skript {\tt IprBase.py} definuje třídu {\tt IprDownloader} se všemy 
-potřebnými funkcemi. Většina funkcí slouží pro otevírání, čtení a parserování
-XML souborů. Obsahuje funkci pro hledání, která prochází všechny záznamy a 
+potřebnými funkcemi. Většina funkcí slouží pro otevírání, čtení a parsování
+XML souborů, viz \ref{xmltodict} .
+Obsahuje funkci pro hledání, která prochází všechny záznamy a 
 porovnává, zda vstupní přibližný název je obsažen v názvu souboru dat. Poté 
-najde odkaz na xml souboru a otevře jej. Následuje vždy čtení a parserování. 
-Poté v naparserovaných udajích najde dle nastavení {\tt crc, format} správný soubor 
+najde odkaz na xml souboru a otevře jej. Následuje vždy čtení a parsování. 
+Poté v naparsovaných udajích najde dle nastavení {\tt crc, format} správný soubor 
 a stáhne jej do definovaného adresáře.
 
 
@@ -110,42 +199,8 @@ Příklad:
 {\tt \$ iprdownloader.py ---alike 'Technická mapa' ---dbname pgis\_osm\_jakl ---dbhost geo102.fsv.cvut.cz  ---dbport 5432 } 
  
 
-\section{IPR data}
-\label{IPR data}
-IPR na svém webu\^1 zveřejǔne data. Celkem jich je na 96 a ta jsou rozdělena 
-do~kategorii. Těmito kategoriemi jsou
- 
-\begin{itemize} 
-    \item   3D model - Obsahuje 3D modely budov a mostů v Praze a digitální 
-            model povrchu (DMP) a dále rastrově digitální model povrhu a 
-            terénu, absolutní a relativní výšky budov.
-    \item   Digitální technická mapa Prahy, kde jsou k dispozici v vektorové
-            podobě inženýrské sítě v Praze, technické budovy a hranice parcel.
-    \item   Doprava, obsahuje cyklistické trasy a značky, pěší trasy, 
-            parkovací zóny,automaty, P+R parkoviště a mapy zon PID (vektor)
-    \item   Geologie
-    \item   Hluk
-    \item   Kvalita životního prostředí
-    \item   Mapové podklady
-    \item   Občanská vybavenost
-    \item   Ochrana přírody a krajiny
-    \item   Ortofoto obsahují letecké snímky (rastr) Prahy až s rozlišením 5cm 
-            na~pixel jak ve~viditelném spektru světla tak i v infračerveném.
-    \item   Ovzduší, obsauje vektorové mapy znečištění ovzduší a také
-            zdoje znečištění
-    \item   Platný územní plán
-    \item   Socioekonomická data
-    \item   Technická infrastruktura - vodní hospodářství
-    \item   Urbanismus
-\end{itemize}
-
-
-U všech zveřejněných dat, které jsou ve vektorovém formátu jsou možnosti 
-souborvé formáty GeoJSON, DXF, GML nebo ESRI Shapefile. Dále je na výběr 
-mezi dvěma kartografickými zobrazeními S-JTSK nebo WGS 84. 
-
-\section{Vhodná data pro OSM}
-\label{Vhodná data pro OSM}
+\section{Navržená data pro import}
+\label{Navržená data pro import}
 
 Po projití všech dat bylo vyhodnocena vhodna data pro začlenění do OSM. 
 \begin{itemize}
@@ -165,24 +220,29 @@ verze OSM na školním serveru a z každého SELECTu byla vytvořena nová tabul
 v PostGIS databázi na školním severu. Data byla filtrována za použití doporučených
 atributů na české osm wiki. \cite{OSMfeatures}
 
+Tyto vhodná data byla projit a porovnána s aktuálním stavem v OSM.
+Byly navrženy vhodné atributy který by se ze zdrojových dat daly naplnit.
+Takto navržené data byla navržena na hromadná korespondenční konverzace talk-cz.
+
+
 \subsection{Výstupy PID}
 \label{Výstupy PID}
-V datech od IPR bylo obsaženo celkem 353 záznamů. Jednalo se o vstupy/výstupy 
-z~metra (dveře, schodiště a výtahy). 
+V datech od IPR bylo obsaženo celkem 353 záznamů. Jednalo se o vstupy/výstupy
+z~metra (dveře, schodiště a výtahy).
 
 V OSM databázi bylo hledání v tabulce {\tt osm.czech\_points} bylo použit
-atribut  
+atribut
 \begin{verbatim}
     railway=subway_entrance
-\end{verbatim}    
-Vytvořená tabulka z dat OSM obsahovala 236 prvků. 
-Po porovnání dat bylo zřejmé, že nejvíce jsou v OSM zmapovány 
-výstupy v centru, kde jsou posuny v řádech decimetrů až metr. V okrajových 
-částech města nejsou zmapovány všechny výstupy nebo chybí výstupy pro celé 
-stanice. Protože body vstupů do metra jsou většinou součástí linií, 
+\end{verbatim}
+Vytvořená tabulka z dat OSM obsahovala 236 prvků.
+Po porovnání dat bylo zřejmé, že nejvíce jsou v OSM zmapovány
+výstupy v centru, kde jsou posuny v řádech decimetrů až metr. V okrajových
+částech města nejsou zmapovány všechny výstupy nebo chybí výstupy pro celé
+stanice. Protože body vstupů do metra jsou většinou součástí linií,
 není vhodné body mazat a vytvářet nové. Bylo potřeba najít mezi stávajícími body
 v~OSM a IPR adekvátní dvojce. To znamená, že se jedná o body, které reprezentují 
-stejnou věc v~realitě. 
+stejnou věc v~realitě.
 
 Ani editaci stávajících není příliš přínosné, když všechny vstupy do metra jsou
 minimálně 3 metry široké a všechny změny by byly v řádů cm až dm. 
@@ -202,6 +262,8 @@ Z OSM z tabulky {\tt osm.czech\_point} byly prvky vyfiltrovány podle hodnot
 \begin{verbatim}
     amenity=recycling
     recycling_type=centre
+    source=IPR
+    source:loc=IPR
 \end{verbatim}    
 Bylo nalezeno celkem 11 prvků, a z toho bylo 6 prvků z IPR ve vzdálenosti 
 100 metrů od prvků z OSM. Těchto 6 prvků bude vhodné pouze přesunout. Zbylé 
@@ -217,9 +279,10 @@ Z dostupných dat z tabulky byly navrženy tyto atributy:
     source = 
 \end{verbatim}
 Tyto navržené atributy by se naplnily daty z tabulky dat z IPR.
-Otevírací doba by byla vložena do {\tt opening\_hours = }. U atributu {\tt fee=} 
-bylo navrženo mimo občany Prahy. Hodnota {operator} by byla ze stejnojmeného 
-sloupce z dat IPR. Atribut {\tt source = } by byl ze sloupce {\tt POSKYT }.
+Otevírací doba by byla vložena do {\tt opening\_hours = }. U atributu {\tt fee=}
+bylo navrženo {\tt free for Prague citizens} , tedy zdarma pro občany Prahy.
+Hodnota {\tt operator = } by byla ze stejnojmeného sloupce z dat IPR.
+Atribut {\tt source = } by byl ze sloupce {\tt POSKYT }.
 
 Dále byly navrženy atributy:
 \begin{verbatim}
@@ -233,8 +296,8 @@ Podle toho co zde lze recyklovat, dle sloupce {\tt odpadprije }
 
 \subsection{Cyklistická doprava - značky}
 \label{Cyklistická doprava - značky}
-V případě dat Cyklistická doprava - značky, byla data prohledána, dle IPR 
-uváděné hodnoty {\tt 103} ve sloupci {\tt DRUH} pro Bikeshating, bohužel žádné 
+V případě dat Cyklistická doprava - značky, byla data prohledána, dle IPR
+uváděné hodnoty {\tt 103} ve sloupci {\tt DRUH} pro Bikeshating, bohužel žádné
 takové hodnoty neobsahovaly. Import dat z této tabulky nebyl dál brán v potaz.
 
 
@@ -248,33 +311,33 @@ jestli je bezbariérový a zdroj těchto dat.
 Veřejné toalty byl v datech OSM byl vyhledán podle atribu
 \begin{verbatim}
     amenity=toilets
-\end{verbatim}    
+\end{verbatim}
 
-bylo zjištěno, toho času, 185 záznamů. Překrytí dat IPR a OSM bylo většinou 
-jeden bod z OSM a z IPR na tomto místě bylo, buď jeden ale posunutý, nebo 
-více bodů v okruhu několika metru. Na některých místech, převážně mimo centrum 
-Prahy a mimo linky metra, chyběli body veřejných toaletet úplně. 
+bylo zjištěno, toho času, 185 záznamů. Překrytí dat IPR a OSM bylo většinou
+jeden bod z OSM a z IPR na tomto místě bylo, buď jeden ale posunutý, nebo
+více bodů v okruhu několika metru. Na některých místech, převážně mimo centrum
+Prahy a mimo linky metra, chyběli body veřejných toaletet úplně.
 Bylo tedy vhodné stávající data doplnit data z IPR.
 
 Na IPR dat z tabulky a základě doporučených atributů byly vybrány tyto atributy:
 \begin{verbatim}
     acces = yes/permissive
     fee = no/yes
-    wheelchair = yes/no 
-    opening_hours = 
-    operator = 
-    description = 
+    wheelchair = yes/no
+    opening_hours =
+    operator =
+    description =
     source = IPR
     source:location = IPR
 \end{verbatim}
 Pokud by hodnota byla {\tt fee=yes} připojila by se značka
 \begin{verbatim}
-    fee:price = 
-\end{verbatim}    
+    fee:price =
+\end{verbatim}
 hodnota by byla uvedena v Kč.
 
 Hodnota u {\tt description= } by byla hodnota ze sloupce {\tt lokalita} .
-U atributu {\tt operator= } byla navržena hodnota {\tt Hlavní Město Praha} , 
+U atributu {\tt operator= } byla navržena hodnota {\tt Hlavní Město Praha} ,
 ale jen u~prvků, u~kterých je uvedeno HMP ve sloupci {\tt Operator}.
 Tam kde není žádná hodnota, by se tento atribut nepřidal.
 
@@ -282,31 +345,73 @@ Tam kde není žádná hodnota, by se tento atribut nepřidal.
 
 \subsection{Parkovací automaty}
 \label{Parkovací automaty}
-Soubor dat Parkovací automaty od IPR obsahovale celkem 452 záznamů parkovacích 
+Soubor dat Parkovací automaty od IPR obsahovale celkem 452 záznamů parkovacích
 automatů. Je zde uveden pouze TYP a Poskytovatel dat. Nelze tedy určit zdali
-automat přijímá mimo, asi klasické, mince i bankovky, cizí měnu nebo i umožňuje 
+automat přijímá mimo, asi klasické, mince i bankovky, cizí měnu nebo i umožňuje
 platbu platebními kartami.
 Pro porovnání, byly vyhledány body z OSM s atributy:
 \begin{verbatim}
-    amenity=vendings\_machine
-    vending=parking\_tickets
+    amenity=vendings_machine
+    vending=parking_tickets
+    source=IPR
+    source:loc=IPR
 \end{verbatim}
-
+Podle těchto parametrů bylo nalezeno pouze 8 bodových prvků v databázi OSM.
+Pouze dva záznamy z OSM jsou v blízkosti k bodum z IPR.
+Jeden je ve vzdalenosti okolo 5 metrů a druhý okolo 20 metrů. Nelze tedy určit
+zda oba odkazují na stejný objekt nebo na dva různé.
+Proto se původní prvky nebudou rušit. Nové prvky půjde zpětně rozlišit podle
+atributu {\tt source:loc=} .
 
 U nově přidaných uzlů byly navrženy tyto atributy:
 \begin{verbatim}
     amenity=vendings_machine
     vending=parking_tickets
     source=
+    source:loc=
 \end{verbatim}
-Do hodnoty {\tt source=} by byla použita hodnota ze sloupce {\tt POSKYT}) 
-
+Do hodnoty {\tt source=} by byla použita hodnota ze sloupce {\tt POSKYT}) .
+Hodnota u atributu {\tt source:loc= } by byla použita {\tt IPR} .
 
 \subsection{Záchytná parkoviště P+R}
 \label{Záchytná parkoviště P+R}
+Soubor dat Záchytná parkoviště P+R obsahoval 16 prvků.
+V tabulce bohužel nejsou žádné jiné údaje, kromě polohy uložené v geometrii
+a poksytovatel dat ve sloupci {\tt poskt}.
 
-..vlastní návrh tagování importovaných dat. s pomocí české OSM "features:cs"..
-napsat že to bylo vnešeno do diskuze na talk-cz ... a čekání na reakci ...
- 
+Z dat OSM byly vyhledány body pomocí tohoto atributu
+\begin{verbatim}
+    amenity=park_ride
+\end{verbatim}
+Tento atribut je stále ve fázi schvalování, tudíž nebyly nalezeny žádné záznamy.
+Proto bylo vyzkoušeno hledání pomocí obecnějšího atributu
+\begin{verbatim}
+    amenity=parking
+\end{verbatim}
+Na území Prahy bylo nalezeno,toho času, 182 prvků.
+Bylo vyzkoušeno hledání s přidaným atributem {\tt name=} ,který by obsahoval P+R.
+Byl nalezen pouze jeden záznam.
+Dále bylo vyzkoušeno hledání bodů s atributem {\tt park\_ride=yes} .
+Byl nalezen pouze jeden prvek.
+
+Je tedy navrženo importovat všechny prvky z databáze IPR.
+Navržené atributy jsou
+\begin{verbatim}
+    amenity=park_ride
+    park_ride=yes
+    source=HMP-URM
+    source:loc=IPR
+\end{verbatim}
 
 
+\section{Návrhy z Talk-cz}
+\label{Návrhy z Talk-cz}
+Výše zmíněné návrhy byly takto zveřejněny a podrobeny diskuzi.
+
+Dále byly v diskuzi navrženy
+
+\subsection{Budovy 3D - výšky budov}
+\label{Budovy 3D - výšky budov}
+V diskuzi byla navržena importace výšek budov {\tt building:height=}
+z~dat Budovy 3D.
+V geometrii 3D polygonu budov je uložena výška.
