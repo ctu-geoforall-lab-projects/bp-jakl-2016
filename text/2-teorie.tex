@@ -250,10 +250,17 @@ Lze s ním pracovat ve všech známých operačních systémech. ...
 \label{PostGIS}
 PostGIS je objektově-relační nadstavba databázové struktury PostgreSQL.
 Rozšiřuje ji o funkce, které umožňují geometrické operace s objekty v ní uložené.
+Třídy prvků mohou být buď bod (point), linie (line), polygon (polygon).
+Dále je možné více prvků jedné třídy sdružit do multi-relace 
+to jest  multiPoint, multiLine, multiPolygon.
+Geometrie prvku určuje jeho polohu v určité souřadnicové soustave, neboli 
+kartografickém souřadnice. Dále určuje i kartografickou soustavu ve které je 
+jeho geometrie určena. Je tedy dále možné, při známých transformacích mezi
+soustavami, provádět transformace souřadnic. Základní operace jako délka, obvod,
+plocha, ale jsou zde i sofistikovanější funkce, které lze s objekty nebo i mezi 
+objekty provádět.
 
-...
-
-Je šířena pod GNU General Public License (GPLv2) licencí.
+Sotware PostGIS je šířen pod GNU General Public License (GPLv2) licencí.
 
 
 \section{Python}
