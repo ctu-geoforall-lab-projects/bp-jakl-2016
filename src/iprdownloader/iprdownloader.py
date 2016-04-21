@@ -51,7 +51,7 @@ def main(alike=None, crs=None):
         sys.exit("Unsupported coordinate system: {0}. Valid options: S-JTSK, WGS-84".format(args.crs))
 
     ipr = IprDownloaderPg(args.dbname,args.dbhost, args.dbport,
-                          args.dbuser, args.dbpasswd)
+                          args.dbuser, args.dbpasswd, args.dbschema)
 #    print args.crs
     ipr.filter(args.alike, args.crs, args.format)
 

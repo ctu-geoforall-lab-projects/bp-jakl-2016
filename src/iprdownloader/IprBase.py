@@ -5,6 +5,13 @@ import os
 import zipfile
 from osgeo import ogr,osr
 import codecs
+import logging
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler(sys.stdout)
+handler.setFormatter(logging.Formatter('%(message)s'))
+logger.addHandler(handler)
+logger.setLevel(logging.DEBUG)
+
 sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 class IprError(StandardError):
@@ -92,12 +99,12 @@ class IprDownloader:
             try:
                 os.makedirs(outdir)
             except OSError:
-                print ' Cannot create file direcotry !! '
+                raise VfrError('Cannot create file directory <{}>'.format(outdir))
 
         self.outdir = outdir
         self.filename = []
 
-        print ' Downloading:  '
+        logger.info('Downloading:  ')
 
         i=0
         for itemURL in self.itemURLs:
@@ -106,7 +113,7 @@ class IprDownloader:
             filename = itemURL.split('/')[-1]
             self.filename += [filename]
 
-            print self.itemSizes[i] + '\t' + filename
+            logger.info(' ' + self.itemSizes[i] + '\t' + filename)
             i += 1
              
             filepath = os.path.join(outdir,filename)
@@ -125,6 +132,7 @@ class IprDownloader:
     def _unzip_file(self, item):
         filename = os.path.join(self.outdir, item)
         itemDir = os.path.splitext(filename)[0]
+        logger.info("Unzipping <{}>...".format(os.path.basename(filename)))
         try:
             with zipfile.ZipFile(filename, "r") as z:
                 z.extractall(itemDir)
@@ -139,38 +147,35 @@ class IprDownloader:
 
     def _import_gdal(self, dsn_input, dsn_output, overwrite, crs, format_output):
         def import_layer(layer, odsn, overwrite, crs):
+            layer_name = layer.GetName().lower()
             options = ['PRECISION=NO','GEOMETRY_NAME=geom']
             if hasattr(self, 'dbschema'):
-                options.append('SCHEMA={}'.format(self.dbschema if self.dbschema else 'public'))
+                schema = self.dbschema if self.dbschema else 'public'
+                layer_name = '{}.{}'.format(schema, layer_name)
+                options.append('SCHEMA={}'.format(schema))
             if overwrite:
                 options.append('OVERWRITE=YES')
 
+            if not overwrite:
+                for idx in range(odsn.GetLayerCount()):
+                    l = odsn.GetLayer(idx)
+                    if l.GetName() == layer_name:
+                        logger.warning("Layer <{}> already exists. Skipping...".format(layer.GetName()))
+                        return
 
-#       Rewrite existing prj file with correct EPGS
-            DIR = dsn_input.split('/')[-1]
-            prjFile = DIR.rsplit('_',1)[0] +".prj"
-
-            os.remove(os.path.join(dsn_input,prjFile))
-            prj = open(os.path.join(dsn_input,prjFile), "w")
-
-            spatialRef = osr.SpatialReference()
-
+            # fix CRS
+            spatialRef = layer.GetSpatialRef()
             if crs == 'S-JTSK':
                 spatialRef.ImportFromEPSG(5514)
             else:
                 spatialRef.ImportFromEPSG(4326)
 
-#            spatialRef.MorphToESRI()
-
-            prj.write(spatialRef.ExportToWkt())
-            prj.close()
-
             # copy input layer to output data source
+            logger.info("Importing <{}>...".format(layer.GetName()))
             olayer = odsn.CopyLayer(layer, layer.GetName() , options)
-
             if olayer is None:
                 raise IprError("Unable to copy layer {}".format(layer.GetName()))
-            
+
         # open input data source (directory with shapefile/gml/... files)
         idsn = ogr.Open(dsn_input, False) # read
         if not idsn:
