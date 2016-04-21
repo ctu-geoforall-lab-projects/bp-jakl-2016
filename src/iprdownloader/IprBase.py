@@ -133,6 +133,8 @@ class IprDownloader:
     def _import_gdal(self, dsn_input, dsn_output, overwrite, crs, format_output):
         def import_layer(layer, odsn, overwrite, crs):
             options = ['PRECISION=NO','GEOMETRY_NAME=geom']
+            if hasattr(self, 'dbschema'):
+                options.append('SCHEMA={}'.format(self.dbschema if self.dbschema else 'public'))
             if overwrite:
                 options.append('OVERWRITE=YES')
 

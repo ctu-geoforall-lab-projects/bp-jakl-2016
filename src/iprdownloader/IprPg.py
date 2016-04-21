@@ -1,24 +1,29 @@
 from IprBase import IprDownloader
 
 class IprDownloaderPg(IprDownloader):
-    def __init__(self):
-        pass
+    def __init__(self, dbname, dbhost=None, dbport=None, dbuser=None, dbpasswd=None, dbschema=None):
+        self.dbname = dbname
+        self.dbhost = dbhost
+        self.dbport = dbport
+        self.dbuser = dbuser
+        self.dbpasswd = dbpasswd
+        self.dbschema = dbschema
 
-    def import_data(self, crs, dbname, overwrite, dbhost=None, dbport=None, dbuser=None, dbpasswd=None):
-        def conn_string(dbname, dbhost=None, dbport=None, dbuser=None, dbpasswd=None):
-            dbconn = 'PG:dbname={0}'.format(dbname)
-            if dbhost:
-                dbconn += ' host={0}'.format(dbhost)
-            if dbport:
-                dbconn += ' port={0}'.format(dbport)
-            if dbuser:
-                dbconn += ' user={0}'.format(dbuser)
-            if dbpasswd:
-                dbconn += ' password={0}'.format(dbpasswd)
+    def import_data(self, crs, overwrite):
+        def conn_string():
+            dbconn = 'PG:dbname={0}'.format(self.dbname)
+            if self.dbhost:
+                dbconn += ' host={0}'.format(self.dbhost)
+            if self.dbport:
+                dbconn += ' port={0}'.format(self.dbport)
+            if self.dbuser:
+                dbconn += ' user={0}'.format(self.dbuser)
+            if self.dbpasswd:
+                dbconn += ' password={0}'.format(self.dbpasswd)
 
             return dbconn
 
-        dsn_output = conn_string(dbname, dbhost, dbport, dbuser, dbpasswd)
+        dsn_output = conn_string()
         for item in self.filename:
             if item.split('.')[-1] != 'zip':
                 continue

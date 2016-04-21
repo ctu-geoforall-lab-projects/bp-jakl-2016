@@ -28,6 +28,7 @@ def main(alike=None, crs=None):
     parser.add_argument("--outdir",type=str,default = "data",         help = "define the folder to save (default: data)")
     parser.add_argument("--download", action='store_true',            help = "download selected data")
     parser.add_argument("--dbname",type=str,                          help = "DB name")
+    parser.add_argument("--dbschema",type=str,                        help = "DB schema (default: public)")
     parser.add_argument("--dbhost",type=str,                          help = "DB hostname")
     parser.add_argument("--dbport",type=str,                          help = "DB port")
     parser.add_argument("--dbuser",type=str,                          help = "DB username")
@@ -49,7 +50,8 @@ def main(alike=None, crs=None):
     if args.crs not in ('S-JTSK', 'WGS 84'):
         sys.exit("Unsupported coordinate system: {0}. Valid options: S-JTSK, WGS-84".format(args.crs))
 
-    ipr = IprDownloaderPg()
+    ipr = IprDownloaderPg(args.dbname,args.dbhost, args.dbport,
+                          args.dbuser, args.dbpasswd)
 #    print args.crs
     ipr.filter(args.alike, args.crs, args.format)
 
@@ -57,9 +59,7 @@ def main(alike=None, crs=None):
         ipr.download(args.outdir)
         if args.dbname:
             try:
-                ipr.import_data(args.crs,
-                                args.dbname, args.overwrite, args.dbhost, args.dbport,
-                                args.dbuser, args.dbpasswd)
+                ipr.import_data(args.crs, args.overwrite)
             except IprError as e:
                 sys.exit('ERROR: {}'.format(e))
     else:
