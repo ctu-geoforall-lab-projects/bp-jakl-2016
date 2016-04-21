@@ -124,10 +124,17 @@ class IprDownloader:
 
     def _unzip_file(self, item):
         filename = os.path.join(self.outdir, item)
-        with zipfile.ZipFile(filename, "r") as z:
-            itemDir = os.path.splitext(filename)[0]
-            z.extractall(itemDir)
-            
+        itemDir = os.path.splitext(filename)[0]
+        try:
+            with zipfile.ZipFile(filename, "r") as z:
+                z.extractall(itemDir)
+        except NotImplementedError as e:
+            # most probably compression type 9 (deflate64)
+            # see https://www.kaggle.com/c/predict-closed-questions-on-stack-overflow/forums/t/2850/pkzip-compressed-zipfiles-cannot-be-read-in-python
+            # try unzip at least
+            import subprocess
+            subprocess.call(['unzip', '-qq', '-o', filename, '-d', itemDir])
+
         return itemDir
 
     def _import_gdal(self, dsn_input, dsn_output, overwrite, crs, format_output):
