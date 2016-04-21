@@ -4,6 +4,8 @@ import xmltodict
 import os
 import zipfile
 from osgeo import ogr,osr
+import codecs
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 class IprError(StandardError):
     pass
@@ -118,7 +120,7 @@ class IprDownloader:
 
     def print_items(self):
         for item in self.IprItems:
-            print item
+            print (u'{}'.format(item))
 
     def _unzip_file(self, item):
         filename = os.path.join(self.outdir, item)
