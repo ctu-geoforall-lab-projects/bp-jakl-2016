@@ -16,9 +16,11 @@
 
 \linespread{1.3}
 
-\usepackage[czech, english]{babel}	% použití češtiny, angličtiny
-\usepackage[utf8x]{inputenc}		% Kódování zdrojových souborů je UTF8x
-\PrerenderUnicode{č}            % přidání vyjímky pro znaky s diakritikou
+
+\usepackage[utf8x]{inputenc}    % Kódování zdrojových souborů je UTF8x
+%\PrerenderUnicode{č,ř,ž,š,ě}    % přidání vyjímky pro znaky s diakritikou
+\usepackage[czech]{babel}	% použití češtiny, angličtiny
+
 
 \usepackage[square,sort,comma,numbers]{natbib}
 
@@ -204,7 +206,7 @@
 \include{3-praktic}
 
 % Vysázení seznamu zkratek
-\include{zkratky}
+%\include{zkratky}
 
 % Literatura
 \nocite{*}
