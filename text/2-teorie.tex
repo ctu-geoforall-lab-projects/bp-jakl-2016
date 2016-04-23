@@ -9,7 +9,7 @@
 OpenStreetMap (OSM) je projekt, jež vznikl s cílem vytvoření a sběru 
 volně dostupných geografických dat a následně jejich možné vizualizace
 do topografických map. Projekt založil Steve Coast v červenci roku 
-2004 v Anglii. Jako inspiraci mu posloužil projekt Wikipedia. 
+2004 v Anglii. Jako inspirace mu posloužil projekt Wikipedia.
 
 Zprvu projekt využívalo jen pár nadšenců, ale postupem času získal 
 projekt popularitu. S nárůstem počtu uživatelů narůstal i objem dat. 
@@ -26,7 +26,7 @@ OSM data jsou ukládána ve formátu XML (verze 1.0). Jeho výhoda je jasná
 struktura, snadná orientace v kódu pro člověka. Nevýhodou je ovšem větší objem 
 dat, který lze ale snížit kompresí. Každý prvek má vlastní XML soubor. 
 
-Třídy prvků v OSM jsou rozděleny na uzel (node), cesta (way) a 
+Třídy prvků v OSM jsou rozděleny na: uzel (node), cesta (way) a
 relace (relation).
 
 Příklad XML souboru pro cestu:
@@ -50,30 +50,30 @@ generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)" copyright="OpenStree
 }
 
 
-Uzel je definován jedinečným identifikátorem ({\tt node id=}). Jeho 
-souřadnice jsou ve WGS~­84. Je také ukládána verze ({\tt version= }) a kdy 
-byl do databáze přidán a v jaké změně to bylo provedeno ({\tt changeset=~}). 
-Dále k bodu je možné připojit různé atributy s klíčem a hodnotou ({\tt tag~k=~v=~}). 
+Uzel je definován jedinečným identifikátorem ({\tt node id=}). Jeho
+souřadnice jsou ve WGS~84. Je také ukládána verze ({\tt version= }) a kdy
+byl do databáze přidán a v jaké změně to bylo provedeno ({\tt changeset=~}).
+Dále k bodu je možné připojit různé atributy s klíčem a hodnotou ({\tt tag~k=~v=~}).
 
-Linie je spojení dvou a více uzlů a má taky svůj identifikátor ({\tt way~id=~}).
-Hlavičku XML souboru má shodnou s bodem. Ale dále obsahuje také seznam id uzlů, 
-jež ji tvoří. Liniím lze jí taktéž přiřadit atributy.  
+Linie je spojení dvou a více uzlů, dále má také svůj identifikátor ({\tt way~id=~}).
+Hlavičku XML souboru má shodnou s bodem. Ale dále obsahuje také seznam id uzlů,
+které ji tvoří. Liniím lze taktéž přiřadit atributy.
 
-Linie lze ještě rozdělit na neuzavřené a uzavřené. Uzaveným liniím lze připojit 
+Linie lze ještě rozdělit na neuzavřené a uzavřené. Uzaveným liniím lze připojit
 i atributy určené jen pro plochy. Například les ({\tt landuse=forest}).
-V případě, když přidává-li se atribut, jenž je v základu pro linie, ale chceme
-ho použít pro plochy, přidává se atribut {\tt area=yes}.
+V případě, když se přidá atribut, který je prot linie, ale chceme
+ho použít pro plochy, musí se ještě přidat se atribut {\tt area=yes}.
 
-Speciálním příkladem jsou relace ({\tt relation= }), do které lze zahrnout 
-jeden a více prvků. Lze do nich spojit prvky stejné nebo odlišné třídy 
-nebo i jiné relace. Pro příklad dálnice je tvořena mnoha liniemi a ty 
-jsou zahrnuty do společné relace Dálnice D1. Nebo turistická trasa 
-(od~KČT) je relace sdružující linie (cesty, pěšiny) tak i uzly 
+Speciálním příkladem jsou relace ({\tt relation= }), do které lze zahrnout
+jeden a více prvků. Lze do nich spojit prvky stejné, nebo odlišné třídy,
+nebo i jiné relace. Pro příklad dálnice je tvořena mnoha liniemi, a ty
+jsou zahrnuty do společné relace Dálnice D1. Nebo turistická trasa
+(od~KČT) je relace sdružující linie (cesty, pěšiny) tak i uzly
 (rozcestníky, vyhlídky, apod. ).
 
-U atributů popsaných na osmwiki je vždy uvedeno, k jaké třídě je 
-vhodné a nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit 
-na~jinou než povolenou třídu, nemusí to hlásit chybu, ale může být následně 
+U atributů popsaných na osmwiki je vždy uvedeno, k jaké třídě je
+vhodné a nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit
+na~jinou než povolenou třídu, nemusí to hlásit chybu, ale může být následně
 problém v některých vykreslovačích. \cite{OSMfeatures}
 
 \subsection{Licence}
@@ -81,11 +81,11 @@ problém v některých vykreslovačích. \cite{OSMfeatures}
 
 Původní data OSM a generované grafické dlaždice
 byly na distribuovány pod licencí
-Creative~Commons~Allribution­Share~Alike 2.0 (CC~BY~­SA~2.0). 
+Creative~Commons~AllributionShare~Alike 2.0 (CC~BY~SA~2.0).
 
-Tato licence umožňovala užití (distribuci ale i editaci) díla pod podmínkou, 
-že bude uveden zdroj OpenStreetMap.org ve viditelné části 
-vytvořených mapových dlaždic \cite{OSMlicence} 
+Tato licence umožňovala užití (distribuci ale i editaci) díla pod podmínkou,
+že bude uveden zdroj OpenStreetMap.org ve viditelné části
+vytvořených mapových dlaždic \cite{OSMlicence}
 
   \begin{figure}[hbt]
     \centering
@@ -94,16 +94,16 @@ vytvořených mapových dlaždic \cite{OSMlicence}
       \label{fig:attribution_example}
   \end{figure} 
 
-Roku 2012 byla licence publikovaných dat změněna na Open Data Commons 
+Roku 2012 byla licence publikovaných dat změněna na Open Data Commons
 Open Database Licence (OdbL).
 Tato změna licence přinesla problém
-s~daty, které byly poskytnuty projektu v předchozí licencí 
-(CC­~BY~SA~2.0). Bylo nutné se dotázat každého z dřívějších 
-přispěvatelů dat, ať už právnických osob tak i fyzických osob, jestli 
-s touto změnou souhlasí a je možné s jejich daty i s novou licencí 
-nakládat. U přispěvatelů, kteří nedovolili užívání jejich díla 
-pod novou licencí, nebo u těch, co se nevyjádřili, bylo nutné 
-z~databáze vymazat. Tato situace nastala pouze ve zlomku případů. 
+s~daty, které byly poskytnuty projektu v předchozí licencí
+(CC~BY~SA~2.0). Bylo nutné se dotázat každého z dřívějších
+přispěvatelů dat, ať už právnických osob, tak i fyzických osob, jestli
+s touto změnou souhlasí a je možné s jejich daty i s novou licencí
+nakládat. U přispěvatelů, kteří nedovolili užívání jejich díla
+pod novou licencí, nebo u těch, co se nevyjádřili, bylo nutné
+z~databáze vymazat. Tato situace nastala pouze ve zlomku případů.
 Nejvíce tato změna licencí ohrozila data v zemích jako je Polsko a Nový Zéland.
 
 V současnosti jsou tedy data OSM distibuovány pod licencí ODbL a
@@ -114,40 +114,40 @@ generované grafické dlaždice pod licencí CC-BY SA 4.0
 \subsection{Zdroje dat}
 \label{Zdroje dat}
 
-Jak bylo zmíněno, byla snaha, aby mapová data tvořili jedinci vlastním 
-sběrem dat. Sběr dat ve smyslu měřením vlastní GNSS (GPS, Glonass) 
-přijímačem a znalost místních poměrů (uzavřené silnice, stezky atd.). 
-Toto mapové dílo z těchto dat mohli volně užívat k vlastním užití. 
-Komunita přispěvatelů se zprvu pomalu, ale později rychle rozrostla a 
-dnes čítá 3,7 milionů registrovaných uživatelů s alespoň jednou 
+Jak bylo zmíněno, byla snaha, aby mapová data tvořili jedinci vlastním
+sběrem dat. Sběr dat ve smyslu měřením vlastní GNSS (GPS, Glonass)
+přijímačem a znalost místních poměrů (uzavřené silnice, stezky atd.).
+Toto mapové dílo z těchto dat mohli volně užívat k vlastním užití.
+Komunita přispěvatelů se zprvu pomalu, ale později rychle rozrostla a
+dnes čítá 3,7 milionů registrovaných uživatelů s alespoň jednou
 vytvořenou změnou v OSM a 2,7 milionů účtů aktivních přispěvatelů.\cite{OSMstats}
 
-Tyto mapové podklady byly velice vhodné i pro další projekt, dnes již 
-velice rozšířený a známý jako Geocashing (GC). Projekt GC začal mapové 
-podklady od OSM užívat a zároveň jeho uživatelé začali sami tvořit a 
+Tyto mapové podklady byly velice vhodné i pro další projekt, dnes již
+velice rozšířený a známý jako Geocashing (GC). Projekt GC začal mapové
+podklady od OSM užívat a zároveň jeho uživatelé začali sami tvořit a
 přispívat do OSM. 
 
-Přispěvatelé dat do OSM musí respektovat, že OSM je pod licencí OdbL. 
-Tudíž i jejich zdroj dat musí splňovat tuto licenci. Proto by měli 
-všechny svoje změny, které v OSM vytvoří, řádně ozdrojovat atributem 
+Přispěvatelé dat do OSM musí respektovat, že OSM je pod licencí OdbL.
+Tudíž i jejich zdroj dat musí splňovat tuto licenci. Proto by měli
+všechny svoje změny, které v OSM vytvoří, řádně ozdrojovat atributem
 s~klíčem 
 {\tt source= }
-V případě vlastním sběrem dat se vyplňuje hodnotou 
-{\tt source=survey}
-případně uvést zdroj, odkud čerpali. Pokud tuto povinnost poruší a 
-použijí zdroj, jež není kompatibilní z politikou OSM, tak samotné OSM 
-jejich změnu, aby předešel sporům, sám vymaže. Bohužel musí vymazat 
-celou sadu změn, byť by v něm byl jeden prvek, jenž toto poruší. 
+V případě vlastního sběru dat se vyplňuje hodnotou
+{\tt source=survey} ,
+popřípadně uvést zdroj, odkud čerpali. Pokud tuto povinnost poruší a
+použijí zdroj, jež není kompatibilní z politikou OSM, tak samotné OSM
+jejich změnu, aby předešel sporům, sám vymaže. Bohužel musí vymazat
+celou sadu změn, byť by v něm byl jeden prvek, jenž toto poruší.
 
 Druhým významným zdrojem dat jsou soukromé subjekty (společnosti) a
 většinou jde o podkladové zdroje dat, například ortofoto. Pro obkreslování
-silničních síti z~leteckých nebo satelitních rastrů. V~jejich případě 
-řešeno písemným svolením, nebo smlouvou. Jako významným zdrojem byla 
-společnost Bing, jež nabídla k~dispozici letecké snímky většiny 
+silničních síti z~leteckých nebo satelitních rastrů. V~jejich případě to
+bylo řešeno písemným svolením, nebo smlouvou. Jako významným zdrojem byla
+společnost Bing, jež nabídla k~dispozici letecké snímky většiny
 obydlené pevniny. 
 
-Třetím zdrojem a zároveň postupně dominujícím, co do obsahu dat, jsou 
-databáze ze státního sektoru. Tyto databáze jsou nejvhodnějším zdrojem 
+Třetím zdrojem a zároveň postupně dominujícím, co do obsahu dat, jsou
+databáze ze státního sektoru. Tyto databáze jsou nejvhodnějším zdrojem
 dat.
 
 \subsection{Vykreslovače}
@@ -168,13 +168,13 @@ Geocaching.
 
 \end{itemize}
 
-Existují další stránky jež se zabývají vlastní kompozicí a vykreslením
+Existují další stránky, jež se zabývají vlastní kompozicí a vykreslením
 různých dat. Například mapu turistických a cyklistických tras vykresluje
- mtbmap.cz a to pro celou Evropu. 
- 
-Zajímavými projekty jsou, které k 2D mapě přidává „třetí“ rozměr a 
-vytváří tzv. 2.5D mapu. Většinou jde o 3D zobrazení budov, mostů (dle 
-atributů) popřípadě i stromů. 
+pro celou Evropu mtbmap.\footnote{mtbmap.cz}
+
+Zajímavými projekty jsou například ty, které k 2D mapě přidávájí „třetí“ rozměr a
+vytvářejí tzv. 2.5D mapu. Většinou jde o 3D zobrazení budov, mostů (dle
+atributů), popřípadě i stromů.
 
 \section{Opendata}
 \label{opendata}
@@ -184,25 +184,25 @@ přístupná veřejně. Mělo to kladný efekt na tamní ekonomiku. Díky tomuto
 zprvu k~dispozici satelitní snímky povrchu Země a digitální model terénu
 s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic).
 
-Tento trend se začal rozšiřovat zprvu do zemí západních Evropy,
+Tento trend se začal rozšiřovat zprvu do zemí západní Evropy,
 jmenovitě Anglie, Francie, ale i jiné země mimo Evropu..
 
 V ČR se tomuto věnuje fond Otevřená data\footnote{www.otevrenadata.cz}, který založil Otakar
-Motejl. Teto fond spolupracuje s nadací Sociery Fund Praha. V rámci
+Motejl. Tento fond spolupracuje s nadací Sociery Fund Praha. V rámci
 těchto uskupení je vyvíjen tlak na transparentnost veřejné správy a
 zveřejňování smluv a dat
-státních institucí, jelikož jejich získání a údržba bylo placeno
+státních institucí, jelikož jejich získání a údržba byla placena
 z~veřejných zdrojů.
 
 
 
 \section{Importy}
 \label{Importy}
-Výraz import v tomto případe znamená začlenění většího množství datových sad 
+Výraz import v tomto případě znamená začlenění většího množství datových sad
 z~jednoho datového úložiště (databáze serveru) na jiný. Při velkých objemech dat
-se využívá výkonu výpočetní techniky z důvodu její bezchybovosti, a také 
+se využívá výkonu výpočetní techniky z důvodu její bezchybovosti, a také
 z~důvodu časové náročnosti. Na člověku poté ale zbývá zvolit postup importu
-a naprogramovat skript nebo program, podle něhož technika samotný proces 
+a naprogramovat skript nebo program, podle něhož technika samotný proces
 provede. 
 
 Datové importy z veřejných databází do databáze OSM jsou velmi cenné. 
@@ -210,11 +210,11 @@ Otevřené geografické, ale i jiné, databáze státu a jeho veřejných instit
 financovaných státem jsou komplexní. Komplexní v tom smyslu, že obsahují celistvý
 soubor dat, protože je daná instituce vyžaduje ke svém chodu. Jistá nevýhoda tu 
 ale může být, a to, že data nemusí být vždy úplně aktuální. Některá data mohou 
-být sbírána a zveřejněna i větším časovým odstupem.
+být sbírána a zveřejněna i s větším časovým odstupem.
 
 V rámci České Republiky proběhlo již několik hromadných datových importů. Jak 
-již bylo řečeno větší časová náročnost zabere samotná příprava na import. A to 
-v~případě importu do OSM nejen napsání skriptu, ale i nutná diskuze tohoto záměru
+již bylo řečeno, větší časová náročnost zabere samotná příprava na import. A to
+v~případě, importu do OSM. Nejen napsání skriptu, ale i nutná diskuze tohoto záměru
 na~diskuzní konferenci Talk-cz. 
 
 \subsection{Talk-cz}
@@ -250,13 +250,13 @@ Lze s ním pracovat ve všech známých operačních systémech. ...
 \label{PostGIS}
 PostGIS je objektově-relační nadstavba databázové struktury PostgreSQL.
 Rozšiřuje ji o funkce, které umožňují geometrické operace s objekty v ní uložené.
-Třídy prvků mohou být buď bod (point), linie (line), polygon (polygon).
-Dále je možné více prvků jedné třídy sdružit do multi-relace 
+Třídy prvků mohou být buď bod (point), linie (line) nebo polygon (polygon).
+Dále je možné více prvků jedné třídy sdružit do multi-relace, 
 to jest  multiPoint, multiLine, multiPolygon.
 Geometrie prvku určuje jeho polohu v určité souřadnicové soustave, neboli 
-kartografickém souřadnice. Dále určuje i kartografickou soustavu ve které je 
-jeho geometrie určena. Je tedy dále možné, při známých transformacích mezi
-soustavami, provádět transformace souřadnic. Základní operace jako délka, obvod,
+kartografickém souřadnice. Dále určuje i kartografickou soustavu, ve které je 
+jeho geometrie určena. Je tedy dále možné při známých transformacích mezi
+soustavami provádět transformace souřadnic. Základní operace jako délka, obvod,
 plocha, ale jsou zde i sofistikovanější funkce, které lze s objekty nebo i mezi 
 objekty provádět.
 
@@ -265,26 +265,26 @@ Sotware PostGIS je šířen pod GNU General Public License (GPLv2) licencí.
 
 \section{Python}
 \label{Python}
-Programovací jazyk Python v vznikl v roce 1991. Navrhlo ho Guido van Rossum. 
+Programovací jazyk Python vznikl v roce 1991. Navrhlo ho Guido van Rossum. 
 Je vyvíjen jako open source projekt. Inspiroval se hlavně programovacím jazykem
-ABS, který byl přímo vytvořen pro~vyuku začatečníků v programování. Python je 
+ABS, který byl přímo vytvořen pro~výuku začatečníků v programování. Python je 
 proto jeden z nejvýhodnějších programovacích jazyků pro začínající programátory,
 ale i přesto ho lze použít pro~praktické programování. 
 
 Jedná se tedy o jednoduchý programovací jazyk podporující různá programovací 
 paradigmata, hlavně objektové, imperiativní, procedurální a omezené míře i 
 fun- kcionální. Je multiplatformní, lze jej tedy použít na různých operačních 
-systémech. Klade velký důraz na syntaxi psaného kodu, využívá hlavně prázdné 
-znaky v~psaném kodu.  
+systémech. Klade velký důraz na syntaxi psaného kódu, využívá hlavně prázdné 
+znaky v~psaném kódu.  
 
-Programy nebo skripty lze psát v textovém editoru ale je vhodné použít 
+Programy nebo skripty lze psát v textovém editoru, ale je vhodné použít 
 standartu PEP~8, který kontroluje prázdné znaky a správnou strukturu skriptu. 
 
 V současné době je vydána stabilní verze 3.5.7, která vůči předchozí verzi 2.x
 mění některá, již "zažitá" syntaxe. Například nejviditelnější je změna funkce 
 {\tt print } pro verzi 2.x stačilo  {\tt print "Ahoj"}  a pro verzi 3.x je již
 nutné string vložit do závorek  {\tt print("Ahoj")}  . Tyto dvě dnes používané 
-verze 2.x a 3.x navzájem nekompatibilní.
+verze 2.x a 3.x jsou navzájem nekompatibilní.
 \cite{python} 
 \cite{wikiPython} 
   
@@ -298,8 +298,8 @@ ho pro další použití v programu.
 
 \subsection{knihovna xmltodict}
 \label{xmltodict} 
-Tato knihovna umí číst soubory ve formátu XML a zpracovává je do snažší formu 
-dat, která je jednoduší manipulaci pro samotný program. Data z XML zpracuje
+Tato knihovna umí číst soubory ve formátu XML a zpracovává je do snažší formy 
+dat, která je jednodušší manipulaci pro samotný program. Data z XML zpracuje
 do formy datové řady (array), kde každý člen této řady může být opět řada dat.\cite{xmltodict}
 
 příklad parsování dat ve XML formátu
@@ -345,25 +345,25 @@ ele1
 
 \subsection{knihovna GDAL/OGR}
 \label{GDAL/OGR}
-Jedná se o knihovnu pro práci s geografickými dat a umožňuje jejich čtení a zápis.
+Jedná se o knihovnu pro práci s geografickými daty a umožňuje jejich čtení a zápis.
 Je psána v programovacím jazyce C++. Je považován za jeden z hlavních 
 open~source projektů a je hojně používán ve sféře GIS. Pracuje s vektorovými a 
-rastrovými datovými formáty. Podporuje velkou škálu souborových formátů a to 
-pro vektorová data ale i pro rastrová. Obsahuje databázi definic kartografických
+rastrovými datovými formáty. Podporuje velkou škálu souborových formátů, a to 
+pro vektorová data, ale i pro rastrová. Obsahuje databázi definic kartografických
 projekcí používaných na celém světě a databázi jejich známých transformací. 
 Umožňuje tedy komplexní operace s geografickými daty. \cite{GDAL}
 
 
 \section{QGIS}
 \label{QGIS}
-QGIS je program vytvořen za účelem prohlížení, editaci geografických dat.
-Jedná se o Opensource software. Je tedy možné aby na jeho vývoji spolupracoval
-kdokoli. Je možné si vytvářit novou funkci nebo přímo zásuvný modul do programu.
+QGIS je program vytvořen za účelem prohlížení a editace geografických dat.
+Jedná se o Opensource software. Je tedy možné, aby na jeho vývoji spolupracoval
+kdokoli. Je možné si vytvářit novou funkci, nebo přímo zásuvný modul do programu.
 Je možné je psát v jazyce C++ nebo Python.
 Tyto moduly si uživatelé mohou poté stáhnout a přidat do QGISu a využívat.
 QGIS také umožňuje využívat konzolově jazyk Python. Je možné si tak vytvářet
 vlastní jednoduché skripty v jazyce Python a spouštět je v QGISu.
 
 Od svého vzniku bylo vydáno již spoustu verzí programu.
-Dříve byly verze pojmenovávány podle planet později měsíců a nyní se dávají
+Dříve byly verze pojmenovávány podle planet, později podle jejich měsíců a nyní se dávají
 jména německých měst. V současnosti (duben 2016) je k dispozici verze 2.14 Essen
