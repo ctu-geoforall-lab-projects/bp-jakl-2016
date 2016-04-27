@@ -416,11 +416,56 @@ Navržené atributy jsou
 \label{Návrhy z Talk-cz}
 Výše zmíněné návrhy byly takto zveřejněny a podrobeny diskuzi.
 
-Dále byly v diskuzi navrženy
+Výše zmíněná data byla zpracována v programu QGIS pomocí 
+SQL. Byly vytvořeny, pro každý soubor, jedna tabulka připravená pro import.
+Vždy pro každý atribut byl jeden sloupec (column) a příslužná hodnota atribut 
+byla hodnota v tomto sloupci.
+Každá tabulka mimo navržených atributů obsahovla sloupce s geometrii. 
+
+Pro import  bude použit program osmosis.
+
+Dále byly v diskuzi navrženo přidání výšky budov ze souboru dat Budovy 3D.
 
 \subsection{Budovy 3D - výšky budov}
 \label{Budovy 3D - výšky budov}
-V diskuzi byla navržena importace výšek budov {\tt building:height~= }
-z~dat Budovy 3D. A navržen atribut zdroje {\tt source:building:level~= }
+V diskuzi byla navržen import výšek budov {\tt building:height~= }
+ze~sourbu dat Budovy 3D. 
+A navržen atribut zdroje {\tt source:building:level~= }
 
-V geometrii 3D polygonu budov je uložena výška.
+..rešerše z OSM ..??
+
+V souboru Budodvy 3D jsou uložny 3D polygonu tvoříci budovy.
+Vždy polygony, které vytvářejí 3D model jedné budovy, 
+mají stejnou bodnotu ve sloupci {\tt id\_bud} . 
+Polygony se stejnou hodnotou {\tt id\_bud} lze dále rozdělit dle hodnoty 
+ve~sloupci {\tt typ} na 
+ 
+\begin{verbatim}
+    dilci plocha stresni kruhove plochy
+    komin
+    sikma stresni plocha
+    svisla obvodova stena
+    vikyr_stresni nadstavba
+    vytah_vetrani_klimatizace
+    vodorovna stresni plocha
+    vyznacena vez na strese
+    zakladna vikyre, stresni nadstavby
+    zakladova deska
+ .. a další
+\end{verbatim}
+
+V 3D geometrii těchto polygonů budov jsou uloženy všechny (x,y,z) souřadnice 
+vrcholů, jenž určují polygon. 
+
+Pro nalezeni výšky budovy bylo dále pracováno pouze s polygony 
+{\tt svisla obvodova stena}. 
+Pro nalezení výšky každé stěny byly použity funkce pro hledání 
+maximaní a minimální hodnoty z-ové souřadnice vrcholů.
+Výška byla vypočtena jako jako rozdíl těchto hodnot. 
+
+Přesněji bylo vypočtena takto {\tt ST\_ZMax(geom)-ST\_ZMin(geom) as height} 
+
+Jelikož ale svislé stěny budovy může tvořit více než 4 polygony a 
+ne všechny nemusí mít stejnou hodnotu (výšku), bula z těchto hodnot 
+pro každou svislou stěnu vybrána maximální hodnota. Vždy v rámci jedné budovy. 
+Tedy byla vybrána maximální hodnota výšky stěny budovy.
