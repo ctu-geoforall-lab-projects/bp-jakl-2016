@@ -34,7 +34,7 @@ možnosti souborvé formáty GeoJSON, DXF, GML nebo ESRI Shapefile.
 Dále je na výběr mezi dvěma kartografickými zobrazeními S-JTSK nebo WGS 84.
 
 Celkem IPR zveřejňuje 96 druhů datových souborů a ty jsou rozděleny
-do~kategorii.\footnote{www.geoportalpraha.cz/cs/opendata}
+do~kategorii.\footnote{viz stránka IPR www.geoportalpraha.cz/cs/opendata}
 
 Pokud není řečeno jinak, jedná se o data ve vektorové formě.
 Těmito kategoriemi jsou:
@@ -43,28 +43,92 @@ Těmito kategoriemi jsou:
     \item   3D model - Obsahuje 3D modely budov a mostů v Praze a digitální
             model povrchu (DMP) a dále rastrově digitální model povrhu a
             terénu, absolutní a relativní výšky budov.
+
+            Z těchto dat by se pro OSM dala využít poloha budov ze~soubru
+            Budovy 3D. Budovy jsou ale již importovány ze zdroje RUIAN, takže
+            již nejsou potřeba přidávat.
+
     \item   Digitální technická mapa Prahy - jsou zde k dispozici v vektorové
             podobě inženýrské sítě v Praze, technické budovy a hranice parcel.
+
+            Do OSM se, možná zatím, nepřidávají inženýrské sítě. V tuto nyní
+            lze do OSM přidávat zdroje veřejného osvětlení. Takže pokud by
+            nějaky sbour obsahoval značky veřejného osvětlení mohlo by se tato
+            data importovat do OSM. Hranice města Prahy a městských čístí již
+            v~OSM je. Technické budovy DTMP by bylo možné použít jako zdroj
+            pro budovucí aktualizaci OSM.
+
     \item   Doprava - obsahuje cyklistické trasy a značky, pěší trasy
-            parkovací zóny,automaty, P+R parkoviště a mapy zon PID (vektor)
-    \item   Geologie - obsahuje vektorové mapy radonového nebezpečí..
+            parkovací zóny, automaty, P+R parkoviště a mapy zon PID (vektor)
+
+            Cyklysticé trasy v Praze by se mohli importovat ale jsou již velmi
+            dobře zmapované samotnými uživateli. Dataset obsahuje bodové značky
+            a z těch by se některé mohli importovat.
+            V případě dat Cyklistická doprava - značky, byla data prohledána, dle IPR
+            uváděné hodnoty {\tt 103} ve sloupci {\tt DRUH} pro Bikeshating, bohužel žádné
+            takové hodnoty neobsahovaly. Import dat z této tabulky nebyl dál brán v potaz.
+            Bylo by možné do OSM přidat parkovací zony (jako nový atribut u stávajících komunikací).
+            Vhodná data jsou parkovací automaty a také P+R parkoviště.
+
+    \item   Geologie - obsahuje vektorové mapy radonového nebezpečí. Tato data
+            se do OSM nepřidávají.
+
     \item   Hluk - obsauhjí hlukové mapy a to ve dne a v noci v rasterové formě.
-    \item   Kvalita životního prostředí - ...
-    \item   Mapové podklady - obsahuje klady mapových listů
-            různých měřítek (1:500 až 1:10 000)
-    \item   Občanská vybavenost
-    \item   Ochrana přírody a krajiny
+            Tato data se do OSM nepřidávají. Dále obsahuje i protihlukové bariéry,
+            tyto data by bylo možné do OSM přidat.
+
+    \item   Kvalita životního prostředí - Obsahuje dataset Oblasti svozu komunílního odbadu.
+            Tyto data nejsou vhodná do OSM začlenit. Dále ale obsahuje dataset
+            Odpadní Zařízení pro občany, a toto obsahuje informace o všech sběrnách v Praze,
+            tedy tento dataset je vhodný pro import.
+
+    \item   Mapové podklady - obsahuje klady mapových listů různých měřítek (1:500 až 1:10 000)
+            Tyto data nejsou vhodná do OSM. Dále obsahuje i vrstevnice a to po
+            5~m, 2~m a 1~m. Vrstevnice přímo OSM neobsahuje a ani sám nevykresluje.
+            Je ale možné tyto data využít pro kompozice s OSM.\footnote{projekt mtbmap.cz nebo http://mapa.prahounakole.cz/}
+
+    \item   Občanská vybavenost obsahuje pouze dataset Veřejné toalety.
+            Tyto data by bylo vhodné do OSM přidat.
+
+    \item   Ochrana přírody a krajiny, obsahuje data ochraná pásma památných stromů.
+            Bohužel ne samotné stromy. Vhodná data jsou z datasetů Přírodní parky a
+            Významný krajinný prvek - registrovaný. Z těchto datasetů by se mohly
+            doplnit nebo aktualizovat data v OSM.
+
     \item   Ortofoto obsahují letecké snímky (rastr) Prahy až s rozlišením 5cm
             na~pixel jak ve~viditelném spektru světla tak i v infračerveném.
+
+            Ortofoto jsou vhodná pouze jako podkladový zdroj,
+            například pro mapovací aplikaci JOSM.
+
     \item   Ovzduší, obsauje vektorové mapy znečištění ovzduší a také
-            zdoje znečištění
-    \item   Platný územní plán
-    \item   Socioekonomická data
-    \item   Technická infrastruktura - vodní hospodářství
-    \item   Urbanismus
+            zdoje znečištění. Tyto data se v OSM nemapuje, jediné co by se
+            mohlo přidat do OSM jsou bodové zdroje, a to značkou pro komín.
+            Dále v této kategorii jsou i Bonity a to z různých hledisek (ovzduší, osvit...).
+            Tyto data nejsou vhodná pro OSM.
+
+    \item   Platný územní plán. V této kategorii jsou datasety Veřejně prospěšných staveb
+            (plošné, liniové a bodové). Dataset VPS obsahuje také infomace o P+R u stanic metra.
+            Data jsou z územního plánu, a tedy nemusí být realizovány.
+            Po prozkoumání aktuálních a porovnání s datasetem Záchytná parkoviště P+R,
+            jsou již tyto záznamy obsaženy v datasetu Záachytná parkoviště P+R.
+
+    \item   Socioekonomická data, obsahuje pouze vektorovou mapu ceny pozemků.
+            Tyto data se do OSM neřidávají.
+
+    \item   Technická infrastruktura - vodní hospodářství, obsahuje záplavová území
+            Q20, Q50 a Q100 a uzemí zaplavené v roce 2013. Tyto data se do OSM
+            nepřidávají. Dále v této kategorii jsou datasety Protipovodňové ochrany,
+            jsou zde protipovodnové, dočasné, zdi. Je možné tyto zdi přidat,
+            ale jelikož se jedná o dočasné překážky a to ještě jen v době akutní povodně,
+            nemjí smysl je do OSM přidávat.
+
+    \item   Urbanismus z této kategorie by se dalo pro OSM využít informace
+            z~datasetu Stavební uzávěry - dopravní. Ale by bylo nutné udržovat
+            aktuálnost infomací o plánovaných dopravních uzavírkách.
+            Dále by se mohla do OSM přidat počet pater budov z datasetu
+            Podlaživost.
 \end{itemize}
-
-
 
 
 \subsection{licenční problém}
@@ -87,6 +151,8 @@ na data, která tam uživatel přidal. V některých zemích, kde se nelze
 možnou míru a také souhlasí, že nebude vymáhat svoje autorská práva.
 \cite{ODbl}
 
+..není možné začlenit data s licencí CCBYSA do databází OSM..(proč??)
+
 
 IPR byl kontaktován, zdali by mohla být jeho data použita do import.
 Dle vyjádření vyplinulo, že IPR by neměl problém s použitím svých dat, jelikož
@@ -96,12 +162,9 @@ k dispožici z OSM pro koncové uživatele pod licencí ODbL. Tedy co by někte�
 uživatel nemohl s daty, distribuovaných přímo od IPR, provádět mohl by si je
 obstarat z databáze OSM a pod licencí, která by jeho aktivitu neomezovala.
 
-
 Dle vyjádření se tato situace bude ze strany IPR řešit tak, že se změní 
 licence u distribuovaných dat. Tato změna licencování se očekává 
 v~několika měsících.
-
-
 
 
 \section{IprDownloader}
@@ -303,12 +366,6 @@ Dále byly navrženy atributy:
 \end{verbatim}
 Podle toho co zde lze recyklovat, dle hodnoty ve sloupci {\tt odpadprije }.
 
-\subsection{Cyklistická doprava - značky}
-\label{Cyklistická doprava - značky}
-V případě dat Cyklistická doprava - značky, byla data prohledána, dle IPR
-uváděné hodnoty {\tt 103} ve sloupci {\tt DRUH} pro Bikeshating, bohužel žádné
-takové hodnoty neobsahovaly. Import dat z této tabulky nebyl dál brán v potaz.
-
 
 \subsection{Veřejné toalety}
 \label{Veřejné toalety}
@@ -349,7 +406,6 @@ Hodnota u {\tt description~= } by byla hodnota ze sloupce {\tt lokalita} .
 U atributu {\tt operator~= } byla navržena hodnota {\tt Hlavní Město Praha} ,
 ale jen u~prvků, u~kterých je uvedeno HMP ve sloupci {\tt Operator}.
 Tam kde není žádná hodnota, by se tento atribut nepřidal.
-
 
 
 \subsection{Parkovací automaty}
