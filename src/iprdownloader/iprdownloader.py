@@ -34,6 +34,7 @@ def main(alike=None, crs=None):
     parser.add_argument("--dbuser",type=str,                          help = "DB username")
     parser.add_argument("--dbpasswd",type=str,                        help = "DB password")
     parser.add_argument("--overwrite", action='store_true',           help = "overwrite existing file")
+    parser.add_argument("--import_only", action='store_true',         help = "dont download file, only import")  
     
     args = parser.parse_args()
  
@@ -52,11 +53,11 @@ def main(alike=None, crs=None):
 
     ipr = IprDownloaderPg(args.dbname,args.dbhost, args.dbport,
                           args.dbuser, args.dbpasswd, args.dbschema)
-#    print args.crs
+
     ipr.filter(args.alike, args.crs, args.format)
 
-    if args.download or args.dbname:
-        ipr.download(args.outdir)
+    if (args.download or args.dbname):
+        ipr.download(args.outdir,args.import_only)
         if args.dbname:
             try:
                 ipr.import_data(args.crs, args.overwrite)

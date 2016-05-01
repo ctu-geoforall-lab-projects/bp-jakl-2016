@@ -24,6 +24,7 @@ class IprDownloaderPg(IprDownloader):
             return dbconn
 
         dsn_output = conn_string()
+
         for item in self.filename:
             if item.split('.')[-1] != 'zip':
                 continue

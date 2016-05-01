@@ -90,7 +90,7 @@ class IprDownloader:
         return obj                
 
         
-    def download(self,outdir):
+    def download(self,outdir,only_import):
         import os
 
         if (os.path.isdir(outdir)):
@@ -102,6 +102,7 @@ class IprDownloader:
                 raise VfrError('Cannot create file directory <{}>'.format(outdir))
 
         self.outdir = outdir
+        self.only_import = only_import
         self.filename = []
 
         logger.info('Downloading:  ')
@@ -116,14 +117,17 @@ class IprDownloader:
             logger.info(' ' + self.itemSizes[i] + '\t' + filename)
             i += 1
              
-            filepath = os.path.join(outdir,filename)
-            with open(filepath,"wb") as output:
-                while True:
-                    data = itemfile.read(32768)
-                    if data:
-                        output.write(data)
-                    else:
-                        break
+            if not only_import:
+                filepath = os.path.join(outdir,filename)
+                with open(filepath,"wb") as output:
+                    while True:
+                        data = itemfile.read(32768)
+                        if data:
+                            output.write(data)
+                        else:
+                            break
+            else: 
+                print " ... Skipping ... "
 
     def print_items(self):
         for item in self.IprItems:
@@ -133,15 +137,18 @@ class IprDownloader:
         filename = os.path.join(self.outdir, item)
         itemDir = os.path.splitext(filename)[0]
         logger.info("Unzipping <{}>...".format(os.path.basename(filename)))
-        try:
-            with zipfile.ZipFile(filename, "r") as z:
-                z.extractall(itemDir)
-        except NotImplementedError as e:
-            # most probably compression type 9 (deflate64)
-            # see https://www.kaggle.com/c/predict-closed-questions-on-stack-overflow/forums/t/2850/pkzip-compressed-zipfiles-cannot-be-read-in-python
-            # try unzip at least
-            import subprocess
-            subprocess.call(['unzip', '-qq', '-o', filename, '-d', itemDir])
+        if not self.only_import:
+            try:
+                with zipfile.ZipFile(filename, "r") as z:
+                    z.extractall(itemDir)
+            except NotImplementedError as e:
+                # most probably compression type 9 (deflate64)
+                # see https://www.kaggle.com/c/predict-closed-questions-on-stack-overflow/forums/t/2850/pkzip-compressed-zipfiles-cannot-be-read-in-python
+                # try unzip at least
+                import subprocess
+                subprocess.call(['unzip', '-qq', '-o', filename, '-d', itemDir])
+        else:
+            print " ... Skipping ... "
 
         return itemDir
 
