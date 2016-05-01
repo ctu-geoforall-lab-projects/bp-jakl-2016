@@ -1,0 +1,72 @@
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  Vybere budovy z OSM pro danou oblast ze všech budov v Praze
+     a vytvoří okolo každé z nich bufeer 5m           
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+/*         toto -- čislo se bude měnit podle čísla datasetu bd3_prah--  */              
+create table bud73_OSM(
+                gid int primary key,
+                geom geometry,
+                building text	);
+
+insert into bud73_OSM
+
+select  budovy.gid, 
+        ST_Buffer(budovy.geom,5) as geom, /* hodnota 5 by se dala volit od 0 do těch 5m */
+        budovy.building
+
+from(   select	ST_MakeEnvelope(
+                        max(ST_XMax(geom))+100 ,    max(ST_YMax(geom))+100 , 
+                        min(ST_XMin(geom))-100 ,    min(ST_YMin(geom))-100 , /* to je zvětšení hranice o 100m */
+                        5514 ) as geom 
+        from ipr.bd3_prah73   /* hranice  okolo IPR budov */ 
+    ) as hranice
+							
+join(   select  gid, 
+                ST_Transform(geom,5514) as geom,
+                building
+        from jakl.praha_building 
+    ) as budovy
+				
+on ST_Within(budovy.geom , hranice.geom);				
+
+
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+
+create table bud73_IPR(
+             id_bud int,
+             geom geometry);
+
+insert into bud73_IPR
+select id_bud,
+       ST_Union(                            /* spojí polygony */
+           ST_Force_2D(                     /* vybere jen X,Y souřadnice */   
+               ST_MakeValid(geom))) as geom /* bylo potřeba opravit*/
+
+from   ipr.bd3_prah73
+where  typ like '%stresni plocha'
+group by id_bud;
+
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+
+select budovy.* , vysky.* 
+
+from(  select AAA.*,BBB.*
+       from  jakl.bud73_OSM 	as AAA
+       join  jakl.bud73_IPR 	as BBB
+       on ST_Within(BBB.geom , AAA.geom)
+    ) as budovy
+
+join(  select id_bud,
+              max(height) as max_Height
+
+       from(  select distinct   ST_ZMax(geom)-ST_ZMin(geom)  as height, 
+			  	                id_bud
+              from   ipr.bd3_prah73
+              where  typ = 'svisla obvodova stena'
+           ) as iBUD
+              group by id_bud
+    ) as vysky			
+
+on budovy.id_bud = vysky.id_bud
+
+
