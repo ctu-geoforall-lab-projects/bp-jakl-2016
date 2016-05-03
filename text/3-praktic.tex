@@ -492,11 +492,26 @@ A navržen atribut zdroje {\tt source:building:level~= }
 
 ..rešerše z OSM ..??
 
-V souboru Budodvy 3D jsou uložny 3D polygonu tvoříci budovy.
-Vždy polygony, které vytvářejí 3D model jedné budovy, 
-mají stejnou bodnotu ve sloupci {\tt id\_bud} . 
-Polygony se stejnou hodnotou {\tt id\_bud} lze dále rozdělit dle hodnoty 
-ve~sloupci {\tt typ} na 
+V souboru Budovy 3D jsou dále uložny datové sady budov.
+Tyto datové sady obsahují budovy jen z malé oblasti, protože by dataset budov
+z~celého území Prahy byl moc velký.
+Každá datová sada je přibližně obdélníková oblast z území prahy
+a má svoje originální název.
+
+Po vybrání jedné datové sady (oblasti) byla vytvořena minimální
+ohraničující oblasti a přidána přesah 100 metrů na každou stranu.
+
+Pomocí tohoto obdlníku byly vybrány budovy z OSM a přitom byly vytvořeny
+nárazníkové zony (buffer) s hodnotou 5m. Protože budovy z IPR a OSM
+nemusí mít přesně stejné lomové body (polygonů). Tato vzdálenost (5m)
+by měla být dostačující.
+Tento dočasný datasest byl nazván {bud73_OSM}
+
+Dále byla proveden průzkum dat z jednoho datasetu ze souboru Budovy 3D.
+Bylo zjištěno, že vždy polygony, které vytvářejí 3D model jedné budovy,
+mají stejnou bodnotu ve sloupci {\tt id\_bud} .
+Polygony se stejnou hodnotou {\tt id\_bud} lze dále rozdělit dle hodnoty
+ve~sloupci {\tt typ} na
  
 \begin{verbatim}
     dilci plocha stresni kruhove plochy
@@ -511,19 +526,46 @@ ve~sloupci {\tt typ} na
     zakladova deska
  .. a další
 \end{verbatim}
+Další práce bude zaměřena na polygony, které jsou typu
+\begin{verbatim}
+    sikma stresni plocha
+    vodorovna stresni plocha
+    svisla obvodova stena
+\end{verbatim}
+V 3D geometrii těchto polygonů budov jsou uloženy všechny (x,y,z) souřadnice
+vrcholů, jenž určují polygon.
 
-V 3D geometrii těchto polygonů budov jsou uloženy všechny (x,y,z) souřadnice 
-vrcholů, jenž určují polygon. 
+Poté bylo z datové sady Budovy vybrány všechny polygony, které
+měli hodnotu ve sloupci {\tt typ} hodnoty obsahující frázi {\tt stresni plocha}
+Tyto vybrané 3D polygony byly opraveny funkcí {ST_MakeValid()}
+a následně přetvořeny na 2D polygony funkcí {ST_Force_2D()}.
+(Vypustila se jen hodnota z souřadnice.)
+Následně byly tyto polygony takzvaně "rozpuštěny". Rozpuštění znamená,
+polygony, které se dotýkají minimálně jednou společnou stranou sloučí
+do~jednoho polygonu.
+Polygony byly rozpuštěni ty které měli stejnou hodnotu {id_bud}.
+Tím se docílilo, každá budova byla reprezentována jedním 2D polygonem.
+Tento dočasný dataset byl nazván {bud73_IPR}
 
-Pro nalezeni výšky budovy bylo dále pracováno pouze s polygony 
-{\tt svisla obvodova stena}. 
-Pro nalezení výšky každé stěny byly použity funkce pro hledání 
+Následně mohlo být hledáno pro každý prvek z {bud73_OSM} byl hledán
+prvek z {bud73_IPR}, který by byl vně.
+Byla použita funkce {ST_Within( bud73_OSM.geom , bud73_OSM.geom )} .
+Tímto byly nalezeny prvky z dat IPR, které jsou "přibližně na stejném místě"
+jako budovy z OSM.
+
+Dále tedy bylo možné k těmto prvkům nalézt výšku podle hodnoty {id_bud},
+kterou mají všechny polygony tvořící jednu budovu totožnou.
+
+Pro nalezeni výšky budovy bylo dále pracováno pouze s polygony,
+které mají hodnotu ve sloupci {\tt typ} hodnotu
+{\tt svisla obvodova stena}.
+Pro nalezení výšky každé stěny byly použity funkce pro hledání
 maximaní a minimální hodnoty z-ové souřadnice vrcholů.
-Výška byla vypočtena jako jako rozdíl těchto hodnot. 
+Výška byla vypočtena jako jako rozdíl těchto hodnot.
 
-Přesněji bylo vypočtena takto {\tt ST\_ZMax(geom)-ST\_ZMin(geom) as height} 
+Přesněji bylo vypočtena takto {\tt ST\_ZMax(geom)-ST\_ZMin(geom) as height}
 
-Jelikož ale svislé stěny budovy může tvořit více než 4 polygony a 
-ne všechny nemusí mít stejnou hodnotu (výšku), bula z těchto hodnot 
-pro každou svislou stěnu vybrána maximální hodnota. Vždy v rámci jedné budovy. 
+Jelikož ale svislé stěny budovy může tvořit více než 4 polygony a
+ne všechny nemusí mít stejnou hodnotu (výšku), bula z těchto hodnot
+pro každou svislou stěnu vybrána maximální hodnota. Vždy v rámci jedné budovy.
 Tedy byla vybrána maximální hodnota výšky stěny budovy.
