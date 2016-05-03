@@ -505,7 +505,8 @@ Pomocí tohoto obdlníku byly vybrány budovy z OSM a přitom byly vytvořeny
 nárazníkové zony (buffer) s hodnotou 5m. Protože budovy z IPR a OSM
 nemusí mít přesně stejné lomové body (polygonů). Tato vzdálenost (5m)
 by měla být dostačující.
-Tento dočasný datasest byl nazván {bud73_OSM}
+Tento dočasný datasest byl nazván {\tt bud73\_OSM}. 
+V tomto příkladě bylo pracováno s datasetem {\tt BD\_Prah73}
 
 Dále byla proveden průzkum dat z jednoho datasetu ze souboru Budovy 3D.
 Bylo zjištěno, že vždy polygony, které vytvářejí 3D model jedné budovy,
@@ -537,23 +538,23 @@ vrcholů, jenž určují polygon.
 
 Poté bylo z datové sady Budovy vybrány všechny polygony, které
 měli hodnotu ve sloupci {\tt typ} hodnoty obsahující frázi {\tt stresni plocha}
-Tyto vybrané 3D polygony byly opraveny funkcí {ST_MakeValid()}
-a následně přetvořeny na 2D polygony funkcí {ST_Force_2D()}.
+Tyto vybrané 3D polygony byly opraveny funkcí {\tt ST\_MakeValid()}
+a následně přetvořeny na 2D polygony funkcí {\tt ST\_Force\_2D()}.
 (Vypustila se jen hodnota z souřadnice.)
 Následně byly tyto polygony takzvaně "rozpuštěny". Rozpuštění znamená,
 polygony, které se dotýkají minimálně jednou společnou stranou sloučí
 do~jednoho polygonu.
-Polygony byly rozpuštěni ty které měli stejnou hodnotu {id_bud}.
+Polygony byly rozpuštěni ty které měli stejnou hodnotu {\tt id\_bud}.
 Tím se docílilo, každá budova byla reprezentována jedním 2D polygonem.
-Tento dočasný dataset byl nazván {bud73_IPR}
+Tento dočasný dataset byl nazván {\tt bud73\_IPR}
 
-Následně mohlo být hledáno pro každý prvek z {bud73_OSM} byl hledán
-prvek z {bud73_IPR}, který by byl vně.
-Byla použita funkce {ST_Within( bud73_OSM.geom , bud73_OSM.geom )} .
+Následně mohlo být hledáno pro každý prvek z {\tt bud73\_OSM} byl hledán
+prvek z {\tt bud73\_IPR}, který by byl vně.
+Byla použita funkce {\tt ST\_Within( bud73\_OSM.geom , bud73\_OSM.geom )} .
 Tímto byly nalezeny prvky z dat IPR, které jsou "přibližně na stejném místě"
 jako budovy z OSM.
 
-Dále tedy bylo možné k těmto prvkům nalézt výšku podle hodnoty {id_bud},
+Dále tedy bylo možné k těmto prvkům nalézt výšku podle hodnoty {\tt id\_bud},
 kterou mají všechny polygony tvořící jednu budovu totožnou.
 
 Pro nalezeni výšky budovy bylo dále pracováno pouze s polygony,
