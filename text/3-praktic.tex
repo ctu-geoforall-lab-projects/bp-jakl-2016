@@ -62,7 +62,7 @@ Těmito kategoriemi jsou:
             parkovací zóny, automaty, P+R parkoviště a mapy zon PID (vektor)
 
             Cyklysticé trasy v Praze by se mohli importovat ale jsou již velmi
-            dobře zmapované samotnými uživateli. Dataset obsahuje bodové značky
+            dobře zmapované samotnými uživateli. Datová sada obsahuje bodové značky
             a z těch by se některé mohli importovat.
             V případě dat Cyklistická doprava - značky, byla data prohledána, dle IPR
             uváděné hodnoty {\tt 103} ve sloupci {\tt DRUH} pro Bikeshating, bohužel žádné
@@ -77,22 +77,22 @@ Těmito kategoriemi jsou:
             Tato data se do OSM nepřidávají. Dále obsahuje i protihlukové bariéry,
             tyto data by bylo možné do OSM přidat.
 
-    \item   Kvalita životního prostředí - Obsahuje dataset Oblasti svozu komunílního odbadu.
-            Tyto data nejsou vhodná do OSM začlenit. Dále ale obsahuje dataset
+    \item   Kvalita životního prostředí - Obsahuje datovou sadu Oblasti svozu komunílního odbadu.
+            Tyto data nejsou vhodná do OSM začlenit. Dále ale obsahuje datovou sadu
             Odpadní Zařízení pro občany, a toto obsahuje informace o všech sběrnách v Praze,
-            tedy tento dataset je vhodný pro import.
+            tedy tato datová sada je vhodná pro import.
 
     \item   Mapové podklady - obsahuje klady mapových listů různých měřítek (1:500 až 1:10 000)
             Tyto data nejsou vhodná do OSM. Dále obsahuje i vrstevnice a to po
             5~m, 2~m a 1~m. Vrstevnice přímo OSM neobsahuje a ani sám nevykresluje.
             Je ale možné tyto data využít pro kompozice s OSM.\footnote{projekt mtbmap.cz nebo http://mapa.prahounakole.cz/}
 
-    \item   Občanská vybavenost obsahuje pouze dataset Veřejné toalety.
+    \item   Občanská vybavenost obsahuje pouze datovou sadu Veřejné toalety.
             Tyto data by bylo vhodné do OSM přidat.
 
     \item   Ochrana přírody a krajiny, obsahuje data ochraná pásma památných stromů.
-            Bohužel ne samotné stromy. Vhodná data jsou z datasetů Přírodní parky a
-            Významný krajinný prvek - registrovaný. Z těchto datasetů by se mohly
+            Bohužel ne samotné stromy. Vhodná data jsou z datové sady Přírodní parky a
+            Významný krajinný prvek - registrovaný. Z těchto datových sad by se mohly
             doplnit nebo aktualizovat data v OSM.
 
     \item   Ortofoto obsahují letecké snímky (rastr) Prahy až s rozlišením 5cm
@@ -107,26 +107,26 @@ Těmito kategoriemi jsou:
             Dále v této kategorii jsou i Bonity a to z různých hledisek (ovzduší, osvit...).
             Tyto data nejsou vhodná pro OSM.
 
-    \item   Platný územní plán. V této kategorii jsou datasety Veřejně prospěšných staveb
-            (plošné, liniové a bodové). Dataset VPS obsahuje také infomace o P+R u stanic metra.
+    \item   Platný územní plán. V této kategorii jsou datové sady Veřejně prospěšných staveb
+            (plošné, liniové a bodové). Datová sada VPS obsahuje také infomace o P+R u stanic metra.
             Data jsou z územního plánu, a tedy nemusí být realizovány.
-            Po prozkoumání aktuálních a porovnání s datasetem Záchytná parkoviště P+R,
-            jsou již tyto záznamy obsaženy v datasetu Záachytná parkoviště P+R.
+            Po prozkoumání aktuálních a porovnání s datovou sadou Záchytná parkoviště P+R,
+            jsou již tyto záznamy obsaženy v datové sadě Záchytná parkoviště P+R.
 
     \item   Socioekonomická data, obsahuje pouze vektorovou mapu ceny pozemků.
             Tyto data se do OSM neřidávají.
 
     \item   Technická infrastruktura - vodní hospodářství, obsahuje záplavová území
             Q20, Q50 a Q100 a uzemí zaplavené v roce 2013. Tyto data se do OSM
-            nepřidávají. Dále v této kategorii jsou datasety Protipovodňové ochrany,
+            nepřidávají. Dále v této kategorii jsou datové sady Protipovodňové ochrany,
             jsou zde protipovodnové, dočasné, zdi. Je možné tyto zdi přidat,
             ale jelikož se jedná o dočasné překážky a to ještě jen v době akutní povodně,
             nemjí smysl je do OSM přidávat.
 
     \item   Urbanismus z této kategorie by se dalo pro OSM využít informace
-            z~datasetu Stavební uzávěry - dopravní. Ale by bylo nutné udržovat
+            z~datové sady Stavební uzávěry - dopravní. Ale by bylo nutné udržovat
             aktuálnost infomací o plánovaných dopravních uzavírkách.
-            Dále by se mohla do OSM přidat počet pater budov z datasetu
+            Dále by se mohla do OSM přidat počet pater budov z datové sady
             Podlaživost.
 \end{itemize}
 
@@ -486,34 +486,42 @@ Dále byly v diskuzi navrženo přidání výšky budov ze souboru dat Budovy 3D
 
 \subsection{Budovy 3D - výšky budov}
 \label{Budovy 3D - výšky budov}
-V diskuzi byla navržen import výšek budov {\tt building:height~= }
-ze~sourbu dat Budovy 3D. 
-A navržen atribut zdroje {\tt source:building:level~= }
+V diskuzi byl navržen import výšek budov {\tt building:height~= }
+ze~souboru dat Budovy 3D.
+Dále bylo navrženo aby byl přidán atribut zdroje
+\begin{verbatim}
+    source:building:level =
+\end{verbatim}
+aby bylo možné později zdroj těchto dat identifikovat.
 
-..rešerše z OSM ..??
+...rešerše dat z OSM...{building=yes , height=*} ...??
 
-V souboru Budovy 3D jsou dále uložny datové sady budov.
-Tyto datové sady obsahují budovy jen z malé oblasti, protože by dataset budov
-z~celého území Prahy byl moc velký.
+...kolik budov má již definovanou výšku
+
+V souboru Budovy 3D je dále uložno 128 datových sed pro menší oblasti.
+Tyto datové sady obsahují budovy jen z malé oblasti, protože by datová sada budov
+z~celého území Prahy byl moc velký (až v řádů GB).
 Každá datová sada je přibližně obdélníková oblast z území prahy
-a má svoje originální název.
+a má svůj originální název.
 
-Po vybrání jedné datové sady (oblasti) byla vytvořena minimální
-ohraničující oblasti a přidána přesah 100 metrů na každou stranu.
+V tomto příkladě bude pracováno s datovou sadou {\tt BD\_Prah73} .
+Po vybrání této jedné datové sady (oblasti) byla vytvořena minimální
+ohraničující oblast okolo ní a přidána přesah o 100 metrů na každou stranu.
+Tedy byl vytvořen obdélník okolo jedné datové sady.
 
-Pomocí tohoto obdlníku byly vybrány budovy z OSM a přitom byly vytvořeny
-nárazníkové zony (buffer) s hodnotou 5m. Protože budovy z IPR a OSM
-nemusí mít přesně stejné lomové body (polygonů). Tato vzdálenost (5m)
-by měla být dostačující.
-Tento dočasný datasest byl nazván {\tt bud73\_OSM}. 
-V tomto příkladě bylo pracováno s datasetem {\tt BD\_Prah73}
+Pomocí tohoto obdélníku byly vybrány budovy z OSM uvnitř tohoto obdélníku
+a přitom byly vytvořeny nárazníkové zony (buffer) s hodnotou 5m pro každou budovu.
+Byl zvolen tento postup, protože budovy z IPR a OSM nemusí mít přesně stejnou
+polohu a tvar (polygonů).
+Tato vzdálenost (5 m) byla zvolean jako dostačující, avšak může být zvolena jiná.
+Tento dočasný datasest byl nazván {\tt bud73\_OSM}.
 
-Dále byla proveden průzkum dat z jednoho datasetu ze souboru Budovy 3D.
+Dále byl proveden průzkum dat z {\tt BD\_Prah73},
+datové sady ze souboru Budovy 3D (z IPR).
 Bylo zjištěno, že vždy polygony, které vytvářejí 3D model jedné budovy,
 mají stejnou bodnotu ve sloupci {\tt id\_bud} .
-Polygony se stejnou hodnotou {\tt id\_bud} lze dále rozdělit dle hodnoty
+Polygony se stejnou hodnotou {\tt id\_bud} lze dále dělit dle hodnoty
 ve~sloupci {\tt typ} na
- 
 \begin{verbatim}
     dilci plocha stresni kruhove plochy
     komin
@@ -527,7 +535,7 @@ ve~sloupci {\tt typ} na
     zakladova deska
  .. a další
 \end{verbatim}
-Další práce bude zaměřena na polygony, které jsou typu
+Další práce bude soustřena na polygony, které jsou typu
 \begin{verbatim}
     sikma stresni plocha
     vodorovna stresni plocha
@@ -536,37 +544,42 @@ Další práce bude zaměřena na polygony, které jsou typu
 V 3D geometrii těchto polygonů budov jsou uloženy všechny (x,y,z) souřadnice
 vrcholů, jenž určují polygon.
 
-Poté bylo z datové sady Budovy vybrány všechny polygony, které
-měli hodnotu ve sloupci {\tt typ} hodnoty obsahující frázi {\tt stresni plocha}
-Tyto vybrané 3D polygony byly opraveny funkcí {\tt ST\_MakeValid()}
-a následně přetvořeny na 2D polygony funkcí {\tt ST\_Force\_2D()}.
-(Vypustila se jen hodnota z souřadnice.)
+Poté byly z datové sady {\tt BD\_Prah73} vybrány všechny polygony, které
+měly ve sloupci {\tt typ} obsahují frázi {\tt stresni plocha} .
+Geometrie těchto vybraných 3D polygonů byly opraveny funkcí {\tt ST\_MakeValid()}
+a následně "přetvořeny" na 2D polygony funkcí {\tt ST\_Force\_2D()}.
+(vynechala se jen Z-ová souřadnice.)
 Následně byly tyto polygony takzvaně "rozpuštěny". Rozpuštění znamená,
 polygony, které se dotýkají minimálně jednou společnou stranou sloučí
 do~jednoho polygonu.
-Polygony byly rozpuštěni ty které měli stejnou hodnotu {\tt id\_bud}.
-Tím se docílilo, každá budova byla reprezentována jedním 2D polygonem.
-Tento dočasný dataset byl nazván {\tt bud73\_IPR}
+Rozpuštěny byly polygony navzajem jen ty, které měly stejnou hodnotu ve sloupci 
+{\tt id\_bud}.
+Tím se docílilo, každá budova bude reprezentována jenom jedním 2D polygonem.
+Tento dočasný datová sada byl nazván {\tt bud73\_IPR}
 
-Následně mohlo být hledáno pro každý prvek z {\tt bud73\_OSM} byl hledán
-prvek z {\tt bud73\_IPR}, který by byl vně.
-Byla použita funkce {\tt ST\_Within( bud73\_OSM.geom , bud73\_OSM.geom )} .
+Následně mohlo pro každý prvek z~ datové sady {\tt bud73\_OSM} být hledány
+všechny prvky z~{\tt bud73\_IPR}, které by byly uvnitř.
+Na tuto operaci byla použita funkce
+\begin{verbatim}
+    ST_Within( bud73_OSM.geom , bud73_OSM.geom )
+\end{verbatim}
 Tímto byly nalezeny prvky z dat IPR, které jsou "přibližně na stejném místě"
 jako budovy z OSM.
 
-Dále tedy bylo možné k těmto prvkům nalézt výšku podle hodnoty {\tt id\_bud},
-kterou mají všechny polygony tvořící jednu budovu totožnou.
+Dále tedy bylo možné k těmto prvkům přiřadit výšku podle hodnoty {\tt id\_bud},
+kterou mají všechny polygony tvořící jednu budovu stejnou.
 
-Pro nalezeni výšky budovy bylo dále pracováno pouze s polygony,
-které mají hodnotu ve sloupci {\tt typ} hodnotu
-{\tt svisla obvodova stena}.
-Pro nalezení výšky každé stěny byly použity funkce pro hledání
-maximaní a minimální hodnoty z-ové souřadnice vrcholů.
+Pro hledání výšky budovy bylo dále pracováno pouze s polygony,
+které mají ve sloupci {\tt typ} hodnotu {\tt svisla obvodova stena}.
+Pro nalezení (z-ové) výšky každého polygonu stěny budovy,
+byly použity funkce pro hledání maximaní a minimální hodnoty z-ové souřadnice.
 Výška byla vypočtena jako jako rozdíl těchto hodnot.
+Přesněji byla vypočtena takto
+\begin{verbatim}
+    ST_ZMax(geom) - ST_ZMin(geom)       as height
+\end{verbatim}
 
-Přesněji bylo vypočtena takto {\tt ST\_ZMax(geom)-ST\_ZMin(geom) as height}
-
-Jelikož ale svislé stěny budovy může tvořit více než 4 polygony a
-ne všechny nemusí mít stejnou hodnotu (výšku), bula z těchto hodnot
-pro každou svislou stěnu vybrána maximální hodnota. Vždy v rámci jedné budovy.
+Jelikož ale svislé stěny budovy může tvořit více než 4 polygony,
+a ne všechny nemusí mít stejnou hodnotu (výšku), byla z těchto hodnot
+pro každou svislou stěnu vybrána maximální hodnota.
 Tedy byla vybrána maximální hodnota výšky stěny budovy.
