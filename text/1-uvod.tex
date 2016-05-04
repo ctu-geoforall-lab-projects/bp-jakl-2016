@@ -1,28 +1,40 @@
 \chapter{Úvod}
 \label{1-uvod}
 
-K projektu OSM jsem se dostal již před lety a zaujala mě možnost pomáhat tvořit 
+%%% ML: prvni dve vety preformulovat (2x moznost, "a zaujala me..." +
+%%% "videt vysledek" nezni hezky cesky..)
+
+%%% ML: obecne receno by chtelo vylepsit cesky jazyk v celem textu,
+%%% jeho kvalita pokulhava
+
+K projektu OpenStreetMap (OSM) jsem se dostal již před lety a zaujala mě možnost pomáhat tvořit 
 a upravovat mapu. Možnost přidávat a opravovat objekty ze svého okolí a následně 
 vidět výsledek a možnost ho využívat. Postupem času jsem zjistil, co je vhodné a 
-co již nevhodné vkládat do mapy. Když mi bylo na škole nabídnuto dělat 
+co již nevhodné vkládat do mapy. Když mi bylo na Fakultě stavební ČVUT v Praze nabídnuto dělat 
 bakalářskou práci na téma, které se dotýká problematiky datových importů OSM,
+%%% ML: pri prvni pouziti zkratky by mela byt rezepsana, viz OSM vyse, zde IPR
+%%% ML: "data z IPR" zni divne
 neváhal jsem. Nedávno totiž byla zveřejněna data z IPR a vznikla možnost ujmout 
 se začlenění některých těchto dat do projektu OSM. 
 
 Obsahem této práce je čtenáře nejprve seznámit s projektem OpenStreetMap. 
 Přiblížit mu jeho vývoj a účel jeho vzniku. Jeho možnosti užití a licenci, 
+%%% ML: hlavni misto? mluvit o uziti a licenci...
 jakožto hlavní místo, kam se bude soustředit konečný výsledek této práce.
 
-Dále přiblížit problematiku datových importů do tohoto projektu. Uvést některé 
+Dále přiblížit problematiku datových importů do tohoto projektu. Uvést některé
+%%% ML: objevily a resili...
 problémy, které se v minulosti u již proběhlých importech objevily a jak se 
 řešili. Rozebrat možné další problémy, které mohou vzniknout při importaci dat 
 z~IPR a navrhnout jejich možná řešení. 
 
+%%% ML: zde se lisi forma, vz "Dale priblizit" vs. "Navrh skriptu"
 Návrh skriptu v programovacím jazyku Python, který by tato data stahoval z~IPR 
-a následně importoval do pracovní databáze postGIS. Popis použitých knihoven a 
+a následně importoval do pracovní geodatabáze PostGIS. Popis použitých knihoven a 
 tříd funkcí v~knihovně GDAL.
 
 Analizovat data zveřejněná IPR a porovnat je s daty, která již jsou v OSM. 
-Navrhnout, která data by byla vhodná importovat. Konzultovat tento záměr 
+Navrhnout, jaká data by byla vhodná importovat. Konzultovat tento záměr
+%%% ML: komunita ... poradit se s nimi (klidne bych druhou cast vety vynechal)
 s~komunitou OSM a poradit se s~nimi v~případě některých otázkek. Nakonec 
-vybraná data připravit k importu z~databáze PostGIS do OSM metodou „SQL dump“.
+vybraná data připravit k importu z~geodatabáze PostGIS do OSM metodou „SQL dump“.
