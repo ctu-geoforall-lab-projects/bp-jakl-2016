@@ -147,86 +147,111 @@ Ve zkratce s daty pod licencí ODbL uživatel smí:
 S použitím ale uživatel musí ale uvést zdroj a licenci dat.
 Dále uživatel souhlasí, že nová data vytvořená z původních dat budou sířena
 také pod~licencí ODbL.
-Podrobněji viz přesné znění licence na stránkách OpenDatabase.\footnote{http://opendatacommons.org/licenses/odbl/1.0/}
+Podrobněji viz přesné znění licence na stránkách OpenDatabase.\footnote{\url{http://opendatacommons.org/licenses/odbl/1.0/}}
 
 
 \subsection{Zdroje dat}
 \label{Zdroje dat}
 
-Jak bylo zmíněno, byla snaha, aby mapová data tvořili jedinci vlastním
-sběrem dat. Sběr dat ve smyslu měřením vlastní GNSS (GPS, Glonass)
-přijímačem a znalost místních poměrů (uzavřené silnice, stezky atd.).
-Toto mapové dílo z těchto dat mohli volně užívat k vlastním užití.
-Komunita přispěvatelů se zprvu pomalu, ale později rychle rozrostla a
-dnes čítá 3,7 milionů registrovaných uživatelů s alespoň jednou
-vytvořenou změnou v OSM a 2,7 milionů účtů aktivních přispěvatelů.\cite{OSMstats}
+Jak bylo zmíněno, byla snaha, aby mapová data tvořili jedinci prvotním
+sběrem dat, tj. měřením vlastními GNSS (GPS, Glonass) přijímači a
+znalostí místních poměrů (uzavřené silnice, stezky atd.).  A takto
+vzniklé dílo volně užívat k vlastním potřebám.  Komunita přispěvatelů se
+zprvu pomalu, později poměrně rychle rozrostla a dnes čítá 3,7 milionů
+registrovaných uživatelů s alespoň jednou vytvořenou změnou v OSM a
+2,7 milionů účtů aktivních přispěvatelů.\cite{OSMstats}
 
-Tyto mapové podklady byly velice vhodné i pro další projekt, dnes již
+Takto vzniklé mapové podklady byly velice vhodné i pro další projekt, dnes již
 velice rozšířený a známý jako Geocashing (GC). Projekt GC začal mapové
 podklady od OSM užívat a zároveň jeho uživatelé začali sami tvořit a
 přispívat do OSM. 
 
-Přispěvatelé dat do OSM musí respektovat, že OSM je pod licencí OdbL.
+Přispěvatelé dat do OSM musí respektovat licenci projektu OdbL.
 Tudíž i jejich zdroj dat musí splňovat tuto licenci. Proto by měli
 všechny svoje změny, které v OSM vytvoří, řádně ozdrojovat atributem
 s~klíčem 
-{\tt source= }
+{\tt source}.
 V případě vlastního sběru dat se vyplňuje hodnotou
 {\tt source=survey} ,
 popřípadně uvést zdroj, odkud čerpali. Pokud tuto povinnost poruší a
-použijí zdroj, jež není kompatibilní z politikou OSM, tak samotné OSM
-jejich změnu, aby předešel sporům, sám vymaže. Bohužel musí vymazat
-celou sadu změn, byť by v něm byl jeden prvek, jenž toto poruší.
+použijí zdroj, jež není kompatibilní s licenční politikou OSM, tak ostatní přispěvatelé do OSM tuto změnu, aby předešeli sporům, odstraní. V tomto případě dojde k odstranění celé sady změn, byť by v~ní byl pouze jeden prvek, jenž toto poruší.
 
-Druhým významným zdrojem dat jsou soukromé subjekty (společnosti) a
-většinou jde o podkladové zdroje dat, například ortofoto. Pro obkreslování
-silničních síti z~leteckých nebo satelitních rastrů. V~jejich případě to
+%%% ML: nejen soukrome, ale i statni organizace, viz CUZK s RUIANem,
+%%% OK mate to v dalsi odstavci
+Druhým významným zdrojem dat jsou soukromé subjekty (společnosti).
+Většinou jde o podkladové zdroje dat, například ortofoto. Pro obkreslování
+silničních síti z~leteckých nebo satelitních snímků. V~jejich případě to
 bylo řešeno písemným svolením, nebo smlouvou. Jako významným zdrojem byla
+%%% ML: a ted uz neni...? Bing je spolecnost, nevlastni ji MS?
 společnost Bing, jež nabídla k~dispozici letecké snímky většiny
 obydlené pevniny. 
 
-Třetím zdrojem a zároveň postupně dominujícím, co do obsahu dat, jsou
-databáze ze státního sektoru. Tyto databáze jsou nejvhodnějším zdrojem
+Třetím zdrojem dat a zároveň postupně dominujícím, co do jeho obsahu, jsou
+%%% ML: ze -> produkované
+datové sady ze státního sektoru. Tyto datové sady jsou nejvhodnějším zdrojem
+%%% ML: proc ? vyargumentovat
 dat.
 
 \subsection{Vykreslovače}
 \label{Vykreslovače}
-Na hlavní stránce OSM je pět „základních“ přednastavených vrstev vykreslených 
-z~dat z OSM. Využívá aplikaci OpenLayers založenou na konceptu AJAX.
-Pro snadné vykreslení dat do grafických dlaždic se používá Mercatorovo zobrazení.
+Na hlavní stránce OSM (\url{http://www.openstreetmap.org}) je k dispozici mapová aplikace. Ta nabízí pět
+„základních“ přednastavených vrstev vykreslených z~dat z OSM. Mapová
+%%% ML: na cem je zalozen AJAX, kdyz uz to zminujete. Vysvetlit anebo odstranit.
+aplikace OSM využívá knihovnu OpenLayers založenou na konceptu AJAX.
+%%% ML: jde o EPSG:3857 - zminit, stejny souradnicovy system pouziva
+%%% Google Maps a pod.
+Pro snadné vykreslení dat do grafických dlaždic se používá Mercatorovo
+zobrazení.
 
+%%% ML: mozna dodat screenshoty do prilohy?
 \begin{itemize}
 
   \item Standardní vrstva - vykresluje všechny prvky přiměřeně.
   \item Cyklomapa - vykresluje cyklostezky, výškopis. 
   \item Dopravní mapa - vykresluje silniční a železniční sítě.
-  \item MapQuest Open vznikla jako podkladová mapa právě pro potřeby 
-Geocaching.
+  \item MapQuest Open - podkladová mapa právě pro potřeby 
+    Geocaching.
+    %%% ML: restaurace na prvni miste?
   \item Humanitární mapa, která vykresluje služby (restaurace, banky, muzea, 
   školy, kostely...)  a potlačuje ostatní prvky. 
 
 \end{itemize}
 
+%%% ML: kompozici? ruznych dat? dovysvetlit
 Existují další stránky, jež se zabývají vlastní kompozicí a vykreslením
 různých dat. Například mapu turistických a cyklistických tras vykresluje
 pro celou Evropu mtbmap.\footnote{mtbmap.cz}
 
+%%% priklad? mozna dodat hezky screenshot?
 Zajímavými projekty jsou například ty, které k 2D mapě přidávájí „třetí“ rozměr a
 vytvářejí tzv. 2.5D mapu. Většinou jde o 3D zobrazení budov, mostů (dle
 atributů), popřípadě i stromů.
 
 \section{Opendata}
 \label{opendata}
+
+%%% ML: od kud toto cerpate. Otevrena data (ala public domain) maji
+%%% svuj puvod mnohem drive, v devadesatych letech...
 Základní myšlenka otevřených dat vznikla v USA z iniciativy vlády Barracka Obamy.
+%%% ML: nejen geograficka data
 Tedy pokud vzniknou geografická data z veřejných peněz, měla by tedy být
+%%% ML: tady neco tvrdite, ale nemate to podlozeno
 přístupná veřejně. Mělo to kladný efekt na tamní ekonomiku. Díky tomuto byly
+%%% ML: Landsat a SRTM jsou zverejnena jiz delsi dobu... to opravdu
+%%% nesouvisi s vladou BO
 zprvu k~dispozici satelitní snímky povrchu Země a digitální model terénu
 s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic).
 
 Tento trend se začal rozšiřovat zprvu do zemí západní Evropy,
-jmenovitě Anglie, Francie, ale i jiné země mimo Evropu..
+%%% ML: druha cast vety nenavazuje na prvni, jake zeme, opet, nejaka
+%%% reference?
+jmenovitě Velké Británie, Francie či Německa, ale i jiné země mimo Evropu..
 
+%%% ML: Fond se jmenuje Fond Otakara Motejla (opravdu jej zalozil on,
+%%% nebyl zalozen na jeho pocet). Jednim z projektu fondu jsou prave
+%%% Otevrena data
 V ČR se tomuto věnuje fond Otevřená data\footnote{www.otevrenadata.cz}, který založil Otakar
+%%% ML: Sociery? co Rekostrukce statu a pod.?
 Motejl. Tento fond spolupracuje s nadací Sociery Fund Praha. V rámci
 těchto uskupení je vyvíjen tlak na transparentnost veřejné správy a
 zveřejňování smluv a dat
