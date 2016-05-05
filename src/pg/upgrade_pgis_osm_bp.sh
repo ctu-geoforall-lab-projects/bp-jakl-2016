@@ -1,6 +1,14 @@
 #!/bin/sh
 set -e
 
+SCRIPT=`realpath $0` # realpath is a separate package and doesn't need
+                     # to be installed
+if [ -z $SCRIPT ] ; then
+    SCRIPTPATH='.'
+else
+    SCRIPTPATH=`dirname $SCRIPT`
+fi
+
 DB=pgis_osm_bp
 FILE=czech-republic-latest.osm.bz2
 
@@ -13,7 +21,7 @@ psql $DB -c "CREATE SCHEMA osm"
 psql $DB -c "GRANT USAGE ON SCHEMA osm TO public"
  
 # import
-osm2pgsql -d $DB -E 3857 -p czech -s $FILE
+osm2pgsql -d $DB -E 3857 -p czech -S $SCRIPTPATH/pgis_osm_bp.style -s $FILE
 
 # czech_polygon: polygon -> multipolygon
 echo "ALTER TABLE czech_polygon ADD COLUMN way1 geometry(MultiPolygon,3857);
