@@ -1,0 +1,133 @@
+\chapter{Použité technologie}
+\label{3-technologie}
+
+\section{PostgreSQL}
+\label{PostgreSQL}
+PostgreSQL je Opensource databázový systém, který je vyvýjen déle než patnáct
+let. Za dlouhou dobu vývoje se stal robustní a také hojně využívaný.
+Postupem času získal svou spolehlivostní silnou reputaci.
+Lze s ním pracovat ve všech známých operačních systémech. 
+...
+\cite{PostgreSQL}
+
+\subsection{PostGIS}
+\label{PostGIS}
+PostGIS je objektově-relační nadstavba databázové struktury PostgreSQL.
+Rozšiřuje ji o funkce, které umožňují geometrické operace s objekty v ní uložené.
+Třídy prvků mohou být buď bod (point), linie (line) nebo polygon (polygon).
+Dále je možné více prvků jedné třídy sdružit do multi-relace, 
+to jest  multiPoint, multiLine, multiPolygon.
+Geometrie prvku určuje jeho polohu v určité souřadnicové soustave, neboli 
+kartografickém souřadnice. Dále určuje i kartografickou soustavu, ve které je 
+jeho geometrie určena. Je tedy dále možné při známých transformacích mezi
+soustavami provádět transformace souřadnic. Základní operace jako délka, obvod,
+plocha, ale jsou zde i sofistikovanější funkce, které lze s objekty nebo i mezi 
+objekty provádět.
+
+Sotware PostGIS je šířen pod GNU General Public License (GPLv2) licencí.
+
+
+\section{Python}
+\label{Python}
+Programovací jazyk Python vznikl v roce 1991. Navrhlo ho Guido van Rossum. 
+Je vyvíjen jako open source projekt. Inspiroval se hlavně programovacím jazykem
+ABS, který byl přímo vytvořen pro~výuku začatečníků v programování. Python je 
+proto jeden z nejvýhodnějších programovacích jazyků pro začínající programátory,
+ale i přesto ho lze použít pro~praktické programování. 
+
+Jedná se tedy o jednoduchý programovací jazyk podporující různá programovací 
+paradigmata, hlavně objektové, imperiativní, procedurální a omezené míře i 
+fun- kcionální. Je multiplatformní, lze jej tedy použít na různých operačních 
+systémech. Klade velký důraz na syntaxi psaného kódu, využívá hlavně prázdné 
+znaky v~psaném kódu.  
+
+Programy nebo skripty lze psát v textovém editoru, ale je vhodné použít 
+standartu PEP~8, který kontroluje prázdné znaky a správnou strukturu skriptu. 
+
+V současné době je vydána stabilní verze 3.5.7, která vůči předchozí verzi 2.x
+mění některá, již "zažitá" syntaxe. Například nejviditelnější je změna funkce 
+{\tt print } pro verzi 2.x stačilo  {\tt print 'Ahoj'}  a pro verzi 3.x je již
+nutné string vložit do závorek  {\tt print('Ahoj')}  . Tyto dvě dnes používané
+verze 2.x a 3.x jsou navzájem nekompatibilní.
+\cite{python} 
+\cite{wikiPython} 
+  
+  
+\subsection{knihovna argparse}
+\label{argparse} 
+Knihovna argparse, jejíž autor je Tshepang Lekhonkhobe, je knihovna 
+do~programovacícho jazyku Pyhon. Řeší konzolový vstup do aplikace a zpracovává 
+ho pro další použití v programu.\cite{argparse}
+
+
+\subsection{knihovna xmltodict}
+\label{xmltodict} 
+Tato knihovna umí číst soubory ve formátu XML a zpracovává je do snažší formy 
+dat, která je jednodušší manipulaci pro samotný program. Data z XML zpracuje
+do formy datové řady (array), kde každý člen této řady může být opět řada dat.\cite{xmltodict}
+
+příklad parsování dat ve XML formátu
+
+{\scriptsize
+\begin{lstlisting}
+<head>
+  <many>ele1</many>
+  <many>ele2</many>
+</head>
+\end{lstlisting}
+}
+
+Po otevření a parsování se v Python(u) provede příkazem.
+
+{\scriptsize
+\lstset{language=Python}
+\begin{lstlisting}
+with open('example.xml') as fd: 
+  doc = xmltodict.parse(fd.read()) 
+\end{lstlisting}
+}
+
+Objekt {\tt doc} má poté podobu.
+
+{\scriptsize
+\lstset{language=Python}
+\begin{lstlisting}
+OrderedDict([(u'head', OrderedDict([(u'many', [u'ele1', u'ele2'])]))]) }
+\end{lstlisting}
+}
+
+V této datové řadě lze již snadno procházet. 
+
+{\scriptsize
+\lstset{language=Python}
+\begin{lstlisting}
+doc['head']['many'][0]
+ele1
+\end{lstlisting}
+}
+
+
+\subsection{knihovna GDAL/OGR}
+\label{GDAL/OGR}
+Jedná se o knihovnu pro práci s geografickými daty a umožňuje jejich čtení a zápis.
+Je psána v programovacím jazyce C++. Je považován za jeden z hlavních 
+open~source projektů a je hojně používán ve sféře GIS. Pracuje s vektorovými a 
+rastrovými datovými formáty. Podporuje velkou škálu souborových formátů, a to 
+pro vektorová data, ale i pro rastrová. Obsahuje databázi definic kartografických
+projekcí používaných na celém světě a databázi jejich známých transformací. 
+Umožňuje tedy komplexní operace s geografickými daty. \cite{GDAL}
+
+
+\section{QGIS}
+\label{QGIS}
+QGIS je program vytvořen za účelem prohlížení a editace geografických dat.
+Jedná se o Opensource software. Je tedy možné, aby na jeho vývoji spolupracoval
+kdokoli. Je možné si vytvářit novou funkci, nebo přímo zásuvný modul do programu.
+Je možné je psát v jazyce C++ nebo Python.
+Tyto moduly si uživatelé mohou poté stáhnout a přidat do QGISu a využívat.
+QGIS také umožňuje využívat konzolově jazyk Python. Je možné si tak vytvářet
+vlastní jednoduché skripty v jazyce Python a spouštět je v QGISu.
+
+Od svého vzniku bylo vydáno již spoustu verzí programu.
+Dříve byly verze pojmenovávány podle planet, později podle jejich měsíců a nyní se dávají
+jména německých měst. V současnosti (duben 2016) je k dispozici verze 2.14 Essen

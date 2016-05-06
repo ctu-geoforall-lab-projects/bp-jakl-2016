@@ -470,29 +470,18 @@ Navržené atributy jsou
 \end{verbatim}
 
 
-\section{Návrhy z Talk-cz}
-\label{Návrhy z Talk-cz}
-Výše zmíněné návrhy byly takto zveřejněny a podrobeny diskuzi.
-
-Výše zmíněná data byla zpracována v programu QGIS pomocí 
-SQL. Byly vytvořeny, pro každý soubor, jedna tabulka připravená pro import.
-Vždy pro každý atribut byl jeden sloupec (column) a příslužná hodnota atribut 
-byla hodnota v tomto sloupci.
-Každá tabulka mimo navržených atributů obsahovla sloupce s geometrii. 
-
-Pro import  bude použit program osmosis.
-
-Dále byly v diskuzi navrženo přidání výšky budov ze souboru dat Budovy 3D.
+Výše zmíněné návrhy byly takto zveřejněny v diskuzi na stránkách talk-cz.
 
 \subsection{Budovy 3D - výšky budov}
 \label{Budovy 3D - výšky budov}
-V diskuzi byl navržen import výšek budov {\tt building:height~= }
-ze~souboru dat Budovy 3D.
-Dále bylo navrženo aby byl přidán atribut zdroje
+V komentářích k bylo dále navrženo přidání výšek budov ze souboru dat Budovy 3D.
+\begin{verbatim}
+    building:height
+\end{verbatim}
+V návrhu bylo doporučeno označení pro zdroj tohoto importu, pro případné pozdější úpravy a opravy.
 \begin{verbatim}
     source:building:level =
 \end{verbatim}
-aby bylo možné později zdroj těchto dat identifikovat.
 
 ...rešerše dat z OSM...{building=yes , height=*} ...??
 
