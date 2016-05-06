@@ -87,15 +87,28 @@ from(  select AAA.*,BBB.*
        on ST_Within(BBB.geom , AAA.geom)
     ) as budovy
 
-join(  select id_bud,
+join(  
+/* pokud by by byla brána jen výška bez střechy 	
+	select id_bud,
               max(height) as max_Height
 
-       from(  select distinct   ST_ZMax(geom)-ST_ZMin(geom)  as height, 
-			  	                id_bud
-              from   ipr.bd3_prah73
-              where  typ = 'svisla obvodova stena'
+       	from	select distinct ST_ZMax(geom)-ST_ZMin(geom)  as height, 
+				id_bud
+              	from   ipr.bd3_prah73
+              	where  typ = 'svisla obvodova stena' 
            ) as iBUD
-              group by id_bud
+	group by id_bud */
+
+/* nebo celková výška budovy */
+	select 	id_bud,
+		max(maxZ) - min(minZ) as Height
+	from(	select	id_bud,
+			ST_ZMax(geom) as maxZ,
+			ST_ZMin(geom)  as minZ
+		from   ipr.bd3_prah73
+	     ) as max_min
+	group by id_bud
+
     ) as vysky			
 
 on budovy.id_bud = vysky.id_bud
