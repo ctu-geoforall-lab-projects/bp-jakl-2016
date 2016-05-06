@@ -12,27 +12,29 @@ do topografických map. Projekt založil Steve Coast v červenci roku
 2004 v Anglii. Jako inspirace mu posloužil projekt Wikipedia.
 
 Zprvu projekt využívalo jen pár nadšenců, postupem času ale získal
-%%% ML: dvakrat "narustat" v jedne vete
-projekt popularitu. S nárůstem počtu uživatelů narůstal i objem dat.
+projekt popularitu. S nárůstem počtu uživatelů se zvyšoval i objem dat.
+Bylo tedy nutné navýšit kapacitu a zabezpečení serverů.
+Také bylo potřeba zlepšit síťové řešení a infrastrukturu.
+Tím je myšleno, že data byla rozdělena na více serverů, aby se rozložila zátěž na ně.
+ 
 %%% ML: nejen kapacitu serveru, ale cele infrastruktury, resit dalsi otazky (bezpecnost a pod)...
-Bylo tedy nutné zvyšovat kapacitu serverů. 
 
 V dubnu roku 2006 byla založena nadace OpenStreetMap Foundantion pro financováni 
-projektu jako takového (zaměstnanců, běhu serverů atd.). \cite{wikiOSM}
+projektu jako takového (zaměstnanců, běhu a zajištění bezpečnosti serverů atd.). \cite{wikiOSM}
 
 
 \subsection{Struktura dat}
 \label{struktura dat}
-OSM data jsou nyní ukládána v databázi PostgreSQL \footnote{viz \url{http://blog.cleverelephant.ca/2009/04/openstreetmap-moves-to-postgresql.html}}
-%%% ML: tady to skoro vypada, ze jsou dava ve formatu XML ulozena
+OSM data jsou nyní uložena v databázi PostgreSQL. \footnote{viz \url{http://blog.cleverelephant.ca/2009/04/openstreetmap-moves-to-postgresql.html}}
+
 %%% primo v DB, cemuz tak ale neni; XML, resp. OSM je vymenny format
-a jsou k dispozici ve formátu XML. Jeho výhoda je jasná 
-struktura, snadná orientace v kódu pro člověka. Nevýhodou je ovšem větší objem
-%%% ML: v jake slova smyslu (prvek ~ soubor) ???
-dat, který lze ale snížit kompresí. Každý prvek má vlastní XML soubor. 
+Pro samotnou výměnu dat ale slouží souborový formát {.osm}, který využívá datový
+formát  XML. 
+Jeho výhoda je jasná struktura, snadná orientace v kódu pro člověka. 
+Nevýhodou je ovšem větší objem dat, který lze ale snížit kompresí. 
 
 %%% ML: tady by se hodil vycet (itemize), chtelo by do vysvetlit, co je cesta a pod...
-Třídy prvků v OSM jsou rozděleny na: uzel (node), cesta (way) a
+Elementy jsou v OSM rozděleny na: uzel (node), cesta (way) a
 relace (relation).
 
 Příklad XML souboru pro cestu:
@@ -40,8 +42,12 @@ Příklad XML souboru pro cestu:
 {\scriptsize
 \begin{lstlisting}
 <osm version="0.6" 
-generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
-   <way id="87249754" visible="true" version="2" changeset="34489106" timestamp="2015-10-07T11:52:41Z" user="Petr Dlouhý" uid="17615">
+generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)" 
+copyright="OpenStreetMap and contributors" 
+attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+
+   <way id="87249754" visible="true" version="2" changeset="34489106"
+        timestamp="2015-10-07T11:52:41Z" user="Petr Dlouhý" uid="17615">
        <nd ref="1014526199"/>
        <nd ref="1014525941"/>
        <nd ref="1014526337"/>
@@ -56,47 +62,45 @@ generator="CGImap 0.4.0 (32632 thorn-01.openstreetmap.org)" copyright="OpenStree
 }
 
 
-Uzel je definován jedinečným identifikátorem ({\tt node id=}). Jeho
-%%% ML: dodat EPSG kod, vsechny souradnice jsou v jednom SRS...
-souřadnice jsou ve WGS~84. Je také ukládána verze ({\tt version= }) a kdy
+Základním bodovým elementem je uzel (node), který je definován jedinečným
+identifikátorem ({\tt id=}). Všechny souřadnice jsou ve WGS~84 (EPGS 4326). 
+Je také ukládána verze ({\tt version= }), to jest, kdy byl do databáze přidán
+a také zde je uvedeno v jaké změně to bylo provedeno ({\tt changeset=~}).
 %%% ML: opet cestina (minimalne 2x "a")... preformulovat
-byl do databáze přidán a v jaké změně to bylo provedeno ({\tt changeset=~}).
+Dále je možné připojit různé atributy s klíčem a hodnotou ({\tt tag~k=~v=~}).
+Příklad atributu pro strom: {\tt tag k='natural' v='tree'}.
 %%% ML: cely tento odstavec plati i pro dalsi elementy - way/area (?)
-Dále k bodu je možné připojit různé atributy s klíčem a hodnotou ({\tt tag~k=~v=~}).
 
-Linie je spojení dvou a více uzlů, dále má také svůj identifikátor ({\tt way~id=~}).
-%%% ML: nejde o hlavicku, ale o xml atributy a tagy...
-Hlavičku XML souboru má shodnou s bodem. Ale dále obsahuje také seznam id uzlů,
-které ji tvoří. Liniím lze taktéž přiřadit atributy.
+Další liniový element je cesta (way) a ta je vždy spojení dvou a více uzlů.
+Ta má také svůj jedinečný identifikátor ({\tt way~id=~}) v rámci všech cest.
+Má vždy základní atributy jako {\tt id=*, visible=*, version=*, .. }, 
+stejně jako u elementu uzel.
+Dále však musí být seznam bodů, ze kterých se skládá.
+Je zde uvedena pouze reference na id bodů, nikoliv jejich souřadnice.
+Cestám lze taktéž přiřadit různé atributy.
 
-Linie lze ještě rozdělit na neuzavřené a uzavřené. Uzaveným liniím lze připojit
+Cesty se dále rozdělují na neuzavřené a uzavřené. Uzavřeným cestám se dají přidat
 i atributy určené jen pro plochy. Například les ({\tt landuse=forest}).
-%%% ML: veta nize - ?
-V případě, když se přidá atribut, který je prot linie, ale chceme
-ho použít pro plochy, musí se ještě přidat se atribut {\tt area=yes}.
 
-Speciálním příkladem jsou relace ({\tt relation= }), do kterých lze zahrnout
-jeden a více prvků. Lze do nich spojit prvky stejné, nebo odlišné třídy,
-nebo i jiné relace. Například dálnice je tvořena několika liniemi (cestami), a ty
-jsou zahrnuty do společné relace Dálnice D1. Nebo např. turistická trasa
-(od~KČT) je relace sdružující jak linie (cesty, pěšiny) tak i uzly
+Speciálním elementem je relace (relation), do které lze zahrnout
+jeden a více elementů. Mohou se do nich spojit elementy stejného (uzel a uzel),
+nebo různého druhu (uzely, cesty nebo i relace). 
+Například dálnice je tvořena několika cestami (way), a ty
+jsou zahrnuty do společné relace Dálnice D1. Nebo například turistická trasa
+(od~KČT) může být relace sdružující jak liniové elementy (cesty, pěšiny) tak i bodové
 (rozcestníky, vyhlídky, apod. ).
 
 %%% ML: osm wiki zni familiarne, + reference v tomto pripade je lepsi
 %%% hned za slovem, nemusim byt na konco odstravce
-U atributů popsaných na osmwiki \cite{OSMfeatures} je vždy uvedeno, k jaké třídě je
+U atributů popsaných na OpenStreetMap Wikipedii \cite{OSMfeatures} je vždy uvedeno, k jaké třídě je
 vhodné a nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit
-%%% ML: to ???
-na~jinou než povolenou třídu, nemusí to hlásit chybu, ale může být následně
+na~jinou než povolenou třídu, může být následně problém v některých vykreslovačích. 
 %%% ML: viz kapitola?
-problém v některých vykreslovačích. 
 
 \subsection{Změna licence}
 \label{změna licence}
 
-%%% ML: Původně vs. původní data...
-Původní data OSM a generované grafické dlaždice
-byly na distribuovány pod licencí
+Původně byla data OSM a generované grafické dlaždice distribuována pod licencí
 Creative~Commons~AllributionShare~Alike 2.0 (CC~BY~SA~2.0).
 
 Tato licence umožňovala užití (distribuci ale i editaci) díla pod podmínkou,
@@ -109,7 +113,7 @@ vytvořených mapových dlaždic \cite{OSMlicence}.
       \caption{Příklad umístění licence}
       \label{fig:attribution_example}
   \end{figure} 
-
+%%% ====================================
 %%% ML: duvod zmeny ?
 V roce 2012 byla licence publikovaných dat změněna na Open Data Commons
 Open Database Licence (ODbL).
