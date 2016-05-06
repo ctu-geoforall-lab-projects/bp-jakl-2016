@@ -1,4 +1,35 @@
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  Vybere budovy z OSM v Praze ze všech v ČR
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+
+create table praha_building_osm(
+		gid int primary key,
+		geom geometry,
+		building text,
+		height real,
+        "building:part" text) ;
+		
+		
+Insert into praha_building_osm
+
+select  B.gid, 
+        B.geom,
+        B.building, 
+        B.height,
+        B.part
+
+from(	select gid,geom,building, height 
+			from osm.czech_polygon
+			where building is not null
+		) as B
+
+join( 	select gid,geom,name 
+			from osm.czech_polygon 
+			where name like 'Hlavní město Praha' ) as P
+
+on ST_Within(B.geom, P.geom);
+
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   Vybere budovy z OSM pro danou oblast ze všech budov v Praze
      a vytvoří okolo každé z nich bufeer 5m           
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
@@ -24,7 +55,7 @@ from(   select	ST_MakeEnvelope(
 join(   select  gid, 
                 ST_Transform(geom,5514) as geom,
                 building
-        from jakl.praha_building 
+        from jakl.praha_building_osm
     ) as budovy
 				
 on ST_Within(budovy.geom , hranice.geom);				
