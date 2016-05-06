@@ -151,6 +151,7 @@ node,way   width        text         linear
 node,way   wood         text         linear
 node,way   height       real         polygon
 way        building:height  real     polygon
+way        building:part  text       polygon       
 node,way   z_order      int4         linear # This is calculated during import
 way        way_area     real         linear # This is calculated during import
 
