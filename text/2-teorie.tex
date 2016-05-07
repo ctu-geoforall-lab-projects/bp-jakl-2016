@@ -123,7 +123,15 @@ vytvořených mapových dlaždic \cite{OSMlicence}.
 
 V roce 2012 byla licence publikovaných dat změněna na Open Data Commons
 Open Database Licence (ODbL).
-Důvodem byla lepší licenční ochrana dat v databázi. \cite{OSMlicenceChange}
+Důvodem byla lepší licenční ochrana dat v databázi. 
+Starší licence (CC BY-SA) chránila data pouze pomocí autorského zákona. 
+Obě licence jsou "Uveďte autora" a "Zachovejte licenci". Avšak rozdíl mezi
+"starou" a "novou" je ten, že pokud někdo pod starou licencí (CC BY-SA),
+vytvoří mapu (nebo jiné dílo) musí zachovat stejnou licenci ale nemusí uvolnit
+přímo data. Pod novou licencí (ODbl) je možné uvolnit data (nebo dílo)
+pod jakoukoli licencí ale pokud uvolní všechny doplňky a vylepšní,
+která k OSM datům přidal.\cite{OSMlicenceChange}.
+
 Tato změna licence přinesla problém
 s~daty, které byly poskytnuty projektu v předchozí licencí
 (CC~BY~SA~2.0). Bylo nutné se dotázat každého z dřívějších
@@ -138,8 +146,12 @@ V současnosti jsou tedy data OSM distibuována pod licencí ODbL a
 generované grafické dlaždice pod licencí CC-BY SA 4.0. \cite{OSMlicence}
 
 \subsection{Licence ODbL}
+Licence ODbl \footnote{Plné znění (anglicky) viz na \url{http://opendatacommons.org/licenses/odbl/1.0/}}
+se zabívá právní ochranou databází, včetně
+veškerých autorských a příbuzných práv k databázi.
+Chrání všechny prvky z databáze, ale dále nezahrnuje autorská
+práva na obsah nezavislý na databázi. 
 
-%%% ML: preformulovat: Licence ODbl umoznuje...
 Licence ODbl umožňuje
 \begin{itemize}
     \item    kopírovat, distribuovat a užívat data
@@ -147,18 +159,20 @@ Licence ODbl umožňuje
     \item    měnit původní data
 \end{itemize}
 
-%%% ML: preformulovat
-S použitím ale uživatel musí ale uvést zdroj a licenci dat.
-Dále uživatel souhlasí, že nová data vytvořená z původních dat budou sířena
-také pod~licencí ODbL.\footnote{Přesné znění viz na \url{http://opendatacommons.org/licenses/odbl/1.0/}}
-
+Při použití databáze s licencí ODbl, je k ni
+nutné připojit kopii přesnéh zněnít licence ODbl.
+Při nakládnání s databází ponechat nedotčena veškerá autorská práva a
+uvést její zdroj (nebo autora).
+Veškeré odvozené databáze musí spoňovat podmínky ODbl,
+tj. buď přímo licence ODbl, nebo licence s ní kompatibilní.
+\cite{Nesetril2013thesis}
 
 \subsection{Zdroje dat}
 \label{Zdroje dat}
 Jak bylo zmíněno, byla snaha, aby mapová data tvořili jedinci prvotním
 sběrem dat, tj. měřením vlastními GNSS (GPS, Glonass) přijímači a
 znalostí místních poměrů (uzavřené silnice, stezky atd.).  A takto
-vzniklé dílo volně užívat k vlastním potřebám.  Komunita přispěvatelů se
+vzniklé dílo volně užívat k vlastním potřebám. Komunita přispěvatelů se
 zprvu pomalu, později poměrně rychle rozrostla a dnes čítá 3,7 milionů
 registrovaných uživatelů s alespoň jednou vytvořenou změnou v OSM a
 2,7 milionů účtů aktivních přispěvatelů.\cite{OSMstats}
@@ -190,8 +204,6 @@ obydlené pevniny. \footnote{\url{http://wiki.openstreetmap.org/wiki/Bing}}
 Třetím zdrojem dat a zároveň postupně dominujícím, co do jeho obsahu, jsou
 datové sady ze státního sektoru. Tyto datové sady jsou nejvhodnějším zdrojem
 dat.
-%%% ML: ze -> produkované
-%%% ML: proc ? vyargumentovat
 
 \subsection{Importy}
 \label{Importy}
@@ -220,35 +232,28 @@ Tato diskuze probíhá přes posílání emailových zpráv do společné konfer
 Uživatelům chodí emaily z probíhající diskuze a pokud na nějaký chtějí reagovat,
 tak pošlou email na adresu serveru, na kterém diskuze běží, a musí do Předmětu 
 napsat Re: a předmět zprávy, na kterou reagují. Server tyto zprávy pomocí 
-předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách.\footnote{http://lists.openstreetmap.org/listinfo/talk-cz}
+předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách.\footnote{\url{http://lists.openstreetmap.org/listinfo/talk-cz}}
 
 \subsection{Vykreslovače}
 \label{Vykreslovače}
 Na hlavní stránce OSM (\url{http://www.openstreetmap.org}) je k dispozici mapová aplikace. Ta nabízí pět
 „základních“ přednastavených vrstev vykreslených z~dat z OSM.
-%%% ML: jde o EPSG:3857 - zminit, stejny souradnicovy system pouziva
-%%% Google Maps a pod.
 Pro snadné vykreslení dat do grafických dlaždic se používá takzvaný pseudo Mercatorovo
 zobrazení nebo Web Mercator (EPSG 3857), a to proto, že snadno vykreslí celý povrch Země (až na velké zkreslení u polů). 
 První, kdo zobrazení Web Mercartor použil byla spolčnost Google pro svoje mapy Google Maps.\cite{WebMercator}
-
 %%% ML: mozna dodat screenshoty do prilohy?
-\begin{itemize}
 
+\begin{itemize}
   \item Standardní vrstva - vykresluje všechny prvky přiměřeně.
   \item Cyklomapa - vykresluje cyklostezky, výškopis. 
   \item Dopravní mapa - vykresluje silniční a železniční sítě.
-  \item MapQuest Open - podkladová mapa právě pro potřeby 
-    Geocaching.
-    %%% ML: restaurace na prvni miste?
-  \item Humanitární mapa, která vykresluje služby (restaurace, banky, muzea, 
-  školy, kostely...)  a potlačuje ostatní prvky. 
-
+  \item MapQuest Open - podkladová mapa právě pro potřeby Geocaching.
+  \item Humanitární mapa, která vykresluje důležité věřejné služby a potlačuje ostatní prvky. 
 \end{itemize}
 
 %%% ML: kompozici? ruznych dat? dovysvetlit
-Existují další stránky, jež se zabývají skládáním a vykreslením
-různých dat. Například mapu turistických a cyklistických tras vykresluje
+Existují další stránky, jež se zabývají skládáním různých zdrojů data s OSM a jejich vykreslením.
+Například mapu turistických a cyklistických tras vykresluje
 pro celou Evropu mtbmap.\footnote{mtbmap.cz}
 
 %%% priklad? mozna dodat hezky screenshot?
@@ -262,35 +267,72 @@ atributů), popřípadě i stromů.
 \section{Opendata}
 \label{opendata}
 
-%%% ML: od kud toto cerpate. Otevrena data (ala public domain) maji
-%%% svuj puvod mnohem drive, v devadesatych letech...
 Základní myšlenka otevřených dat vznikla v USA.
-%%% ML: nejen geograficka data
 Myšlenka je, pokud vzniknou jakákoliv data z veřejných peněz, měla by tedy být
-%%% ML: tady neco tvrdite, ale nemate to podlozeno
 přístupná veřejně. Některé studie uvádí, že tento jev měl kladný efekt na ekonomiku.
 \footnote{\url{http://www.worldbank.org/content/dam/Worldbank/document/Open-Data-for-Economic-Growth.pdf}}
+\footnote{\url{http://www.otevrenadata.cz/res/data/001/003498.pdf}}
 
-Proto jako první hlavní zdroj byly satelitní snímky povrchu Země a digitální model terénu
+Proto jako první hlavní zdroj byly satelitní snímky povrchu Země (Landsat) %\footnote{\url{http://landsat.usgs.gov/}}
+a digitální model terénu (projekt SRTM) %\footnote{\url{http://www2.jpl.nasa.gov/srtm/}}
 s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic).
-%%% ML: Landsat a SRTM jsou zverejnena jiz delsi dobu... to opravdu
-%%% nesouvisi s vladou BO
 
-Tento trend se začal rozšiřovat zprvu do zemí západní Evropy,
-%%% ML: druha cast vety nenavazuje na prvni, jake zeme, opet, nejaka
-%%% reference?
-jmenovitě Velké Británie, Francie či Německa, ale i jiné země mimo Evropu..
+Tento trend se začal rozšiřovat zprvu do zemí západní Evropy
+(Velké Británie, Francie či Německa), ale i země mimo Evropu.\cite{OpendataTrends}
 
-%%% ML: Fond se jmenuje Fond Otakara Motejla (opravdu jej zalozil on,
-%%% nebyl zalozen na jeho pocet). Jednim z projektu fondu jsou prave
+%%% Jednim z projektu fondu jsou prave
 %%% Otevrena data
-V ČR se tomuto věnuje fond Otevřená data\footnote{www.otevrenadata.cz}, který založil Otakar
-%%% ML: Sociery? co Rekostrukce statu a pod.?
-Motejl. Tento fond spolupracuje s nadací Sociery Fund Praha. V rámci
-těchto uskupení je vyvíjen tlak na transparentnost veřejné správy a
-zveřejňování smluv a dat
-státních institucí, jelikož jejich získání a údržba byla placena
-z~veřejných zdrojů.
+V České Republice se tomuto věnuje fond Otakara Motejla, založen na jeho počest,
+a jeho hlavním projektem je Otevřená data. Spolupracuje s nadací Society Fund
+Praha a Rekonstrukce Státu.
+V rámci těchto uskupení je vyvíjen tlak na transparentnost veřejné správy,
+zveřejňování smluv a dat státních institucí, jelikož jejich získání a údržba byla
+placena z~veřejných zdrojů.
+%%% rozsirit
+\\
+\\*
+Otevřená data lze dělit na 5 stupňů,
+dle otevřenost.
+
+\begin{itemize}
+
+    \item   Data jsou dostupná v WWW síti s jasnými licenčními podmínkami.
+            Není zde žádný požadavek na datová formát a proto není brán jako
+            dostatečný způsob zveřejňování dat. Těmito daty ku příkladu jsou
+            Webové Mapové Služby (WMS). Jsou veřejně k dispozici avšak
+            nezveřejňují přímo data ale jen obrázky generované z nich.
+
+    \item   Zveřejněná data jsou již ve strojově čitelném formátu, který je
+            veřejně dobře znám. Nejčastěji se jedná o charakter tabulky.
+            Musí umožňovat přístup k jednotlivým řádku a obsahu buněk.
+
+    \item   Třetí stupěn navíd od druhého vyžaduje aby k jeho čtení nebyl
+            vyžadován speciální software ale aby byl volně dostupný ze sítě WWW.
+            Spadají sem tedy dokumenty formátů OpenOffice (Office Open XML,
+            OpenDocument). Pro prostorová data formáty GML, KML nebo GeoPackage.
+
+    \item   U stupně otevřenosti 4 je v distribuované datové sadě
+            povidnost zavést identifikaci entity ve tvaru Internationalized
+            Resource Identifier (IRI)
+
+    \item   U nejvyššího možného stupně otevřenosti je vyžadováno aby distribuce
+            splňovala standardy popojených dat (Linked Data).
+
+\end{itemize}
+%% http://opendata.gov.cz/standardy:stupne-otevrenosti
+
+\begin{figure}[hbt]%[p]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./pictures/5star-steps.png}
+    \caption{Stupně otevřenosti dat, převzdato z \url{http://5stardata.info}}
+    \label{fig:Stupně otevřenosti dat}
+\end{figure}
+
+Díky této iniciativě došlo v rámci České Republiky ke zveřejnění
+dat státních úřadů s různým úspěchem a stupněm otevřenosti.
+Avšak tento trend zpřístupnění a zveřejňování pozvolna pokračuje.
+Příkladem buď Ministersta vnitra a financí nebo Český úřad zeměměřický a katastrální.
+
 
 \section{IPR Praha}
 \label{IPR Praha}
@@ -316,9 +358,14 @@ pro jakýkoliv účel, a to i komerční.
 
 Poskytovatel licence nemůže odvolat tato oprávnění do té doby, dokud dodržujete licenční podmínky.
 
-Uveďte původ — Je Vaší povinností uvést autorství, poskytnout s dílem odkaz na licenci a vyznačit Vámi provedené změny. Toho můžete docílit jakýmkoli rozumným způsobem, nicméně nikdy ne způsobem naznačujícím, že by poskytovatel licence schvaloval nebo podporoval Vás nebo Váš způsob užití díla.
+Uveďte původ — Je Vaší povinností uvést autorství, poskytnout s dílem odkaz
+na~licenci a vyznačit Vámi provedené změny. Toho můžete docílit jakýmkoli
+rozumným způsobem, nicméně nikdy ne způsobem naznačujícím, že by poskytovatel
+licence schvaloval nebo podporoval Vás nebo Váš způsob užití díla.
 
-Zachovejte licenci — Pokud budete toto dílo upravovat, pozměňovat nebo na něj navazovat, musíte svoje odvozená díla vystavovat pod stejnou licencí jako původní dílo."
+Zachovejte licenci — Pokud budete toto dílo upravovat, pozměňovat nebo
+na~něj navazovat, musíte svoje odvozená díla vystavovat pod stejnou
+licencí jako původní dílo."
 
 Podrobněji viz přesné znění na stránkách CraetiveCommmons.
 \footnote{https://creativecommons.org/licenses/by-sa/4.0/legalcode/}
