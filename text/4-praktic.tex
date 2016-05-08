@@ -573,19 +573,19 @@ Na tuto operaci byla použita funkce
 \end{verbatim}
 Tímto byly nalezeny prvky z dat IPR, které jsou "přibližně na stejném místě"
 jako budovy z OSM. Do tabulky o dvou sloupcích byly uloženy pouze údaje
-{\tt gid} pro budovy z OSM a {\tt id_bud} polygonu budovy (z dat IPR).
-Tato do4asn8 tabulka byla nazvána {\tt gid_id}.
+{\tt gid} pro budovy z OSM a {\tt id\_bud} polygonu budovy (z dat IPR).
+Tato do4asn8 tabulka byla nazvána {\tt gid\_id}.
 
 
 Dále tedy bylo možné k těmto prvkům ({\tt gid} OSM budov) přiřadit výšku podle hodnoty {\tt id\_bud},
 kterou mají všechny polygony tvořící jednu budovu stejnou.
 Njeprve musely být vybrány pouze ty záznamy {\tt gid},
-které jsou v tabulce {\tt git_id} pouze jednou.
+které jsou v tabulce {\tt git\_id} pouze jednou.
 To jest polygon budovy z OSM, ve které byl nalezen pouze jeden polygon z datasetu IPR.
 Následně byly k připojeny výšky
 Pro nalezení výšky budovy\footnote{dle \url{http://wiki.openstreetmap.org/wiki/Cs:Simple_3D_Buildings}}
 byly požity všechny všechny polygony tvořící budovu.
-V~rámci jedné budovy (podle stejné hodnoty v {\tt id_bud}, byla výška budovy vypočtena
+V~rámci jedné budovy (podle stejné hodnoty v {\tt id\_bud}, byla výška budovy vypočtena
 jako rozdíl nejvyššího bodu a nejnižšího bodu budovy.
 Přesněji byla vypočtena takto
 \begin{verbatim}
@@ -598,11 +598,11 @@ Přesněji byla vypočtena takto
         ) as max_min
     group by id_bud
 \end{verbatim}
-Ve skriptu je tato dočasné tabulky označena {\tt osm_height}.
+Ve skriptu je tato dočasné tabulky označena {\tt osm\_height}.
 
 Nakonec se získané hodnota výšky budovy přidá do puvodního datasetu (tabulky)
-{\tt praha_building_osm}. Dočasné tabulky {\tt bud73\_osm, bud73\_ipr, gid\_id}
-a {\tt osm_height}.
+{\tt praha\_building\_osm}. Dočasné tabulky {\tt bud73\_osm, bud73\_ipr, gid\_id}
+a {\tt osm\_height}.
 
 
 
