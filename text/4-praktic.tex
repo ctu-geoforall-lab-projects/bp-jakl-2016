@@ -4,17 +4,17 @@
 \section{server PostGIS}
 \label{server PostGIS}
 V rámci této bakalářské práce s daty byla zřízena databáze PostGIS na školním
-serveru. Do této databáze byla nahrána verze dat z OSM pro celou Českou
-Republiku. Tyto data jsou každý den pravidelně aktualizována.
-Data z OSM jsou do školní databáze nahrávána pomocí programu {\tt osm2pgsql.py}.\footnote{dostupné na http://wiki.openstreetmap.org/wiki/Osm2pgsql}
+serveru. Data z OSM jsou do školní databáze nahrávána pomocí programu {\tt osm2pgsql.py}.\footnote{dostupné z \url{http://wiki.openstreetmap.org/wiki/Osm2pgsql}}
 Ten nejprve stáhne aktuální data pro celou evropu a následně ořeže
-jen na území ČR. 
+jen na území ČR. Tyto data jsou každý den pravidelně aktualizována.
 
-Pro každou ze tří tříd z OSM je vytvořena samostatná 
+Tabulky v databázi byly vytvořeny podle základního schematu, který vyfiltruje některé údaje.
+Pro každou ze tří tříd prvků (bod, liniem a polygon) z OSM je vytvořena samostatná 
 tabulka. Pro uzly je vytvořena tabulka {\tt czech\_point}.
 Pro~cesty z~OSM je vztvořena tabulka {\tt czech\_line} a pro plošné 
 prvky (uzavřené cesty s atributy pro plochy) je vytvořena tabulka
-{\tt czech\_polygon}.
+{\tt czech\_polygon}. Ještě je vytvořena tabulka {\tt czech\_roads},
+která obsahuje všechny silnice v ČR.
 
 Každý prvek má přiřazen, v rámci tabulky, jedinečné číslo {\tt PID}, 
 dále je vytvořena geometrie a pak pro každý atribut je stejnojmený 
@@ -34,7 +34,7 @@ možnosti souborvé formáty GeoJSON, DXF, GML nebo ESRI Shapefile.
 Dále je na výběr mezi dvěma kartografickými zobrazeními S-JTSK nebo WGS 84.
 
 Celkem IPR zveřejňuje 96 druhů datových souborů a ty jsou rozděleny
-do~kategorii.\footnote{viz stránka IPR www.geoportalpraha.cz/cs/opendata}
+do~kategorii.\footnote{viz stránka IPR \url{www.geoportalpraha.cz/cs/opendata}}
 
 Pokud není řečeno jinak, jedná se o data ve vektorové formě.
 Těmito kategoriemi jsou:
@@ -482,6 +482,18 @@ V návrhu bylo doporučeno označení pro zdroj tohoto importu, pro případné 
 \begin{verbatim}
     source:building:level =
 \end{verbatim}
+
+Při rešerši dat uložencýh na školní geodatabázi bylo zjištěno,
+že data stahovaná a ukládaná z OSM neobsahují potřebné údaje.
+Přesněji dataset (tabulka) neobsahovala údaje výšky budov
+(sloupc {\tt height} a sloupec {\tt building\:height}.
+Proto bylo nutné základní schéma změnit tak, aby se tyto údaje také ukládaly.
+Upravené schema bylo uloženo a bylo nastaveno jako výchozí.
+
+Bylo také vyhodnocena že bude vhodné aby se ukládal údaj, zdali
+je polygon samostatná budova nebo pouze část relace budovy.
+K tomuto rozeznání je užíván atribut {\tt builing\:part},
+a jeho hodnoty byly zaznamenány do stejnjmeného sloupce.
 
 ...rešerše dat z OSM...{building=yes , height=*} ...??
 
