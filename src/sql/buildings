@@ -31,6 +31,7 @@ on ST_Within(B.geom, P.geom);
 
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   Vybere budovy z OSM pro danou oblast ze všech budov v Praze
+    ..ale jen ty co nejsou building:part a nemají definovanou building:height
      a vytvoří okolo každé z nich bufeer 5m           
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 /*         toto -- čislo se bude měnit podle čísla datasetu bd3_prah--  */              
@@ -53,8 +54,10 @@ join(   select  gid,
                 ST_Transform(geom,5514) as geom,
                 building
         from jakl.praha_building_osm
+        where  "building:part" is null              /* vybere jen ty co nejsou součastí (part) relace a nemaji definovanou vyšku */
+          and  "building:height" is null
     ) as budovy
-on ST_Within(budovy.geom , hranice.geom);				
+on ST_Within(budovy.geom , hranice.geom);
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         Vytvoří jeden polygon pro každou jednu budovu  (IPR)
@@ -114,7 +117,7 @@ join(	select	id_bud,
 						max(maxZ) - min(minZ) as Height
 			from(	select	id_bud,
 									ST_ZMax(geom) as maxZ,
-									ST_ZMin(geom)  as minZ
+									ST_ZMin(geom) as minZ
 						from   ipr.bd3_prah73
 					) as max_min
 			group by id_bud
@@ -122,38 +125,13 @@ join(	select	id_bud,
 on budovy.id_bud = vysky.id_bud;
 
 /*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		Vyhledání všech budov z OSM které nejsou součástí (bulding:part) nějaké relace 
-							  a zárovenˇ nemají uvedenou výšku (building:height)  		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% */
-
-create table 	osm_adept(
-			gid int primary key,
-			building_height 	real	);
-
-insert into osm_adept
-select	A.gid,
-			B.building_height
-from(	select * 
-			from	praha_building_osm
-          	where 	"building:part" is null         /* vybere jen ty co nejsou part a nemaji definovanou vyšku */
-    	        and	"building:height" is null
-	) as A
-join(   	select *
-			from osm_height         /* a připojí k nim výšky z předchozí tabulky */
-		)as B
-on A.gid = B.gid
-order by A.gid;		
-
-
-
-/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		nakonec Získaná data přidá do původní tabulky budov z OSM 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
 
 update praha_building_osm
 SET "building:height" = building_height
-from osm_adept
-where osm_adept.gid = praha_building_osm.gid;		
+from osm_height
+where osm_height.gid = praha_building_osm.gid;
 
 /*=========================================================
     nakonec odstraní všechny dočasné tabulky
@@ -162,7 +140,6 @@ drop table bud73_osm;
 drop table bud73_ipr;
 drop table gid_id;
 drop table osm_height;
-drop table osm_adept;
 
 /* 
 skript lze spustit vícekrát zasebou .. a postpně zvětšovat buffer kolem OSM budov,

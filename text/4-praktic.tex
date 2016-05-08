@@ -495,9 +495,6 @@ je polygon samostatná budova nebo pouze část relace budovy.
 K tomuto rozeznání je užíván atribut {\tt builing\:part},
 a jeho hodnoty byly zaznamenány do stejnjmeného sloupce.
 
-...rešerše dat z OSM...{building=yes , height=*} ...??
-
-...kolik budov má již definovanou výšku
 
 V souboru Budovy 3D je dále uložno 128 datových sed pro menší oblasti.
 Tyto datové sady obsahují budovy jen z malé oblasti, protože by datová sada budov
@@ -511,16 +508,31 @@ ohraničující oblast okolo ní a přidána přesah o 100 metrů na každou str
 Tedy byl vytvořen obdélník okolo jedné datové sady.
 
 Pomocí tohoto obdélníku byly vybrány budovy z OSM uvnitř tohoto obdélníku
-a přitom byly vytvořeny nárazníkové zony (buffer) s hodnotou 5m pro každou budovu.
+a přitom byly vytvořeny nárazníkové zony (buffer) s hodnotou 3 m pro každou budovu.
 Byl zvolen tento postup, protože budovy z IPR a OSM nemusí mít přesně stejnou
-polohu a tvar (polygonů).
-Tato vzdálenost (5 m) byla zvolean jako dostačující, avšak může být zvolena jiná.
-Tento dočasný datasest byl nazván {\tt bud73\_OSM}.
+polohu a tvar (polygonů).Tento dočasný datasest byl nazván {\tt bud73\_OSM}.
 
-Dále byl proveden průzkum dat z {\tt BD\_Prah73},
-datové sady ze souboru Budovy 3D (z IPR).
+Pro velikost nárazníkové zóny kolem budov z OSM se provedla analyza.
+Modelováno bylo s hodnotami po~0.5~m od~0.5~m až do vzdálenost 5~m.
+Při malé velikosti nárazníkové zóny nastalávala situace,
+že v této zóně nebyla nalezena žádná budova (polygon budovy) z datasetu IPR.
+Mohlo by se zdát, že čím větší nárazníková zóna kolem budov z OSM tím lépe.
+Avšak, čím byla velikost nárazníkové zóny zvolena větší, tím více se stalo,
+že v této nárazníkové zóně "uvízlo" více budov (polygonů) z datasetu IPR.
+Bylo tedy nutné zvolit "zlatou střední cestu" tj. 3 m.
+
+Další možností jak se vyvarovat aby v nárazníkové zoně kolem budov z OSM "uvízlo více
+polygonů budov (z dataset IPR) je spouštět skript vícekrát a postupně volit větší
+a větší nárazníkovou zónu. Skript je napsán tak aby vybral a vytvořil nárazníkovou zónu
+, jen těm budovám (polygonům), které nemají atribut {\tt building:part} a ani
+{\tt building:height}. Ovšem tento postup spouštět skript vícekrát je samozřejmě také
+více časově náročný.
+
+Dále byl proveden průzkum dat z {\tt BD\_Prah73} datové sady ze souboru Budovy 3D (z IPR).
 Bylo zjištěno, že vždy polygony, které vytvářejí 3D model jedné budovy,
-mají stejnou bodnotu ve sloupci {\tt id\_bud} .
+mají stejnou bodnotu ve sloupci {\tt id\_bud}.
+V 3D geometrii těchto polygonů budov jsou uloženy všechny (x,y,z) souřadnice
+vrcholů, jenž určují polygon.
 Polygony se stejnou hodnotou {\tt id\_bud} lze dále dělit dle hodnoty
 ve~sloupci {\tt typ} na
 \begin{verbatim}
@@ -536,51 +548,64 @@ ve~sloupci {\tt typ} na
     zakladova deska
  .. a další
 \end{verbatim}
-Další práce bude soustřena na polygony, které jsou typu
-\begin{verbatim}
-    sikma stresni plocha
-    vodorovna stresni plocha
-    svisla obvodova stena
-\end{verbatim}
-V 3D geometrii těchto polygonů budov jsou uloženy všechny (x,y,z) souřadnice
-vrcholů, jenž určují polygon.
 
 Poté byly z datové sady {\tt BD\_Prah73} vybrány všechny polygony, které
-měly ve sloupci {\tt typ} obsahují frázi {\tt stresni plocha} .
+měly ve sloupci {\tt typ} obsahují frázi {\tt stresni}.
 Geometrie těchto vybraných 3D polygonů byly opraveny funkcí {\tt ST\_MakeValid()}
 a následně "přetvořeny" na 2D polygony funkcí {\tt ST\_Force\_2D()}.
-(vynechala se jen Z-ová souřadnice.)
+Vynechala se jen Z-ová souřadnice z geometrie.
+Kvůli některým situacím, kdy k sobě polygony přesně nedoléhaly, bylo nutné
+vytvořit nich nárazníkovou zónu (buffer) a jako dostačující byla zvolena hodnota 0.1 m.
 Následně byly tyto polygony takzvaně "rozpuštěny". Rozpuštění znamená,
 polygony, které se dotýkají minimálně jednou společnou stranou sloučí
 do~jednoho polygonu.
 Rozpuštěny byly polygony navzajem jen ty, které měly stejnou hodnotu ve sloupci 
 {\tt id\_bud}.
 Tím se docílilo, každá budova bude reprezentována jenom jedním 2D polygonem.
-Tento dočasný datová sada byl nazván {\tt bud73\_IPR}
+Tenta dočasná datová sada byla nazvána {\tt bud73\_IPR}
 
-Následně mohlo pro každý prvek z~datové sady {\tt bud73\_OSM} být hledány
-všechny prvky z~{\tt bud73\_IPR}, které by byly uvnitř.
+
+Následně mohlo být pro každý polygon z~{\tt bud73\_OSM} hledány
+všechny polygony z~{\tt bud73\_IPR}, které by byly uvnitř.
 Na tuto operaci byla použita funkce
 \begin{verbatim}
     ST_Within( bud73_OSM.geom , bud73_OSM.geom )
 \end{verbatim}
 Tímto byly nalezeny prvky z dat IPR, které jsou "přibližně na stejném místě"
-jako budovy z OSM.
+jako budovy z OSM. Do tabulky o dvou sloupcích byly uloženy pouze údaje
+{\tt gid} pro budovy z OSM a {\tt id_bud} polygonu budovy (z dat IPR).
+Tato do4asn8 tabulka byla nazvána {\tt gid_id}.
 
-Dále tedy bylo možné k těmto prvkům přiřadit výšku podle hodnoty {\tt id\_bud},
+
+Dále tedy bylo možné k těmto prvkům ({\tt gid} OSM budov) přiřadit výšku podle hodnoty {\tt id\_bud},
 kterou mají všechny polygony tvořící jednu budovu stejnou.
-
-Pro hledání výšky budovy bylo dále pracováno pouze s polygony,
-které mají ve sloupci {\tt typ} hodnotu {\tt svisla obvodova stena}.
-Pro nalezení (z-ové) výšky každého polygonu stěny budovy,
-byly použity funkce pro hledání maximaní a minimální hodnoty z-ové souřadnice.
-Výška byla vypočtena jako jako rozdíl těchto hodnot.
+Njeprve musely být vybrány pouze ty záznamy {\tt gid},
+které jsou v tabulce {\tt git_id} pouze jednou.
+To jest polygon budovy z OSM, ve které byl nalezen pouze jeden polygon z datasetu IPR.
+Následně byly k připojeny výšky
+Pro nalezení výšky budovy\footnote{dle \url{http://wiki.openstreetmap.org/wiki/Cs:Simple_3D_Buildings}}
+byly požity všechny všechny polygony tvořící budovu.
+V~rámci jedné budovy (podle stejné hodnoty v {\tt id_bud}, byla výška budovy vypočtena
+jako rozdíl nejvyššího bodu a nejnižšího bodu budovy.
 Přesněji byla vypočtena takto
 \begin{verbatim}
-    ST_ZMax(geom) - ST_ZMin(geom)       as height
+    select	id_bud,
+            max(maxZ) - min(minZ) as Height
+    from(   select	id_bud,
+                    ST_ZMax(geom) as maxZ,
+                    ST_ZMin(geom) as minZ
+            from    ipr.bd3_prah73
+        ) as max_min
+    group by id_bud
 \end{verbatim}
+Ve skriptu je tato dočasné tabulky označena {\tt osm_height}.
 
-Jelikož ale svislé stěny budovy může tvořit více než 4 polygony,
-a ne všechny nemusí mít stejnou hodnotu (výšku), byla z těchto hodnot
-pro každou svislou stěnu vybrána maximální hodnota.
-Tedy byla vybrána maximální hodnota výšky stěny budovy.
+Nakonec se získané hodnota výšky budovy přidá do puvodního datasetu (tabulky)
+{\tt praha_building_osm}. Dočasné tabulky {\tt bud73\_osm, bud73\_ipr, gid\_id}
+a {\tt osm_height}.
+
+
+
+
+
+
