@@ -16,35 +16,39 @@ projekt popularitu. S nárůstem počtu uživatelů se zvyšoval i objem dat.
 Bylo tedy nutné navýšit kapacitu a zabezpečení serverů.
 Také bylo potřeba zlepšit síťové řešení a infrastrukturu.
 Tím je myšleno, že data byla rozdělena na více serverů.
- 
-%%% ML: nejen kapacitu serveru, ale cele infrastruktury, resit dalsi otazky (bezpecnost a pod)...
 
 V dubnu roku 2006 byla založena nadace OpenStreetMap Foundantion pro financováni 
 projektu jako takového (zaměstnanců, běhu a zajištění bezpečnosti serverů atd.). \cite{wikiOSM}
-
 
 \subsection{Struktura dat}
 \label{struktura dat}
 OSM data jsou nyní uložena v databázi PostgreSQL. \cite{OSMserver}
 
-%%% primo v DB, cemuz tak ale neni; XML, resp. OSM je vymenny format
 Pro samotnou výměnu dat ale slouží souborový formát {.osm}, který využívá datový
 formát  XML. 
 Jeho výhoda je jasná struktura, snadná orientace v kódu pro člověka. 
 Nevýhodou je ovšem větší objem dat, který lze ale snížit kompresí. 
 
-%%% ML: tady by se hodil vycet (itemize), chtelo by do vysvetlit, co je cesta a pod...
-Elementy jsou v OSM rozděleny na:
+Prvky (elementy) jsou v OSM rozděleny na:
 \begin{itemize}
     \item uzel (node) 
+    \item cesta (way)
+        \subitem neuzavřená
+        \subitem uzavřená
+        \subitem plocha (area)
+    \item relace (relation) 
+\end{itemize}
+
+\subsubsection{uzel (node) }
 
 Základním bodovým elementem je uzel (node), který je definován jedinečným
-identifikátorem ({\tt id=}). Všechny souřadnice jsou ve WGS~84 (EPGS 4326). 
-Je také ukládána verze ({\tt version= }), to jest, kdy byl do databáze přidán
-a také zde je uvedeno v jaké změně to bylo provedeno ({\tt changeset=~}).
-Dále je možné připojit různé atributy (tag) s klíčem a hodnotou ({\tt tag~k=~v=~}).
+identifikátorem ({\tt id=}). 
+Je ukládána verze uzlu, časový údaj, kdy byl do databáze přidán
+a je také uvedeno v jaké změně to bylo provedeno ({\tt changeset=~}).
+Každý uzel má svoje souřadnice uloženy v souřadnicovém systému WGS~84 (EPGS 4326). 
+Dále je možné připojit různé atributy (tag) tj. klíče a hodnotou ({\tt tag~k=~v=~}).
 \\*
-Příklad XML souboru pro uzel (stromu):
+Příklad XML souboru pro uzel (strom):
 
 {\scriptsize \begin{lstlisting}
 <node id="2905214905" visible="true" version="1" changeset="22804106" 
@@ -54,18 +58,20 @@ Příklad XML souboru pro uzel (stromu):
     <tag k="source" v="bing:ortofoto"/>
 </node>
 \end{lstlisting} }
-    \item cesta (way)
 
-Další liniový element je cesta (way) a je vždy určena dva a více uzlů.
-Ta má také svůj jedinečný identifikátor ({\tt way~id=~}) v rámci všech cest.
-Má vždy základní atributy ({\tt id=*, visible=*, version=*, .. }), 
+\subsubsection{cesta (way) }
+
+Další liniový element je cesta (way), ta je vždy určena dvěma nebo více uzly.
+Každá cesta má také svůj jedinečný identifikátor ({\tt way~id=~}) v rámci všech cest.
+Má také základní atributy ({\tt id=*, visible=*, version=*, .. }), 
 stejně jako u elementu uzel.
 Dále však musí být seznam bodů, ze kterých se skládá.
 Je zde uvedena pouze reference na id bodů, nikoliv jejich souřadnice.
 Cestám lze taktéž přiřadit různé atributy.
 
 Cesty se dále rozdělují na neuzavřené a uzavřené.
-Jen uzavřeným cestám se dají přiřadit atributy určené pro plochy (area).
+Jen uzavřené cesty mohou tvořit plošné objekty (area),
+a jen těm se mohou přiřadit atributy určené pro plochy.
 Například les ({\tt landuse=forest}).
 
 Příklad XML souboru pro cestu:
@@ -86,22 +92,21 @@ Příklad XML souboru pro cestu:
 \end{lstlisting}
 }
       
-    \item relace (relation)
+\subsubsection{relace (relation) }
 
 Speciálním elementem je relace (relation), do které lze zahrnout
-jeden a více elementů. Mohou se do nich spojit elementy stejného (uzel a uzel),
-nebo různého druhu (uzely, cesty nebo i relace). 
+jeden a více elementů. Mohou se do nich spojit elementy stejného druhu (uzel a uzel),
+nebo různého (uzly, cesty nebo i relace).
 Například dálnice je tvořena několika cestami (way), a ty
 jsou zahrnuty do společné relace Dálnice D1. Nebo například turistická trasa
-(od~KČT) může být relace sdružující jak liniové elementy (cesty, pěšiny) tak i bodové
+(od~KČT) může být relace sdružující jak liniové elementy (cesty, pěšiny), tak i bodové
 (rozcestníky, vyhlídky, apod. ).
-\end{itemize}
 
-U atributů popsaných na OpenStreetMap Wikipedii \cite{OSMfeatures} je vždy uvedeno, k jaké třídě je
-vhodné a nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit
-na~jinou než povolenou třídu, může být následně problém v některých vykreslovačích. 
+U atributů popsaných na OpenStreetMap Wikipedii \cite{OSMfeatures} je vždy uvedeno,
+k jakému druhu elementu je
+vhodné či nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit
+na~jiný, než doporučený druh elementu, může být následně problém v některých vykreslovačích. 
 Viz \ref{Vykreslovače}
-%%% ML: viz kapitola?
 
 \subsection{Změna licence}
 \label{změna licence}
@@ -109,7 +114,7 @@ Viz \ref{Vykreslovače}
 Původně byla data OSM a generované grafické dlaždice distribuována pod licencí
 Creative~Commons~AllributionShare~Alike 2.0 (CC~BY~SA~2.0).
 
-Tato licence umožňovala užití (distribuci ale i editaci) díla pod podmínkou,
+Tato licence umožňovala užití (distribuci ale i editaci) díla (dat) pod podmínkou,
 že bude uveden zdroj OpenStreetMap.org ve viditelné části
 vytvořených mapových dlaždic \cite{OSMlicence}.
 
@@ -125,19 +130,22 @@ V roce 2012 byla licence publikovaných dat změněna na Open Data Commons
 Open Database Licence (ODbL).
 Důvodem byla lepší licenční ochrana dat v databázi. 
 Starší licence (CC BY-SA) chránila data pouze pomocí autorského zákona. 
-Obě licence jsou "Uveďte autora" a "Zachovejte licenci". Avšak rozdíl mezi
-"starou" a "novou" je ten, že pokud někdo pod starou licencí (CC BY-SA),
-vytvoří mapu (nebo jiné dílo) musí zachovat stejnou licenci ale nemusí uvolnit
-přímo data. Pod novou licencí (ODbl) je možné uvolnit data (nebo dílo)
-pod jakoukoli licencí ale pokud uvolní všechny doplňky a vylepšní,
-která k OSM datům přidal.\cite{OSMlicenceChange}.
+Sice obě licence jsou "Uveďte autora" a "Zachovejte licenci", avšak rozdíl mezi
+"starou" a "novou" je ten, že pokud někdo pod "starou" licencí (CC BY-SA),
+vytvoří mapu (nebo jiné dílo) musí zachovat stejnou licenci.
+Nemusí však uvolnit přímo data, která při tom použil.
+
+Data OSM pod novou licencí, je možné jakkoli upravit,
+a zveřejnit pod jakoukoli novou licencí,
+která je podobná s myšlenkou Opendata, 
+za podmínky, že také uvolní všechny své doplňky a vylepšení.\cite{OSMlicenceChange}.
 
 Tato změna licence přinesla problém
-s~daty, které byly poskytnuty projektu v předchozí licencí
+s~daty, které byly poskytnuty projektu za předchozí licence
 (CC~BY~SA~2.0). Bylo nutné se dotázat každého z dřívějších
-přispěvatelů dat, ať už právnických osob, tak i fyzických osob, zdali
-souhlasí jejich data budou distribuována pod novou licencí.
-U přispěvatelů, kteří to nedovolili, nebo ti co se nevyjádřili,
+přispěvatelů dat, ať už právnických osob, tak i fyzických osob,
+zdali souhlasí, že jejich data budou distribuována pod novou licencí.
+U přispěvatelů, kteří k tomuto nesvolili, nebo ti co se nevyjádřili,
 bylo nutné jejich příspěvky z~databáze OSM vymazat.
 Tato situace nastala pouze ve zlomku případů (méně než 1 \%).
 Nejvíce tato změna licencí ohrozila data v zemích jako je Polsko a Nový Zéland. \cite {OSMlicenceIssue}
@@ -147,10 +155,8 @@ generované grafické dlaždice pod licencí CC-BY SA 4.0. \cite{OSMlicence}
 
 \subsection{Licence ODbL}
 Licence ODbl \footnote{Plné znění (anglicky) viz na \url{http://opendatacommons.org/licenses/odbl/1.0/}}
-se zabívá právní ochranou databází, včetně
+se zabývá právní ochranou databází, včetně
 veškerých autorských a příbuzných práv k databázi.
-Chrání všechny prvky z databáze, ale dále nezahrnuje autorská
-práva na obsah nezavislý na databázi. 
 
 Licence ODbl umožňuje
 \begin{itemize}
@@ -160,10 +166,10 @@ Licence ODbl umožňuje
 \end{itemize}
 
 Při použití databáze s licencí ODbl, je k ni
-nutné připojit kopii přesnéh zněnít licence ODbl.
+nutné připojit kopii přesného zněnít licence ODbl.
 Při nakládnání s databází ponechat nedotčena veškerá autorská práva a
 uvést její zdroj (nebo autora).
-Veškeré odvozené databáze musí spoňovat podmínky ODbl,
+Veškeré odvozené databáze musí splňovat podmínky ODbl,
 tj. buď přímo licence ODbl, nebo licence s ní kompatibilní.
 \cite{Nesetril2013thesis}
 
@@ -189,7 +195,7 @@ s~klíčem
 {\tt source}.
 V případě vlastního sběru dat se vyplňuje hodnotou
 {\tt source=survey} ,
-popřípadně uvést zdroj, odkud čerpali. Pokud tuto povinnost poruší a
+popřípadě uvést zdroj, odkud čerpali. Pokud tuto povinnost poruší a
 použijí zdroj, jež není kompatibilní s licenční politikou OSM, tak ostatní 
 přispěvatelé do~OSM tuto změnu, aby předešeli sporům, odstraní. 
 V tomto případě dojde k odstranění celé sady změn, byť by v~ní byl pouze jeden prvek, jenž to poruší.
@@ -197,8 +203,9 @@ V tomto případě dojde k odstranění celé sady změn, byť by v~ní byl pouz
 Druhým významným zdrojem dat jsou soukromé subjekty (společnosti).
 Většinou jde o podkladové zdroje dat, například ortofoto. Pro obkreslování
 silničních síti z~leteckých nebo satelitních snímků. V~jejich případě to
-bylo řešeno písemným svolením, nebo smlouvou. Jako významným zdrojem byly
-mapy Bing, jež nabídla k~dispozici letecké snímky většiny
+bylo řešeno písemným svolením, nebo smlouvou. Jako významným zdrojem
+podkladových map pro obkreslování byly mapy vyhledávače Bing od společnosti
+Microsoft. Ta svolila použít jejich letecké snímky většiny
 obydlené pevniny. \footnote{\url{http://wiki.openstreetmap.org/wiki/Bing}}
 
 Třetím zdrojem dat a zároveň postupně dominujícím, co do jeho obsahu, jsou
@@ -207,10 +214,10 @@ dat.
 
 \subsection{Importy}
 \label{Importy}
-Výraz import v tomto případě znamená začlenění většího množství datových sad
+Výraz import v tomto případě znamená začlenění většího množství dat z datové sady nebo datových sad
 z~jednoho datového úložiště (databáze serveru) na jiný. Při velkých objemech dat
 se využívá výkonu výpočetní techniky z důvodu její bezchybovosti, a také
-z~důvodu časové náročnosti. Na člověku poté ale zbývá zvolit postup importu
+z~důvodu časové náročnosti. Na člověku poté zbývá zvolit postup importu
 a naprogramovat skript nebo program, podle něhož technika samotný proces
 provede. 
 
@@ -218,12 +225,12 @@ Datové importy z veřejných databází do databáze OSM jsou velmi cenné.
 Otevřené geografické, ale i jiné, databáze státu a jeho veřejných institucí 
 financovaných státem jsou komplexní. Komplexní v tom smyslu, že obsahují celistvý
 soubor dat, protože je daná instituce vyžaduje ke svém chodu. Jistá nevýhoda tu 
-ale může být, a to, že data nemusí být vždy úplně aktuální. Některá data mohou 
+ale může být, data nemusí být vždy úplně aktuální. Některá data mohou 
 být sbírána a zveřejněna i s větším časovým odstupem.
 
 V rámci České Republiky proběhlo již několik hromadných datových importů. Jak 
-již bylo řečeno, větší časová náročnost zabere samotná příprava na import. A to
-v~případě, importu do OSM. Nejen napsání skriptu, ale i nutná diskuze tohoto záměru
+již bylo řečeno, více času zabere samotná příprava na import.
+V~případě importu dat do OSM, nejen napsání skriptu, ale i nutná diskuze tohoto záměru
 na~diskuzní konferenci Talk-cz. 
 
 \subsection{Talk-cz}
@@ -251,8 +258,7 @@ První, kdo zobrazení Web Mercartor použil byla spolčnost Google pro svoje ma
   \item Humanitární mapa, která vykresluje důležité věřejné služby a potlačuje ostatní prvky. 
 \end{itemize}
 
-%%% ML: kompozici? ruznych dat? dovysvetlit
-Existují další stránky, jež se zabývají skládáním různých zdrojů data s OSM a jejich vykreslením.
+Existují další stránky, jež kombinují data z OSM a jiných zdrojů a vytváří z nich tematické mapy.
 Například mapu turistických a cyklistických tras vykresluje
 pro celou Evropu mtbmap.\footnote{mtbmap.cz}
 
@@ -268,8 +274,8 @@ atributů), popřípadě i stromů.
 \label{opendata}
 
 Základní myšlenka otevřených dat vznikla v USA.
-Myšlenka je, pokud vzniknou jakákoliv data z veřejných peněz, měla by tedy být
-přístupná veřejně. Některé studie uvádí, že tento jev měl kladný efekt na ekonomiku.
+Ta říká, pokud vzniknou jakákoli data z veřejných peněz, měla by tedy být
+veřejně přístupná. Některé studie uvádí, že tento jev měl kladný efekt na ekonomiku.
 \footnote{\url{http://www.worldbank.org/content/dam/Worldbank/document/Open-Data-for-Economic-Growth.pdf}}
 \footnote{\url{http://www.otevrenadata.cz/res/data/001/003498.pdf}}
 
@@ -292,7 +298,7 @@ placena z~veřejných zdrojů.
 \\
 \\*
 Otevřená data lze dělit na 5 stupňů,
-dle otevřenost.
+dle otevřenosti.
 
 \begin{itemize}
 
@@ -331,7 +337,7 @@ dle otevřenost.
 Díky této iniciativě došlo v rámci České Republiky ke zveřejnění
 dat státních úřadů s různým úspěchem a stupněm otevřenosti.
 Avšak tento trend zpřístupnění a zveřejňování pozvolna pokračuje.
-Příkladem buď Ministersta vnitra a financí nebo Český úřad zeměměřický a katastrální.
+Příkladem buď Ministerstvo vnitra, Ministerstvo financí nebo Český úřad zeměměřický a katastrální.
 
 
 \section{IPR Praha}
@@ -341,9 +347,9 @@ Tento institut se věnuje urbanismu, architektury a rozvoje města Prahy. Hlavn�
 úkolem IPR je tvorba územního plánu Prahy a významným úkolem IPR je zajišťovat
 zpracování geografických informací. Spravuje data a mapy města Prahy. Od roku 
 2002 poskytuje na svých stránkách zdarma webové aplikace bez limitu využití. 
-Po~rozvoji Pražského geoportálu došlo k jejich většímu využívání.  Na základě 
-platných Pravidel pro poskytování dat a  výstupů z datových souborů a datového 
-skladu Geografického byla od dne 1.~4.~2015 zveřejněny datové soubory a další 
+Po~rozvoji Pražského geoportálu došlo k jejich většímu využívání. Na základě 
+platných Pravidel pro poskytování dat a výstupů z datových souborů a datového 
+skladu Geografického byla ode dne 1.~4.~2015 zveřejněny datové soubory a další 
 webové služby. Tato data byla uveřejněna pod licencí CC-BY SA 4.0 \cite{IPR}
 \subsection{licence CC BY-SA 4.0}
 \label{licence CC BY-SA 4.0}
