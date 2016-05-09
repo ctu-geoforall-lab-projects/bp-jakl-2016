@@ -41,7 +41,7 @@ Prvky (elementy) jsou v OSM rozděleny na:
 
 \subsubsection{uzel (node) }
 
-Základním bodovým elementem je uzel (node), který je definován jedinečným
+Základním bodovým prvkem je uzel (node), který je definován jedinečným
 identifikátorem ({\tt id=}). 
 Je ukládána verze uzlu, časový údaj, kdy byl do databáze přidán
 a je také uvedeno v jaké změně to bylo provedeno ({\tt changeset=~}).
@@ -61,10 +61,10 @@ Příklad XML souboru pro uzel (strom):
 
 \subsubsection{cesta (way) }
 
-Další liniový element je cesta (way), ta je vždy určena dvěma nebo více uzly.
+Označení pro liniový prvek je cesta (way), ta je vždy určena dvěma nebo více uzly.
 Každá cesta má také svůj jedinečný identifikátor ({\tt way~id=~}) v rámci všech cest.
 Má také základní atributy ({\tt id=*, visible=*, version=*, .. }), 
-stejně jako u elementu uzel.
+stejně jako u prvku uzel.
 Dále však musí být seznam bodů, ze kterých se skládá.
 Je zde uvedena pouze reference na id bodů, nikoliv jejich souřadnice.
 Cestám lze taktéž přiřadit různé atributy.
@@ -94,19 +94,25 @@ Příklad XML souboru pro cestu:
       
 \subsubsection{relace (relation) }
 
-Speciálním elementem je relace (relation), do které lze zahrnout
-jeden a více elementů. Mohou se do nich spojit elementy stejného druhu (uzel a uzel),
+Speciálním prvkem je relace (relation), do které lze zahrnout
+jeden a více prvků. Mohou se do nich spojit prvky stejného druhu (uzel a uzel),
 nebo různého (uzly, cesty nebo i relace).
 Například dálnice je tvořena několika cestami (way), a ty
 jsou zahrnuty do společné relace Dálnice D1. Nebo například turistická trasa
-(od~KČT) může být relace sdružující jak liniové elementy (cesty, pěšiny), tak i bodové
+(od~KČT) může být relace sdružující jak liniové prvky (cesty, pěšiny), tak i bodové
 (rozcestníky, vyhlídky, apod. ).
 
 U atributů popsaných na OpenStreetMap Wikipedii \cite{OSMfeatures} je vždy uvedeno,
-k jakému druhu elementu je
+k jakému druhu prvku je
 vhodné či nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit
-na~jiný, než doporučený druh elementu, může být následně problém v některých vykreslovačích. 
-Viz \ref{Vykreslovače}
+na~jiný, než doporučený druh prvku, může být následně problém v některých vykreslovačích. Viz \ref{Vykreslovače}
+\begin{figure}[hbt]%[p]
+    \centering
+    \includegraphics[scale=0.6]{./pictures/OSMelements.png}
+    \caption{Rozdělení prvků OSM, vlastní tvorba}
+    \label{fig:rozdělení OSM prvků}
+\end{figure}
+
 
 \subsection{Změna licence}
 \label{změna licence}
