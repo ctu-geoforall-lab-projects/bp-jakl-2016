@@ -2,6 +2,7 @@ from IprBase import IprDownloader
 
 class IprDownloaderPg(IprDownloader):
     def __init__(self, dbname, dbhost=None, dbport=None, dbuser=None, dbpasswd=None, dbschema=None):
+        IprDownloader.__init__(self)
         self.dbname = dbname
         self.dbhost = dbhost
         self.dbport = dbport

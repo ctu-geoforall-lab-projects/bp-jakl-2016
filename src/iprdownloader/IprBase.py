@@ -19,7 +19,7 @@ class IprError(StandardError):
 
 class IprDownloader:
     def __init__(self):
-        pass
+        os.environ['SHAPE_ENCODING'] = 'cp1250'
 
     def filter(self, alike, crs, file_format):
         xml_file = "http://opendata.iprpraha.cz/feed.xml"
