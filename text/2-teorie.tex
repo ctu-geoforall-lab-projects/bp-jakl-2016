@@ -27,7 +27,7 @@ OSM data jsou nyní uložena v databázi PostgreSQL. \cite{OSMserver}
 Pro samotnou výměnu dat ale slouží souborový formát {.osm}, který využívá datový
 formát  XML. 
 Jeho výhoda je jasná struktura, snadná orientace v kódu pro člověka. 
-Nevýhodou je ovšem větší objem dat, který lze ale snížit kompresí. 
+Nevýhodou je ovšem větší objem dat, který lze snížit kompresí. 
 
 Prvky (elementy) jsou v OSM rozděleny na:
 \begin{itemize}
@@ -46,7 +46,7 @@ identifikátorem ({\tt id=}).
 Je ukládána verze uzlu, časový údaj, kdy byl do databáze přidán
 a je také uvedeno v jaké změně to bylo provedeno ({\tt changeset=~}).
 Každý uzel má svoje souřadnice uloženy v souřadnicovém systému WGS~84 (EPGS 4326). 
-Dále je možné připojit různé atributy (tag) tj. klíče a hodnotou ({\tt tag~k=~v=~}).
+Dále je možné připojit různé atributy (tag) tj. klíče s hodnotou ({\tt tag~k=~v=~}).
 \\*
 Příklad XML souboru pro uzel (strom):
 
@@ -99,12 +99,12 @@ jeden a více prvků. Mohou se do nich spojit prvky stejného druhu (uzel a uzel
 nebo různého (uzly, cesty nebo i relace).
 Například dálnice je tvořena několika cestami (way), a ty
 jsou zahrnuty do společné relace Dálnice D1. Nebo například turistická trasa
-(od~KČT) může být relace sdružující jak liniové prvky (cesty, pěšiny), tak i bodové
-(rozcestníky, vyhlídky, apod. ).
+(od~KČT) může být relace sdružující, jak liniové prvky
+(cesty, pěšiny), tak i bodové (rozcestníky, vyhlídky, apod. ).
 
-U atributů popsaných na OpenStreetMap Wikipedii \cite{OSMfeatures} je vždy uvedeno,
+U atributů popsaných na OpenStreetMap Wikipedii \cite{OSMfeatures} je vždy uvedeno
 k jakému druhu prvku je
-vhodné či nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit
+vhodné, či nevhodné je použít (dle komunity uživatelů OSM). Pokud se stane, že je použit
 na~jiný, než doporučený druh prvku, může být následně problém v některých vykreslovačích. Viz \ref{Vykreslovače}
 \begin{figure}[hbt]%[p]
     \centering
@@ -117,7 +117,7 @@ na~jiný, než doporučený druh prvku, může být následně problém v někte
 \subsection{Změna licence}
 \label{změna licence}
 
-Původně byla data OSM a generované grafické dlaždice distribuována pod licencí
+Původně byla data OSM a generované grafické dlaždice distribuovány pod licencí
 Creative~Commons~AllributionShare~Alike 2.0 (CC~BY~SA~2.0).
 
 Tato licence umožňovala užití (distribuci ale i editaci) díla (dat) pod podmínkou,
@@ -156,7 +156,7 @@ bylo nutné jejich příspěvky z~databáze OSM vymazat.
 Tato situace nastala pouze ve zlomku případů (méně než 1 \%).
 Nejvíce tato změna licencí ohrozila data v zemích jako je Polsko a Nový Zéland. \cite {OSMlicenceIssue}
 
-V současnosti jsou tedy data OSM distibuována pod licencí ODbL a
+V současnosti jsou tedy data OSM distribuována pod licencí ODbL a
 generované grafické dlaždice pod licencí CC-BY SA 4.0. \cite{OSMlicence}
 
 \subsection{Licence ODbL}
@@ -171,8 +171,8 @@ Licence ODbl umožňuje
     \item    měnit původní data
 \end{itemize}
 
-Při použití databáze s licencí ODbl, je k ni
-nutné připojit kopii přesného zněnít licence ODbl.
+Při použití databáze s licencí ODbl, je
+nutné připojit kopii přesného znění licence ODbl.
 Při nakládnání s databází ponechat nedotčena veškerá autorská práva a
 uvést její zdroj (nebo autora).
 Veškeré odvozené databáze musí splňovat podmínky ODbl,
@@ -207,9 +207,10 @@ přispěvatelé do~OSM tuto změnu, aby předešeli sporům, odstraní.
 V tomto případě dojde k odstranění celé sady změn, byť by v~ní byl pouze jeden prvek, jenž to poruší.
 
 Druhým významným zdrojem dat jsou soukromé subjekty (společnosti).
-Většinou jde o podkladové zdroje dat, například ortofoto. Pro obkreslování
-silničních síti z~leteckých nebo satelitních snímků. V~jejich případě to
-bylo řešeno písemným svolením, nebo smlouvou. Jako významným zdrojem
+Většinou jde o podkladové zdroje dat, například ortofoto, které jsou
+vhodné pro obkreslování silničních síti z~leteckých nebo
+satelitních snímků. V~jejich případě to
+bylo řešeno písemným svolením, nebo smlouvou. Významným zdrojem
 podkladových map pro obkreslování byly mapy vyhledávače Bing od společnosti
 Microsoft. Ta svolila použít jejich letecké snímky většiny
 obydlené pevniny. \footnote{\url{http://wiki.openstreetmap.org/wiki/Bing}}
@@ -222,7 +223,7 @@ dat.
 \label{Importy}
 Výraz import v tomto případě znamená začlenění většího množství dat z datové sady nebo datových sad
 z~jednoho datového úložiště (databáze serveru) na jiný. Při velkých objemech dat
-se využívá výkonu výpočetní techniky z důvodu její bezchybovosti, a také
+se využívá výkonu výpočetní techniky z důvodu její bezchybnosti, a také
 z~důvodu časové náročnosti. Na člověku poté zbývá zvolit postup importu
 a naprogramovat skript nebo program, podle něhož technika samotný proces
 provede. 
@@ -230,7 +231,7 @@ provede.
 Datové importy z veřejných databází do databáze OSM jsou velmi cenné. 
 Otevřené geografické, ale i jiné, databáze státu a jeho veřejných institucí 
 financovaných státem jsou komplexní. Komplexní v tom smyslu, že obsahují celistvý
-soubor dat, protože je daná instituce vyžaduje ke svém chodu. Jistá nevýhoda tu 
+soubor dat, protože je daná instituce vyžaduje ke svému chodu. Jistá nevýhoda tu 
 ale může být, data nemusí být vždy úplně aktuální. Některá data mohou 
 být sbírána a zveřejněna i s větším časovým odstupem.
 
@@ -242,9 +243,10 @@ na~diskuzní konferenci Talk-cz.
 \subsection{Talk-cz}
 \label{Talk-cz}
 Tato diskuze probíhá přes posílání emailových zpráv do společné konference. 
-Uživatelům chodí emaily z probíhající diskuze a pokud na nějaký chtějí reagovat,
-tak pošlou email na adresu serveru, na kterém diskuze běží, a musí do Předmětu 
-napsat Re: a předmět zprávy, na kterou reagují. Server tyto zprávy pomocí 
+Uživatelům chodí emaily z probíhající diskuze. Pokud na nějaký
+chtějí reagovat, tak pošlou email na adresu serveru, na kterém diskuze
+běží. Musí ale do předmětu zprávy (emailu) napsat Re: a předmět zprávy, na kterou reagují.
+Server tyto zprávy pomocí 
 předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách.\footnote{\url{http://lists.openstreetmap.org/listinfo/talk-cz}}
 
 \subsection{Vykreslovače}
@@ -252,8 +254,8 @@ předmětu a času řadí. Diskuze je poté k dispozici na webových stránkách
 Na hlavní stránce OSM (\url{http://www.openstreetmap.org}) je k dispozici mapová aplikace. Ta nabízí pět
 „základních“ přednastavených vrstev vykreslených z~dat z OSM.
 Pro snadné vykreslení dat do grafických dlaždic se používá takzvaný pseudo Mercatorovo
-zobrazení nebo Web Mercator (EPSG 3857), a to proto, že snadno vykreslí celý povrch Země (až na velké zkreslení u polů). 
-První, kdo zobrazení Web Mercartor použil byla spolčnost Google pro svoje mapy Google Maps.\cite{WebMercator}
+zobrazení nebo Web Mercator (EPSG 3857), a to proto, že snadno vykreslí celý povrch Země (až na velké zkreslení u pólů). 
+První, kdo zobrazení Web Mercartor použil, byla spolčnost Google pro svoje mapy Google Maps.\cite{WebMercator}
 %%% ML: mozna dodat screenshoty do prilohy?
 
 \begin{itemize}
@@ -261,7 +263,7 @@ První, kdo zobrazení Web Mercartor použil byla spolčnost Google pro svoje ma
   \item Cyklomapa - vykresluje cyklostezky, výškopis. 
   \item Dopravní mapa - vykresluje silniční a železniční sítě.
   \item MapQuest Open - podkladová mapa právě pro potřeby Geocaching.
-  \item Humanitární mapa, která vykresluje důležité věřejné služby a potlačuje ostatní prvky. 
+  \item Humanitární mapa - vykresluje důležité veřejné služby a potlačuje ostatní prvky. 
 \end{itemize}
 
 Existují další stránky, jež kombinují data z OSM a jiných zdrojů a vytváří z nich tematické mapy.
@@ -269,7 +271,7 @@ Například mapu turistických a cyklistických tras vykresluje
 pro celou Evropu mtbmap.\footnote{mtbmap.cz}
 
 %%% priklad? mozna dodat hezky screenshot?
-Zajímavými projekty jsou například ty, které k 2D mapě přidávájí „třetí“ rozměr a
+Zajímavými projekty jsou například ty, které k 2D mapě přidávají „třetí“ rozměr a
 vytvářejí tzv. 2.5D mapu. Většinou jde o 3D zobrazení budov, mostů (dle
 atributů), popřípadě i stromů.
 
@@ -292,76 +294,81 @@ s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic).
 Tento trend se začal rozšiřovat zprvu do zemí západní Evropy
 (Velké Británie, Francie či Německa), ale i země mimo Evropu.\cite{OpendataTrends}
 
-%%% Jednim z projektu fondu jsou prave
-%%% Otevrena data
-V České Republice se tomuto věnuje fond Otakara Motejla, založen na jeho počest,
+V České republice se tomuto věnuje fond Otakara Motejla, založen na jeho počest,
 a jeho hlavním projektem je Otevřená data. Spolupracuje s nadací Society Fund
 Praha a Rekonstrukce Státu.
 V rámci těchto uskupení je vyvíjen tlak na transparentnost veřejné správy,
 zveřejňování smluv a dat státních institucí, jelikož jejich získání a údržba byla
 placena z~veřejných zdrojů.
-%%% rozsirit
-\\
 \\*
 Otevřená data lze dělit na 5 stupňů,
 dle otevřenosti.
 
+\begin{figure}[hbt]%[p]
+    \centering
+    \includegraphics[width=0.8\textwidth]{./pictures/5star-steps.png}
+    \caption{Stupně otevřenosti dat, převzato z \url{http://5stardata.info}}
+    \label{fig:Stupně otevřenosti dat}
+\end{figure}
+
 \begin{itemize}
 
-    \item   Data jsou dostupná v WWW síti s jasnými licenčními podmínkami.
-            Není zde žádný požadavek na datová formát a proto není brán jako
-            dostatečný způsob zveřejňování dat. Těmito daty ku příkladu jsou
-            Webové Mapové Služby (WMS). Jsou veřejně k dispozici avšak
-            nezveřejňují přímo data ale jen obrázky generované z nich.
+    \item   Data jsou dostupná v WWW stránek s jasnými licenčními
+            podmínkami. Není zde žádný požadavek na datový formát,
+            a proto není brán jako dostatečný způsob zveřejňování dat.
+            Těmito daty ku příkladu jsou Webové Mapové Služby (WMS).
+            Jsou veřejně k dispozici, avšak nezveřejňují přímo data,
+            ale jen obrázky generované z nich.
 
-    \item   Zveřejněná data jsou již ve strojově čitelném formátu, který je
-            veřejně dobře znám. Nejčastěji se jedná o charakter tabulky.
-            Musí umožňovat přístup k jednotlivým řádku a obsahu buněk.
+    \item   Zveřejněná data jsou již ve strojově čitelném formátu,
+            který je veřejně dobře znám. Nejčastěji se jedná
+            o~charakter tabulky. Musí umožňovat přístup k~jednotlivým
+            řádkům a obsahu buněk.
 
-    \item   Třetí stupěn navíd od druhého vyžaduje aby k jeho čtení nebyl
-            vyžadován speciální software ale aby byl volně dostupný ze sítě WWW.
-            Spadají sem tedy dokumenty formátů OpenOffice (Office Open XML,
-            OpenDocument). Pro prostorová data formáty GML, KML nebo GeoPackage.
+    \item   Třetí stupeň navíc od druhého vyžaduje, aby k~jeho čtení
+            nebyl vyžadován speciální software, ale aby byl volně
+            dostupný z WWW. Spadají sem tedy dokumenty formátů
+            OpenOffice (Office Open XML, OpenDocument).
+        \\* Pro~prostorová data například formáty GML, KML nebo
+            GeoPackage.
 
     \item   U stupně otevřenosti 4 je v distribuované datové sadě
-            povidnost zavést identifikaci entity ve tvaru Internationalized
-            Resource Identifier (IRI)
+            povinnost zavést identifikaci entity ve tvaru
+            Internationalized Resource Identifier (IRI)
 
-    \item   U nejvyššího možného stupně otevřenosti je vyžadováno aby distribuce
-            splňovala standardy popojených dat (Linked Data).
+    \item   U nejvyššího možného stupně otevřenosti je vyžadováno, aby
+            distribuce splňovala standardy propojených dat (Linked
+            Data).
 
 \end{itemize}
 %% http://opendata.gov.cz/standardy:stupne-otevrenosti
 
-\begin{figure}[hbt]%[p]
-    \centering
-    \includegraphics[width=0.8\textwidth]{./pictures/5star-steps.png}
-    \caption{Stupně otevřenosti dat, převzdato z \url{http://5stardata.info}}
-    \label{fig:Stupně otevřenosti dat}
-\end{figure}
-
 Díky této iniciativě došlo v rámci České Republiky ke zveřejnění
 dat státních úřadů s různým úspěchem a stupněm otevřenosti.
 Avšak tento trend zpřístupnění a zveřejňování pozvolna pokračuje.
-Příkladem buď Ministerstvo vnitra, Ministerstvo financí nebo Český úřad zeměměřický a katastrální.
+Příkladem je Ministerstvo vnitra, Ministerstvo financí nebo Český úřad zeměměřický a katastrální.
 
 
 \section{IPR Praha}
 \label{IPR Praha}
-IPR Praha je zkratka názvu Institut plánování a rozvoje a hlavního města Prahy. 
-Tento institut se věnuje urbanismu, architektury a rozvoje města Prahy. Hlavním
-úkolem IPR je tvorba územního plánu Prahy a významným úkolem IPR je zajišťovat
-zpracování geografických informací. Spravuje data a mapy města Prahy. Od roku 
-2002 poskytuje na svých stránkách zdarma webové aplikace bez limitu využití. 
-Po~rozvoji Pražského geoportálu došlo k jejich většímu využívání. Na základě 
-platných Pravidel pro poskytování dat a výstupů z datových souborů a datového 
-skladu Geografického byla ode dne 1.~4.~2015 zveřejněny datové soubory a další 
-webové služby. Tato data byla uveřejněna pod licencí CC-BY SA 4.0 \cite{IPR}
+IPR Praha je zkratka názvu prot Institut plánování a rozvoje
+hlavního města Prahy. Tento institut se věnuje urbanismu, architektuře
+a rozvoje města Prahy. Hlavním úkolem IPR je tvorba územního plánu
+Prahy a významným úkolem IPR je zajišťovat zpracování geografických
+informací. Spravuje data a mapy města Prahy. Od roku 2002 poskytuje
+na~svých stránkách zdarma webové aplikace bez limitu využití.
+Po~rozvoji Pražského geoportálu došlo k jejich většímu využívání.
+Na~základě platných Pravidel pro poskytování dat a výstupů z~datových
+souborů a datového skladu Geografického byly ode dne 1.~4.~2015
+zveřejněny datové soubory a další webové služby. Tato data byla
+uveřejněna pod licencí CC-BY SA 4.0 \cite{IPR}
+
 \subsection{licence CC BY-SA 4.0}
 \label{licence CC BY-SA 4.0}
 Licence CC BY-SA 4.0 je zde uvedena ve zjednodušeném znění.
 
-"Uživatel s smí
+"Uživatel smí
+
 \begin{itemize}
     \item   Sdílet - rozmnožovat a distribuovat materiál prostřednictvím jakéhokoli média v jakémkoli formátu
     \item   Upravovat - remixovat, změnit a vyjít z původního díla
@@ -377,7 +384,5 @@ licence schvaloval nebo podporoval Vás nebo Váš způsob užití díla.
 
 Zachovejte licenci — Pokud budete toto dílo upravovat, pozměňovat nebo
 na~něj navazovat, musíte svoje odvozená díla vystavovat pod stejnou
-licencí jako původní dílo."
-
-Podrobněji viz přesné znění na stránkách CraetiveCommmons.
-\footnote{https://creativecommons.org/licenses/by-sa/4.0/legalcode/}
+licencí jako původní dílo."~\footnote{Citováno ze stánek CreativeCommons. \\*
+Přesné znění licence viz na stránce https://creativecommons.org/licenses/by-sa/4.0/legalcode/}
