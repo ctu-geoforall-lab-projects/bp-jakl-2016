@@ -4,11 +4,11 @@
 
 CREATE TABLE export_parkomat (
     geom geometry,
-	amenity text DEFAULT 'vending_machine',
-	vending text DEFAULT 'parking_tickets',
-	source text DEFAULT 'IPR',
-	"source:loc" text DEFAULT 'IPR'
-	)
+    amenity text DEFAULT 'vending_machine',
+    vending text DEFAULT 'parking_tickets',
+    source text DEFAULT 'IPR',
+    "source:loc" text DEFAULT 'IPR'
+    )
 
 /*===================================================================*/
 
