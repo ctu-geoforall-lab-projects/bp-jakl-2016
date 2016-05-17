@@ -214,58 +214,58 @@ na~ODbL.
 
 \section{IprDownloader}
 \label{IprDownloader}
-Jak již bylo řečeno tak IPR distribuuje svá data a datové soubory přímo
-na~své stránce. Data tam jsou distribuována možností odkazů ke stažení,
-nebo je k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}).
+Jak již bylo řečeno, tak IPR distribuje geografická data ve formě datových souborů stažitelných z webových stránek organizace.
+Kromě samotných datových souborů je k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}).
 Pomocí něho se lze také dostat ke všem distribuovaným datům. Jelikož
-by bylo zdlouhavé stahovat všechny tyto soubory ručně, proto byl
-vytvořen program, který umožňuje stahování a import dat. Skript byl
+by bylo zdlouhavé stahovat všechny tyto soubory ručně, byl
+v rámci práce vytvořen program, který umožňuje stahování a také import dat primárně do geodatabáze PostGIS. Skript byl
+%%% ML: zde by se hodil odkaz do teoreticke casti
 napsán v~programovacím jazyce Python a využívá knihovny GDAL.
 
-Je rozdělen na tři soubory 
-{\tt , IprDownloader.py , IprBase.py} a {\tt IprPg.py}.
+Zdrojový kód programu je rozdělen do tří souborů: 
+{\tt IprDownloader.py}, \newline {\tt IprBase.py} a {\tt IprPg.py}.
 
 
-\subsection{{\tt IprDownloader.py}}
-Na primární skript {\tt IprDowloader.py}, který parsuje vstupní údaje a
-zpracovává je k~dalšímu použití ve skriptu, viz \ref{argparse}. Těmito
-základními údaji jsou
-({\tt ---alike, ---crs, ---format, ---outdir ---d}).
-Dalšími vstupními údaji mohou údaje o databázi, kam se mají data
-importovat. Těmito vstupy jsou
-({\tt ---dbname ---dbschema ---dbhost ---dbport ---dbuser ---dbpassword}).
+\subsection{IprDownloader}
+Skript {\tt IprDowloader.py} parsuje vstupní údaje a
+zpracovává je k~dalšímu použití v programu, viz \ref{argparse}. Základními parametry programy jsou
+{\tt ---alike, ---crs, ---format, ---outdir, ---d}.
+Dalšími vstupními parametry mohou údaje o databázi, kam se mají data
+importovat. Jde o 
+{\tt ---dbname, ---dbschema, ---dbhost, ---dbport, ---dbuser, ---dbpassword}.
 
-Skript hlídá vstupní formát kartografických souřadnic, a pokud se
-neshodují s~možnými, oznámí chybu o špatném vstupu. Pokud uživatel
-vloží kartografické zobrazení ve formě EPGS kódu, program jej převede
-na~jeho název.
+%%% ML: kartografickych souradnic ? (student geodezie by mel znat
+%%% rozdil mezi kartografickym zobrazenim a souradnicovym systeme)
+%%% Cely odstavec mi neda smysl, zatim jsem jej zakomentoval
+%% Skript hlídá vstupní formát kartografických souřadnic, a pokud se
+%% neshodují s~možnými, oznámí chybu o špatném vstupu. Pokud uživatel
+%% vloží kartografické zobrazení ve formě EPGS kódu, program jej převede
+%% na~jeho název.
 
 
-\subsection{{\tt IprBase.py}}
+\subsection{IprBase}
 Skript {\tt IprBase.py} definuje třídu {\tt IprDownloader} se všemi
 potřebnými funkcemi. Většina funkcí slouží pro otevírání, čtení a
-parsování XML souborů, viz \ref{xmltodict}. Obsahuje funkci
-pro~hledání, která prochází všechny záznamy a porovnává, zda vstupní
-přibližný název je obsažen v názvu souboru dat. Poté najde odkaz
-na~XML souboru dat a otevře jej. Následuje vždy čtení a parsování.
-Poté v naparsovaných údajích najde dle nastavení ({\tt crc, format})
-správný soubor a stáhne jej do~definovaného adresáře.
+parsování XML souborů, viz kapitola \ref{xmltodict}. Obsahuje funkci
+pro~hledání, která prochází všechny záznamy v ATOM souboru a porovnává, zda název
+definovaný parametrem {\tt alike} je obsažen v názvu souboru dat. Poté najde dle nastavení ({\tt
+  crc, format}) daný soubor a stáhne jej do~definovaného adresáře.
 
 
-\subsection{{\tt IprPg.py}}
-Skript {\tt IprPg.py } definuje třídou {\tt IprDownloaderPg }, která
-dědí všechny funkce od třídy {\tt IprDownloader } a definuje další
+\subsection{IprPg}
+Skript {\tt IprPg.py } definuje třídu {\tt IprDownloaderPg}, která
+dědí všechny metody rodičovské třídy {\tt IprDownloader } a definuje další
 funkce potřebné pro~správný import stažených dat do databáze
 PostgreSQL. Přesněji stažený soubor zkontroluje, jestli není 
-kompresován v~archivu {\tt *.zip}, jestli ano, vytvoří nový soubor,
-který ma stejný název jako archiv. Do nově vytvořeného souboru poté 
+komprimován v~archivu {\tt *.zip}, pokud ano, tak vytvoří nový adresář,
+který má stejný název jako archiv. Do nově vytvořeného adresáře poté 
 extrahuje všechna data z archivu.
 
 
 \section{Ovládání}
-Při pouhém spuštění programu vypíše program všechna nalezená data,
+Při spuštění vypíše program všechna nalezená data,
 která IPR dává k~dispozici. Pro hledání a označení, která data se mají
-stáhnout slouží {\tt ---alike }. Za toto uživatel připojí slovo, nebo
+stáhnout slouží parametr {\tt ---alike}. Za toto uživatel připojí slovo, nebo
 frázi, jež chce v~datech hledat. Pro~sousloví, které obsahuje mezeru,
 je vhodné jej umístit do uvozovek. Program rozlišuje velká~x~malá
 písmena, háčky a čárky.
