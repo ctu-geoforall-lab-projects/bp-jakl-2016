@@ -3,25 +3,17 @@
 
 \section{PostgreSQL}
 \label{PostgreSQL}
-PostgreSQL je Opensource databázový systém, který je vyvíjen déle než patnáct
-let. Za dlouhou dobu vývoje se stal robustní a také hojně využívaný.
-Postupem času získal svou spolehlivostní silnou reputaci.
-Lze s ním pracovat ve všech známých operačních systémech. 
+
+PostgreSQL je open source objektově-relační databázový systém. Za dlouhou dobu vývoje se stal robustním a hojně využívaným řešením hlavně díky své spolehlivosti. Lze s ním pracovat ve všech známých operačních systémech. 
 \cite{PostgreSQL}
 
 \subsection{PostGIS}
 \label{PostGIS}
-PostGIS je objektově-relační nadstavba databázové struktury PostgreSQL.
-Rozšiřuje ji o funkce, které umožňují geometrické operace s objekty
-v~ní uložené. Třídy prvků mohou být buď bod (point), linie (line),
-nebo polygon (polygon). Dále je možné více prvků sdružit
-do~multiPoint, multiLine, nebo multiPolygon. Geometrie prvku určuje
-jeho polohu v určité souřadnicové soustavě. Dále určuje i
-kartografickou soustavu, ve~které je jeho geometrie určena. Je tedy
-dále možné při známých transformacích mezi soustavami provádět
-transformace souřadnic. Základní operace jako délka, obvod, plocha,
-ale jsou zde i sofistikovanější funkce, které lze s objekty nebo
-i mezi objekty provádět. 
+PostGIS je nadstavba databázového systému PostgreSQL.
+Rozšiřuje jej o funkce a~datové typy, které umožňují uložení, manipulaci a správu geografických objektů. Mezi podporované geometrické typy patří bod (point), linie (linestring),
+nebo polygon (polygon). Dále je možno prvky sdružit 
+do tzv. multiprvků (multiPoint, multiLineString nebo multiPolygon). Geometrie prvku určuje
+jeho polohu v daném souřadnicovém systému. Data je tedy možno transformovat do jiných PostGISem podporovaných souřadnicových systémů. Systém kromě základních operací jako výpočet délky, obvodu, plochy, podporuje i sofistikovanější funkce jako je např. výpočet obalové zóny a další.
 
 Sotware PostGIS je šířen pod GNU General Public License (GPLv2).
 
@@ -34,39 +26,38 @@ začátečníků v programování. Python je proto jeden z nejvýhodnějších
 programovacích jazyků pro začínající programátory, ale i přesto ho lze
 použít pro~praktické programování.
 
-Jedná se tedy o jednoduchý programovací jazyk podporující různá
+Jedná se o jednoduchý programovací jazyk podporující různá
 programovací paradigmata, hlavně objektové, imperativní, procedurální
 a v~omezené míře i funkcionální. Je multiplatformní, lze jej tedy
 použít na~různých operačních systémech. Klade velký důraz na~syntaxi 
 psaného kódu, využívá hlavně prázdné znaky v~psaném kódu.
 
-Programy nebo skripty lze psát v textovém editoru, ale je vhodné
-použít standartu PEP~8, který kontroluje prázdné znaky a správnou
-strukturu skriptu. 
+Programy nebo skripty lze psát libovolném textovém editoru. Vhodné je
+použít standardu PEP~8, který definuje správnou strukturu odsazení kódu.
 
-V současné době je vydána stabilní verze 3.5.7, která vůči předchozí
-verzi 2.x mění některá, již "zažitá" syntaxe. Například 
-nejviditelnější je změna funkce {\tt print } pro verzi 2.x stačilo
- {\tt print 'Ahoj'}  a pro verzi 3.x je již nutné string vložit
-do~závorek  {\tt print('Ahoj')}  . Tyto dvě dnes používané verze 2.x
+V současné době je vydána stabilní verze 3.5.7, která oproti předchozí
+verzi 2.x mění některé již \uv{zažité} vlastnosti jazyka. Například 
+nejviditelnější je změna funkce {\tt print()}. Ve verzi 2.x stačilo napsat
+ {\tt print 'Ahoj'}. Ve verzi 3.x je již nutné řetězec vložit
+do~závorek  {\tt print('Ahoj')}. Tyto dvě dnes používané verze 2.x
 a 3.x jsou navzájem nekompatibilní.
 \cite{python} 
 \cite{wikiPython} 
   
-\subsection{knihovna argparse}
+\subsection{Knihovna argparse}
 \label{argparse} 
-Knihovna argparse, jejíž autor je Tshepang Lekhonkhobe, je knihovna 
-do~programovacího jazyku Python. Řeší konzolový vstup do aplikace a 
+Knihovna argparse je knihovna 
+programovací jazyka Python, která řeší konzolový vstup do aplikace a 
 zpracovává ho pro~další použití v programu.\cite{argparse}
 
-\subsection{knihovna xmltodict}
+\subsection{Knihovna xmltodict}
 \label{xmltodict} 
-Tato knihovna umí číst soubory ve formátu XML a zpracovává je
-do~snadnější formy dat, která je i jednodušší pro manipulaci samotného
-programu. Data z~XML zpracuje do~formy datové řady (array), kde každý
+Tato Python knihovna umí číst soubory ve formátu XML a zpracovat jejich obsah do datové struktury, která je jednodušší pro manipulaci v samotném
+%%% ML: rady? nejedna se o slovniky - dictionary, respektive slovníky s řazením klíčových slov? Zkuste preformulovat
+programu. Data z~XML zpracuje do~formy datového pole (array), kde každý
 člen této řady může být opět řada dat.\cite{xmltodict}
 
-Příklad parsování dat ve XML formátu.
+Příklad zpracování dat ve formátu XML.
 
 {\scriptsize
 \begin{lstlisting}
@@ -77,7 +68,7 @@ Příklad parsování dat ve XML formátu.
 \end{lstlisting}
 }
 
-Po otevření a parsování se v Python(u) provede příkazem.
+Zpracování dat provedeme v Pythonu příkazem:
 
 {\scriptsize
 \lstset{language=Python}
@@ -87,7 +78,7 @@ with open('example.xml') as fd:
 \end{lstlisting}
 }
 
-Objekt {\tt doc} má poté podobu.
+Objekt {\tt doc} vypadá následově:
 
 {\scriptsize
 \lstset{language=Python}
@@ -96,7 +87,7 @@ OrderedDict([(u'head', OrderedDict([(u'many', [u'ele1', u'ele2'])]))]) }
 \end{lstlisting}
 }
 
-V této datové řadě lze již snadno procházet. 
+Data v této struktuře lze již jednoduše procházet.
 
 {\scriptsize
 \lstset{language=Python}
@@ -106,29 +97,25 @@ ele1
 \end{lstlisting}
 }
 
-\subsection{knihovna GDAL/OGR}
+\subsection{Knihovna GDAL} %%% ML: dnes se oznacuje spis jako GDAL a ne GDAL/OGR
 \label{GDAL/OGR}
-Jedná se o knihovnu pro práci s geografickými daty a umožňuje jejich
-čtení a zápis. Je psána v programovacím jazyce C++. Je považován
-za~jeden z hlavních open~source projektů a je hojně používán ve~sféře
-GIS. Pracuje s vektorovými a rastrovými datovými formáty. Podporuje
-velkou škálu souborových formátů, a to pro~vektorová data, ale i
-pro~rastrová. Obsahuje databázi definic kartografických projekcí
-používaných na~celém světě a databázi jejich známých transformací.
-Umožňuje tedy komplexní operace s geografickými daty. \cite{GDAL}
+Jedná se o knihovnu pro práci s geografickými daty umožňující jejich
+čtení a~zápis. Je napsána v programovacím jazyce C++. Je považována
+za~jeden z hlavních open~source projektů hojně využívaných ve~sféře
+%%% ML: nejen souborovych, zmeneno
+GIS. Podporuje velkou škálu rastrových a vektorových formátů.
+%%% ML: to se tyka knihovny PROJ.4
+Díky knihovně PROJ.4 podporuje celou škálu souřadnicových systémů a umožňuje transformaci dat mezi nimi. \cite{GDAL}
 
 \section{QGIS}
 \label{QGIS}
-QGIS je program vytvořen za~účelem prohlížení a editace geografických
-dat. Jedná se o Opensource software. Je tedy možné, aby na~jeho vývoji
-spolupracoval kdokoli. Je možné si vytvořit novou funkci, nebo přímo
-zásuvný modul do programu. Je možné je psát v jazyce C++ nebo Python.
-Tyto moduly si uživatelé mohou poté stáhnout a přidat do~QGISu a 
-využívat. QGIS také umožňuje využívat konzolově jazyk Python. Je možné
-si tak vytvářet vlastní jednoduché skripty v jazyce Python a spouštět
-je v~QGISu.
+QGIS je program vytvořený za~účelem prohlížení a editace geografických
+%%% ML: vsechny nasledujici vety zacinaji na Je, zkusil jsem preformulovat
+dat. Jedná se o open source software. Je tedy možné, aby na~jeho vývoji
+spolupracoval kdokoli. Vlastní uživatelské nástroje se píší ve formě tzv. zásuvných modulů, které je možné implementovat v jazyce C++ nebo Python.
+Tyto moduly si ostatní uživatelé mohou poté stáhnout a začlenit do své instalace QGISu. QGIS také umožňuje využívat jazyk Python v rámci vestavěné konzole. Lze tak vytvářet vlastní jednoduché skripty v jazyku Python a spouštět
+je přímo v~QGISu.
 
-Od svého vzniku byla vydána již spousta verzí programu.Dříve byly
-verze pojmenovávány podle měsíců planet Jupitera a Saturnu, později
-a dosud se dávají jména měst. V současnosti (duben 2016) je
+Od svého vzniku byla vydána již spousta verzí tohoto programu. Dříve byly
+verze pojmenovávány podle měsíců planet Jupitera a Saturnu, později se začaly používat jména měst. V současnosti (duben 2016) je
 k~dispozici verze 2.14 Essen.
