@@ -1,81 +1,88 @@
 \chapter{Praktická část}
 \label{4-Praktická část}
 
-\section{Server PostGIS}
+\section{Geodatabáze PostGIS}
 \label{Server PostGIS} 
-V rámci této bakalářské práce byla zřízena databáze PostGIS na školním
-serveru. Data z OSM jsou do školní databáze nahrávána pomocí programu {\tt osm2pgsql.py}.\footnote{dostupné z \url{http://wiki.openstreetmap.org/wiki/Osm2pgsql}}
-Ten nejprve stáhne aktuální data pro celou Evropu a následně je ořeže
-jen na území ČR. Tato data jsou každý den pravidelně aktualizována.
+V rámci této bakalářské práce byla zřízena geodatabáze PostGIS na školním
+serveru {\em geo102}. Data z OSM jsou do školní databáze nahrávána pomocí programu {\tt osm2pgsql}.\footnote{dostupné z \url{http://wiki.openstreetmap.org/wiki/Osm2pgsql}}
+%%% ML: to neni pravda, shellovy skript (viz git) pracuje primo s daty CR
+%Ten nejprve stáhne aktuální data pro celou Evropu a následně je ořeže
+%jen na území ČR.
+%%% ML: neskodilo by zminit, ze tyto aktualnize zajistuje shellovy skript, ktyery je soucasti prilohy na cd
+Obsah databáze je každý den pravidelně aktualizován podle aktuálního stavu OSM.
 
-Tabulky v databázi byly vytvořeny podle základního sch0matu, který
-vyfiltruje některé údaje. Pro~každou ze~tří tříd prvků (uzel, cesta
-a relace) z OSM je vytvořena samostatná tabulka. Pro~uzly je vytvořena
-tabulka {\tt czech\_point}. Pro~cesty z~OSM je vytvořena tabulka
-{\tt czech\_line} a pro~plošné prvky (uzavřené cesty s atributy
-pro~plochy) je vytvořena tabulka {\tt czech\_polygon}. Relace jsou
-řešeny tak, že pokud jsou tvořeny plochamy, vytvoří z~nich program
-multipolygon a vloží do~tabulky {\tt czech\_polygon}. Stejně jsou
-řešeny i relace tvořeny z~cest (do~{\tt czech\_line}, respektive bodů
+%%% ML: my jsme to zakladni schema ale upravovali (height)
+Tabulky v databázi byly vytvořeny podle základního schématu. Pro~každou třídu prvků (uzel, cesta
+a relace) je vytvořena samostatná tabulka. Pro~uzly je vytvořena
+tabulka {\tt czech\_point}, pro~cesty tabulka {\tt czech\_line} a pro~plošné prvky (uzavřené cesty s atributy
+pro~plochy) tabulka {\tt czech\_polygon}. Relace jsou
+%%% ML: plochami a ne plochamy! (to uz me prekvapilo, rikal jste, ze text projde jazykovou korekci)
+řešeny tak, že pokud jsou tvořeny plochami, vytvoří z~nich program
+{\tt osm2pgsql} multipolygon a ten vloží do~tabulky {\tt czech\_polygon}. Stejně jsou
+řešeny i relace tvořené cestami (tabulka~{\tt czech\_line}), respektive body
 ({\tt czech\_point}). Ještě je dle schematu vytvořena tabulka
 {\tt czech\_roads}, která obsahuje všechny silnice v~ČR.
 
-Každý prvek má přiřazen, v~rámci tabulky, jedinečné číslo {\tt gid},
-pro~snažší práci s~daty. Ještě je vytvořena geometrie a pak pro~každý
-atribut (dle schématu) je stejnojmenný sloupec s~hodnotou. Například
-bod s~atributem {\tt landuse = forest} má ve~sloupci {\tt landuse}
+Každý prvek má přiřazen, v~rámci tabulky, jedinečné číslo {\tt gid}.
+Dále je vytvořena pro každý prvek geometrie a pro~každý
+atribut (dle schématu) stejnojmenný sloupec s~hodnotou. Například
+bod s~atributem {\tt landuse=forest} má ve~sloupci {\tt landuse}
 hodnotu {\tt forest}.
 
-Téže databáze bude použito pro~analýzu a úpravu dat z~IPR a
-pro~import do~OSM.
+Takto vytvořená databáze bude použita pro~analýzu dat IPR a~jejich přípravu pro importu do~OSM.
 
-\section{IPR data}
+\section{Data IPR}
 \label{IPR data}
-IPR na svém webu od~jara roku 2015 zveřejňuje data. U~všech
-zveřejněných dat, které jsou ve~vektorovém formátu, jsou možnosti
-GeoJSON, DXF, GML nebo ESRI Shapefile. Dále je na~výběr mezi dvěma
-kartografickými zobrazeními S-JTSK (EPSG:5514) nebo WGS 84 (EPSG:4326).
+%%% ML: zde by se hodila reference na kap., kde o tom pisete
+IPR na svém webu od~jara roku 2015 zveřejňuje svá data v režimu otevřených dat. Vektorová data zveřejňuje ve formátech GeoJSON, DXF, GML a ESRI Shapefile. Dále je na~výběr mezi dvěma
+%%% ML: jsou to srs ane kartograficka zobrazeni (jste studenten geodezie!)
+souřadnicovými systémy S-JTSK (EPSG:5514) nebo WGS 84 (EPSG:4326).
 
-Celkem IPR zveřejňuje (toho času) 96 datových setů, a ty jsou rozděleny
-do~kategorií.\footnote{viz stránka IPR \url{www.geoportalpraha.cz/cs/opendata}}
+Celkem IPR zveřejňuje (toho času) 96 datových setů, které jsou rozděleny
+do~kategorií.\footnote{viz webové stránky IPR, \url{www.geoportalpraha.cz/cs/opendata}}
 
 Pokud není řečeno jinak, jedná se o data ve vektorové formě.
 Těmito kategoriemi jsou:
 
 \begin{itemize}
     \item   3D model - Obsahuje 3D modely budov a mostů v Praze a
-            digitální model povrchu (DMP) a dále rastrově digitální
+            digitální model povrchu (DMP), dále rastrově digitální
             model povrhu a terénu, absolutní a relativní výšky budov.
 
             Z těchto dat by se pro OSM dala využít poloha budov
-            ze~souboru Budovy 3D. Budovy jsou ale již importovány
-            ze~zdroje RUIAN, takže již nejsou potřeba přidávat.
+            ze~souboru Budovy 3D. Budovy byly do OSM již importovány
+            %%% ML: mate nekde zkratku vysvetlenu
+            ze~zdroje RÚIAN, není třeba je tedy importovat znovu.
 
     \item   Digitální technická mapa Prahy - zde jsou k dispozici
             ve~vektorové podobě všechny inženýrské sítě v~Praze,
             technické budovy a parcelní hranice.
 
             Do OSM se, možná zatím, nepřidávají inženýrské sítě.
-            V~tuto chvíli lze do OSM přidávat zdroje veřejného
-            osvětlení. Takže pokud by nějáky soubor dat obsahoval
-            značky veřejného osvětlení, mohla by se tato
-            data importovat do OSM. Hranice města Prahy a městských
-            částí již v~OSM jsou. Datová sada Technické budovy by bylo
-            možné použít jako zdroj pro budoicí aktualizaci OSM.
+            V~současnosti lze ale do OSM přidávat zdroje veřejného osvětlení.
+            %%% ML: nasledujici veta je uplne zbytecna, jsou takovato data v IPR?
+            %Takže pokud by nějaký soubor dat obsahoval
+            %značky veřejného osvětlení, mohla by se tato
+            %data importovat do OSM.
+            Hranice města Prahy a jeho městských
+            částí již v~OSM jsou dostupná. Datovou sada Technické budovy by bylo
+            možné použít jako zdroj pro budoucí aktualizaci OSM.
+            %%% ML: no prubehy hranic parcel obsahuje RUIAN, neni treba nic obkreslovat, to se mozna delo drive, dnes jiz rozhodne ne...
             Průběhy hranic parcel lze již nyní bezproblémově
             obkreslovat z rastrových podkladů, které veřejně
             poskytuje ČÚZK. 
 
     \item   Doprava - obsahuje cyklistické trasy a značky, pěší trasy,
-            parkovací zóny, automaty, P+R parkoviště a mapy zon PID,
-            Cyklisticé trasy v Praze by se mohly importovat, ale jsou
-            již velmi dobře zmapované samotnými uživately. Datová sada
-            obsahuje bodové značky, a z~těch by se některé mohly
+            parkovací zóny, automaty, P+R parkoviště a mapy zón PID.
+            Cyklistické trasy v Praze lze do OSM importovat, jsou ale
+            %%% ML: uzivateli (a ne uzivately)! vedouci prace neni jazykovy korektor ;-)
+            již velmi dobře zmapované samotnými uživateli. Datová sada
+            obsahuje bodové značky, z~těch by se některé mohly
             importovat. V~případě datové sady 
-            Cyklistická doprava~-~značky, byla data prohledána, dle IPR
+            Cyklistická doprava~-~značky, byla data prohledána. Dle IPR
             uváděné hodnoty {\tt 103} ve sloupci {\tt DRUH}
-            pro~Bikeshating, bohužel žádné takové hodnoty
-            neobsahovaly. Import dat z tohoto datové sady nebyl proto
+            pro~Bikesharing, bohužel žádné takové hodnoty
+            neobsahovaly. Import dat z této datové sady nebyl proto
             dál brán v potaz. Bylo by možné do OSM přidat parkovací
             zóny (jako nový atribut u~stávajících komunikací).
             Vhodná data jsou parkovací automaty a také P+R parkoviště.
@@ -88,8 +95,8 @@ Těmito kategoriemi jsou:
             obsahuje i protihlukové bariéry, které by bylo možné
             do~OSM přidat.
 
-    \item   Kvalita životního prostředí - Obsahuje datovou sadu
-            Oblasti svozu komunálního odpadu. Tato data nejsou vhodná
+    \item   Kvalita životního prostředí - obsahuje datovou sadu
+            Oblasti svozu komunálního odpadu. Tato data není vhodné
             do~OSM začlenit. Dále ale obsahuje datovou sadu
             Odpadní Zařízení pro občany, která obsahuje informace
             o~všech sběrnách odpadu v~Praze. Tato datová sada se jeví
@@ -99,9 +106,9 @@ Těmito kategoriemi jsou:
             měřítek (1:500 až 1:10~000). Klady mapových listů nejsou
             vhodná data pro~OSM. Dále kategorie obsahuje i datové sady
             vrstevnic, a to po~5~m, 2~m a 1~m. Vrstevnice přímo OSM
-            neobsahuje, avšak byly by velkým zpřesněním stávajcího
+            neobsahuje, avšak byly by velkým zpřesněním stávajícího
             zdroje vrstevnic. Nebo jako zdroj pro~projekty, které
-            kombinují OSM s~jinými daty.\footnote{projekt mtbmap.cz nebo http://mapa.prahounakole.cz/}
+            kombinují OSM s~jinými daty.\footnote{Projekt mtbmap.cz nebo \url{http://mapa.prahounakole.cz/}}
 
     \item   Občanská vybavenost obsahuje pouze datovou sadu Veřejné
             toalety. Jistě jsou již toalety v Praze částečně
@@ -110,7 +117,7 @@ Těmito kategoriemi jsou:
 
     \item   Ochrana přírody a krajiny, obsahuje data o ochranných
             pásmech památných stromů. Bohužel ne samotné stromy.
-            Vhodná data jsou z~datové sady Přírodní parky a
+            Vhodná data pro import jsou z~datové sady Přírodní parky a
             Významný krajinný prvek - registrovaný. Z těchto datových
             sad by se mohly doplnit, nebo aktualizovat data v OSM.
 
@@ -118,35 +125,32 @@ Těmito kategoriemi jsou:
             s~rozlišením až 5~cm na~pixel jak ve~viditelném spektru
             světla, tak i v~infračerveném.
 
-            Ortofoto jsou vhodná pouze jako podkladový zdroj,
+            Ortofoto je vhodné pouze jako podkladový zdroj,
             například pro mapovací aplikaci JOSM.
 
     \item   Ovzduší obsahuje vektorové mapy znečištění ovzduší a také
             zdroje znečištění. Tato data se v OSM nemapují, jediné co
             by se mohlo přidat do OSM jsou bodové zdroje, a to
-            například značkou pro~komín. Dále v~této kategorii jsou i
+            například značkou pro~komín. Dále jsou v~této kategorii i
             bonity, a to z~různých hledisek (ovzduší, půdy,
             osvit, atd.). Tato data nejsou vhodná pro import do~OSM.
 
     \item   Platný územní plán. V této kategorii jsou datové sady
             Veřejně prospěšných staveb (plošné, liniové a bodové).
             Datová sada VPS obsahuje také informace o~P+R u~stanic
-            metra. Data jsou z~územního plánu, a tedy nemusí být
+            metra. Tyto informace pocházejí z~územního plánu, a tedy nemusí být
             realizovány. Po prozkoumání a porovnání s~datovou sadou
-            Záchytná parkoviště P+R, jsou již všechny záznamy obsaženy
-            v~datové sadě Záchytná parkoviště P+R.
+            Záchytná parkoviště P+R, lze konstatovat, že jsou všechny záznamy obsaženy již v této datové sadě.
 
     \item   Socioekonomická data obsahuje pouze vektorovou mapu ceny
             pozemků. Data o ceně pozemků se do~OSM nepřidávají. 
 
     \item   Technická infrastruktura - vodní hospodářství, obsahuje
             záplavová území Q20, Q50 a Q100 a území zaplavené
-            povodněmi v roce 2013. Záplavové území se do~OSM
-            nepřidávají. Dále v této kategorii jsou datové sady
-            Protipovodňové ochrany, obsahují údaje o všech dočasných
-            protipovodňových zdech. Je možné tyto zdi přidat, ale
-            jelikož se jedná o~dočasné překážky, a to~ještě jen v~době
-            povodně, nemají moc smysl je do OSM přidávat.
+            povodněmi v roce 2013. Informace o záplavových územích se do~OSM
+            nepřidávají. Dále jsou v této kategorii datové sady
+            Protipovodňové ochrany, které obsahují údaje o všech dočasných
+            protipovodňových zdech. Jelikož se jedná o~dočasné překážky, a to~ještě jen v~době povodně, nemá smysl je do OSM přidávat.
 
     \item   Urbanismus - Z~této kategorie by se mohly pro OSM využít
             informace z~datové sady
@@ -160,34 +164,35 @@ Těmito kategoriemi jsou:
 \subsection{Licenční problém}
 \label{Licenční problém}
 Jak již bylo řečeno výše, IPR svá data zveřejnil a stále zveřejňuje
-(v době tvorby této práce) pod~licencí CC~BY-SA~4.0 viz \ref{licence CC BY-SA 4.0}.
+(v době tvorby této práce) pod~licencí CC~BY-SA~4.0, viz kapitola \ref{licence CC BY-SA 4.0}.
 
-Jelikož jsou ale data OSM distribuována pod licencí ODbL(v1.0), která
-neumožňuje začletnit data z licencí CC BY-SA.
+%%% ML: tak co, vete chybi druha polovina (duvod: tyto dve licence nejsou kompatibbilni)
+Jelikož jsou ale data OSM distribuována pod licencí ODbL (v1.0), která
+neumožňuje začletnit data z licencí CC BY-SA. 
 
 Na některá data (informace), jako například místní názvy, ulice atd.
 se nemohou vztahovat autorská práva. Neboť nevyžadují žádnou 
-kreativitu pro "vytvoření". Ovšem na soubor (databázi) těchto dat
-vytvořený podle nějakých kritérií již může být uplatněna právní
-ochrana. A právě na toto je nejvhodnější licence ODbl, která se
+kreativitu pro jejich \uv{vytvoření}. Ovšem na soubor (databázi) těchto dat
+vytvořený podle daných kritérií již může být právní
+ochrana uplatněna. A právě proto vznikla licence ODbL, která se
 zaměřuje na ochranu databáze jako celku.
 
-U dat chráněných autorským právem a majíce nějakou licenci se vyžaduje
-jejich vzdání. V~některých zemích, kde se nelze úplně vzdát
-autorských práv, se vyžaduje vzdání se autorských práv na~nejnižší
-možnou míru a také autor souhlasí, že nebude vymáhat svoje autorská
-práva, po dobu, kdy jsou data uložena v databázi. \cite{ODbl}
+U dat chráněných autorským právem a danou licencí se vyžaduje jejich
+vzdání. V~některých zemích, kde se nelze úplně vzdát autorských
+práv, se vyžaduje omezení autorských práv na~nejnižší možnou
+míru. Autor souhlasí, že nebude vymáhat svoje autorská práva, po dobu,
+kdy jsou data uložena v databázi. \cite{ODbl}
 
 IPR byl kontaktován, zdali by mohla být jeho data použita do OSM.
 Dle vyjádření vyplynulo, že IPR by neměl problém s použitím svých dat,
 jelikož jsou zveřejněna pod myšlenkou Opendata. Byla navrhnuta
 možnost udělit od~IPR pro~OSM licenční výjimku.
 
-Vynikla by tu však sitace, kdy by byla data k dispozici od IPR
-pod~licencí CC BY-SA a od~OSM, sice modifikovaná), ale pod~licencí
-ODbl. Tohoto dualismu by mohl využít někdo, komu by licence CC BY-SA
-numožňovala jeho záměr. Mohl by si totiž data obstarat z databáze OSM,
-sice modifikovaná, ale již pod novou licencí (ODbl), která by mu jeho
+Vznikla by tu však situace, kdy by byla data IPR k dispozici 
+pod~licencí CC BY-SA a v~OSM (sice modifikovaná) pod~licencí
+ODbL. Tohoto dualismu by mohl využít někdo, komu by licence CC BY-SA
+neumožňovala jeho záměr. Mohl by si totiž data obstarat z databáze OSM,
+sice modifikovaná, ale již pod novou licencí (ODbL), která by mu jeho
 záměr umožnila.
 
 Hlavní rozdíl je totiž v tom, že pod licencí CC~BY-SA sice může data
@@ -198,10 +203,13 @@ Uživatel opět smí data upravovat nebo k~nim přidávat jiná data, ale
 poté může svoje dílo distribuovat pod~jinou licencí, za~podmínek, že
 uvolní veškerá data, která k tomu použil.
 
-Vhodnější by tedy bylo, změnit licenconci dat zveřejňovaných IPR
-na~ODbl. Dle vyjádření se tato situace bude ze strany IPR řešit tak,
-že se změní licence u distribuovaných dat na ODbl. Tato změna
-licencování se očekává v~několika měsících.
+Vhodnější by tedy bylo, změnit licenci dat zveřejňovaných IPR
+na~ODbL.
+
+%%% ML: nepredbihal bych, je to spise spekulace
+%Dle vyjádření se tato situace bude ze strany IPR řešit tak,
+%že se změní licence u distribuovaných dat na ODbL. Tato změna
+%licencování se očekává v~několika měsících.
 
 
 \section{IprDownloader}
