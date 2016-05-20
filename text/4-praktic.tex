@@ -265,64 +265,58 @@ extrahuje všechna data z archivu.
 \section{Ovládání}
 Při spuštění vypíše program všechna nalezená data,
 která IPR dává k~dispozici. Pro hledání a označení, která data se mají
-stáhnout slouží parametr {\tt ---alike}. Za toto uživatel připojí slovo, nebo
-frázi, jež chce v~datech hledat. Pro~sousloví, které obsahuje mezeru,
-je vhodné jej umístit do uvozovek. Program rozlišuje velká~x~malá
+stáhnout, slouží parametr {\tt ---alike}. Pokud hledaný řetězec obsahuje mezeru,
+tak je nutné jej umístit do uvozovek. Program rozlišuje velká~a~malá
 písmena, háčky a čárky.
 
-Příklad:
-{\tt \$ iprdownloader.py ---alike 'Technická mapa'}
+Příklad: {\tt \$ iprdownloader.py ---alike 'Technická mapa'}
 
 Dále jsou k dispozici nastavení.
 \begin{itemize}
-    \item kartografické zobrazení {\tt ---crs }. K dispozici jsou dvě
-    (S-JTSK nebo WGS-84), respektive lze vkládat čtyři různé
-    vstupy, protože lze tyto kartografická zobrazení vložit i EPGS
-    kódy (5514 a 4326). Přednastavené zobrazení je S-JTSK.
+    \item souřadnicový systém {\tt ---crs }. Podporován je S-JTSK a WGS-84. Kromě názvu lze použít i EPGS kódy (5514 a 4326). Přednastavený souřadnicový systém je S-JTSK.
 
     \item datový formát souborů {\tt ---format}.
-    Pro vektorové soubory je možné zvolit pro vektorová data:
+    Mezi podporované vektorové formáty patří:
         \subitem {\tt json }  JavaScript Object Notation
         \subitem {\tt dxf  }  AutoCAD DXF
         \subitem {\tt gml  }  Geography Markup Language
-        \subitem {\tt shp  }  ESRI shapefile
+        \subitem {\tt shp  }  ESRI Shapefile
         
-    Je předdefinován formát {\tt shp} .
+        Výchozím formátem je {\tt shp} .
          
     Pokud uživatel chce stahovat rastrová data, je potřeba změnit
     předdefinovaný formát souboru na adekvátní rastrový formát např.
-    ({\tt tif}) atd.
+    {\tt tif} atd.
     
-    \item adresář na místním počítači {\tt ---outdir}. Je předdefinován
-    adresář {\tt /data/} ve~složce, kde je uložen samotný program.
+    \item adresář na lokálním počítači {\tt ---outdir}. Je předdefinován
+    adresář {\tt data} ve~složce, kde je uložen samotný program.
 
 \end{itemize}
 
 Pro stažení dat stačí přidat parametr {\tt ---download} .
 
-příklad:
+Příklad:
 
-{\tt \$ iprdownloader.py ---alike 'Technická mapa' ---crs 4326 ---format gmp ---outdir IPR}
+{\tt \$ iprdownloader.py ---alike 'Technická mapa' ---crs 4326 $\backslash$ \newline ---format gmp ---outdir IPR}
 
-Pro možnost stahované soubory importovat rovnou do databáze
-PostGIS, je minimálně nutné zadat název databáze {\tt ---dbname }.
-To v~případě pokud je databáze PostGIS umístěna v lokální síti. Pokud
-je databáze umístěna na~jiném serveru, je nutné zadat adresu
+V případě importu stažených souborů do databáze PostGIS je nutné zadat minimálně název databáze {\tt ---dbname}.
+To v~případě, pokud je databáze PostGIS umístěna na lokálním počítači. Pokud
+je databáze umístěna na vzdáleném počítači, je nutné zadat jeho adresu
 {\tt ---dbhost} a port {\tt ---dbport}. Pokud je ještě vyžadován
 autorizovaný přístup, použije se přístupové jméno {\tt ---dbuser} a
-heslo {\tt ---dbpassword}. Je možné zvolit si schéma v databázi
-{\tt ---dbschema}. Pokud je vložen název databáze, není již potřeba
+heslo {\tt ---dbpassword}. Dále je možné zvolit si schéma v databázi
+{\tt ---dbschema}. Pokud je definován název databáze, není již potřeba
 používat parametr {\tt ---download} pro stahování dat.
 
 Příklad:
 
-{\tt \$ iprdownloader.py ---alike 'Technická mapa' ---dbname pgis\_osm\_jakl ---dbschema IPR ---dbhost geo102.fsv.cvut.cz  ---dbport 5432 } 
+{\tt \$ iprdownloader.py ---alike 'Technická mapa' $\backslash$ \newline ---dbname pgis\_osm\_jakl ---dbschema IPR ---dbhost geo102.fsv.cvut.cz  $\backslash$ \newline ---dbport 5432 } 
  
 
 \section{Navržená data pro import}
 \label{Navržená data pro import}
 
-Po projití všech dat byla vyhodnocena vhodná data pro začlenění
+Po analýze všech dat byla vyhodnocena vhodná data pro začlenění
 do~OSM.
 
 \begin{itemize}
@@ -337,16 +331,14 @@ do~OSM.
     \item   Záchytná parkoviště P+R
 \end{itemize}
 
-Všechna vybraná data byla pomocí IprDownloader.py stažena a
-naimportována do~školní databáze PostGIS. Poté byl program QGIS
-připojen na školní databázi. Poté byla v programu QGIS pomocí SQL
-SELECTu filtrována data z aktuální verze OSM na školním serveru a
-z~každého SELECTu byla vytvořena nová tabulka v~PostGIS databázi
-na~školním severu. Data byla filtrována za použití doporučených
-atributů na české osm wiki. \cite{OSMfeatures}
+Vybraná data byla pomocí IprDownloader.py stažena a naimportována
+do~škol\-ní databáze PostGIS. Tato školní databáze obsahovala i aktuální data OSM. V~programu QGIS byla data pomocí SQL SELECTu
+filtrována, na jejich základě byly vytvořeny nové tabulky. Data byla filtrována za použití doporučených atributů na české
+OSM wiki. \cite{OSMfeatures}
 
-Tato vhodná data byla prohledána a porovnána s aktuálním stavem v~OSM.
+Vybraná data IPR byla prohledána a porovnána s aktuálním stavem v~OSM.
 Byly navrženy vhodné atributy, které by se ze~zdrojových dat daly
+%%% ML: jako poznamka pod carou link na diskuzi
 naplnit. Vybraná data s navrženými atributy byla uveřejněna na Talk-cz.
 
 
@@ -355,41 +347,42 @@ naplnit. Vybraná data s navrženými atributy byla uveřejněna na Talk-cz.
 V datech od IPR bylo obsaženo celkem 353 záznamů. Jednalo se
 o~výstupy z~metra (dveře, schodiště a výtahy).
 
-V OSM databázi bylo hledáno v tabulce {\tt osm.czech\_points}
-a záznamy s hodnotou
+V OSM databázi byly v tabulce {\tt osm.czech\_points}
+nalezeny záznamy s hodnotou
 \begin{verbatim}
     railway = subway_entrance
 \end{verbatim}
 Vytvořená tabulka z dat OSM obsahovala 236 záznamů. Po~porovnání dat
 bylo zřejmé, že nejvíce jsou v OSM zmapovány výstupy v centru, kde
-jsou posuny v řádech decimetrů až metr. V okrajových částech města
+jsou posuny v~řádech decimetrů až metr. V okrajových částech města
 nejsou zmapovány všechny výstupy, nebo chybí výstupy pro celé stanice.
 Protože body vstupů do metra jsou většinou součástí linií, není vhodné
 body mazat a vytvářet nové. Bylo potřeba najít mezi stávajícími body
 v~OSM a IPR adekvátní dvojice. To znamená, že se jedná o body, které
 reprezentují stejný objekt v~realitě.
 
-Ani editace stávajících není příliš přínosná, když všechny vstupy
-do~metra jsou minimálně 3 metry široké a všechny změny by byly v řádů
-cm až dm. Bylo by ale vhodné přidat výstupy do metra tam, kde nejsou
+%%% ML: obcas mluvite o vstupech a jindy o vystupech, coz je to same
+Ani editace stávajících elementů není příliš přínosná. Vstupy
+do~metra jsou minimálně 3 metry široké a případné změny by byly v řádů
+cm až dm. Bylo by ale vhodné přidat výstupy z metra tam, kde nejsou
 v~databázi OSM. Jedná se o stanice metra Zličín, Luka, Kačerov, Rajská
 zahrada a Černý most. Celkem se tedy jedná pouze o 26 bodů, které by
 bylo snadnější přidat ručně, protože výstupy jsou dostatečně zmapované,
-jen zde není na některém uzlu atribut {\tt railway~=~subway\_entrance}.
+pouze občas chybí v uzlech atribut {\tt railway~=~subway\_entrance}.
 
 
 \subsection{Odpadní zařízení pro občany}
 \label{Odpadní zařízení pro občany}
 Data od IPR obsahují seznam 36 sběrných dvorů s velmi detailním
-popsání co jakou látku přijímá, otevírací dobu, zřizovatel. 
+popsání (příjem, otevírací doba, zřizovatel). 
 
-Z~OSM z~tabulky {\tt osm.czech\_point} byly záznamy vyfiltrovány podle
+Z~OSM tabulky {\tt osm.czech\_point} byly záznamy filtrovány podle
 hodnot
 \begin{verbatim}
     amenity = recycling
     recycling_type = centre
 \end{verbatim}    
-Bylo nalezeno celkem 11 záznamů (bodů), a z~toho bylo 6 bodů (z~IPR)
+Bylo nalezeno celkem 11 záznamů (bodů), z~toho bylo 6 bodů (z~IPR)
 ve~vzdálenosti 100 metrů od bodů z OSM. Těchto 6 bodů bude vhodné
 pouze přesunout. Zbylé body je nutné v databázi OSM nově vytvořit.
 
@@ -404,11 +397,11 @@ Z dostupných dat z tabulky byly navrženy tyto atributy
     source:loc = IPR
 \end{verbatim}
 Navržené atributy by se naplnily z tabulky dat od IPR. Otevírací doba
-by byla vložena do~{\tt opening\_hours~= }. Hodnoty v~tomto atributu
-by byly formátovány dle doporučeného formátování.\footnote{http://wiki.openstreetmap.org/wiki/Key:opening\_hours}
-U~atributu {\tt fee~= } bylo navrženo {\tt free of charge for the Prague citizens}, tedy zdarma pro~občany Prahy. Hodnota
-{\tt operator~= } by byla ze~stejnojmenného sloupce z~dat od~IPR. 
-Atribut {\tt source~= } by byl ze~sloupce {\tt POSKYT }.
+by byla vložena do~{\tt opening\_hours}. Hodnoty v~tomto atributu
+by byly formátovány dle doporučeného zápisu.\footnote{\url{http://wiki.openstreetmap.org/wiki/Key:opening\_hours}}
+U~atributu {\tt fee} bylo navrženo {\tt free of charge for the Prague citizens}, tedy zdarma pro~občany Prahy. Hodnota
+{\tt operator} by byla ze~stejnojmenného sloupce z~dat od~IPR. 
+Atribut {\tt source} by byl odvozen ze~sloupce {\tt POSKYT}.
 
 Dále byly navrženy atributy
 \begin{verbatim}
@@ -419,21 +412,23 @@ Dále byly navrženy atributy
     recycling: ... = yes
 \end{verbatim}
 Podle toho co zde lze recyklovat, dle hodnoty ve~sloupci
-{\tt odpadprije }.
+%%% ML: odpadprijem
+{\tt odpadprije}.
 
 
 \subsection{Veřejné toalety}
 \label{Veřejné toalety}
 Datový soubor Veřejné toalety obsahuje jednu tabulku dat. V~této
 tabulce je celkem 247 záznamů. U každého záznamu je uvedena lokalita a
-provozovatel. Dále je uvedena doba, po kterou je přístupný, zdali je
+provozovatel. Dále je uvedena otevírací doba, zdali je
 nutné zaplatit poplatek, jestli je bezbariérový a zdroj těchto dat.
 
-Záznamy odpovídajícíc toaletám byly v~OSM vyhledány podle atributu
+Záznamy odpovídající toaletám byly v~OSM vyhledány podle atributu
 \begin{verbatim}
     amenity = toilets
 \end{verbatim}
 
+%%% ML: nasledujici odstavec prosim cely prepiste
 a bylo zjištěno, toho času, 185 záznamů. Překrytí dat IPR a OSM bylo.
 Buď k bodu z IPR nebyl v okruhu 5 metrů žádný bod z OSM, nebo
 byl, ale měl jiné souřadnice. Také nastaly situace, kdy v OSM
@@ -457,11 +452,11 @@ Pokud by hodnota byla {\tt fee~=~yes} připojil by se atribut
 \end{verbatim}
 a jeho hodnota by byla cena v Kč.
 
-Hodnota u {\tt description~= } by byla hodnota ze sloupce
-{\tt lokalita}. U~atributu {\tt operator~= } byla navržena hodnota
+Hodnota u {\tt description} by byla převzata ze sloupce
+{\tt lokalita}. U~atributu {\tt operator} byla navržena hodnota
 {\tt Hlavní Město Praha}, ale jen u~bodů, které mají v tabulce
-(data od IPR) ve sloupci {\tt Operator} hodnotu {\tt HMP }.
-U zbývajících bodů (záznamů) by atribut neměl žádnou hodnotu.
+(data od IPR) ve sloupci {\tt Operator} hodnotu {\tt HMP}.
+U zbývajících bodů (záznamů) by tento atribut neměl žádnou hodnotu.
 
 
 \subsection{Parkovací automaty}
@@ -481,7 +476,7 @@ OSM. Pouze dva záznamy z~OSM jsou v~blízkosti k bodům z~IPR. Jeden je
 vzdálený do 5 metrů a druhý do 20 metrů. Nelze tedy určit, zda oba (IPR
 a OSM bod) odkazují na stejný objekt, nebo na dva různé. Proto se
 původní body nebudou přesouvat, a ani rušit. Nové prvky půjde zpětně
-rozlišit podle atributu {\tt source:loc~= }.
+rozlišit podle atributu {\tt source:loc}.
 \\*
 U nově přidaných uzlů byly navrženy tyto atributy
 \begin{verbatim}
@@ -490,8 +485,8 @@ U nově přidaných uzlů byly navrženy tyto atributy
     source = IPR
     source:loc = IPR
 \end{verbatim}
-Do~hodnoty {\tt source~= } by byla použita hodnota ze~sloupce
-{\tt POSKYT}). Hodnota u~atributu {\tt source:loc~= } by byla použita
+Do~hodnoty {\tt source} by byla použita hodnota ze~sloupce
+{\tt POSKYT}. Hodnota u~atributu {\tt source:loc} by byla použita
 {\tt IPR}.
 
 \subsection{Záchytná parkoviště P+R}
@@ -511,7 +506,7 @@ Proto bylo vyzkoušeno hledání pomocí obecnějšího atributu
     amenity = parking
 \end{verbatim}
 Na území Prahy bylo nalezeno, toho času, 182 záznamů (bodů). Bylo
-vyzkoušeno hledání s přidaným atributem {\tt name~= }, který by
+vyzkoušeno hledání s přidaným atributem {\tt name}, který by
 obsahoval P+R. Byl nalezen pouze jeden záznam.
 
 Dále bylo vyzkoušeno hledání bodů s atributy
@@ -530,8 +525,10 @@ Navržené atributy jsou
     source:loc = IPR
 \end{verbatim}
 
+%%% ML: odkaz na diskuzi, proc je to zmineno pouze u P+R, ta diskuze
+%%% tykala vsech datovych sad predpokladam
 Výše zmíněné návrhy byly takto zveřejněny v diskuzi na stránkách
-talk-cz.
+Talk-cz.
 
 \subsection{Budovy 3D - výšky budov}
 \label{Budovy 3D - výšky budov}
@@ -545,26 +542,26 @@ V návrhu bylo doporučeno označení pro zdroj tohoto importu, pro případné 
     source:building:level =
 \end{verbatim}
 
-Při rešerši dat uložených na školní geodatabázi bylo zjištěno,
+Při rešerši dat uložených ve školní geodatabázi bylo zjištěno,
 že data stahovaná a ukládaná z OSM neobsahují potřebné údaje.
 Přesněji ukládaná tabulka neobsahovala údaje o výšce budov
 (sloupec {\tt height} a sloupec {\tt building\::height}).
-Proto bylo nutné základní schéma změnit tak, aby se tyto údaje také 
+Proto bylo nutné základní schéma pro {\tt osm2pgsql} změnit tak, aby se tyto údaje také 
 ukládaly. Upravené schéma bylo uloženo a bylo nastaveno jako výchozí.
 
-Bylo také vyhodnoceno, že bude vhodné, aby se ukládal údaj, jestli
+Také se ukázalo, že bude vhodné, aby se ukládal údaj, jestli
 není polygon vytvořen z relace budovy, protože v rámci této relace
 (budovy) mají definovanou výšku ({\tt height}, nebo
-{\tt building\::height} pouze její části, ze~kterých je složena.
-K~tomuto rozeznání byl použit atribut {\tt builing\:part}.
+{\tt building\::height}) pouze její části, ze~kterých je složena.
+K~tomuto rozeznání byl použit atribut {\tt builing\::part}.
 
-V souboru dat Budovy 3D je dále uloženo 128 datových sad pro menší
-oblasti. Tyto datové sady obsahují budovy jen z malé oblasti, protože
-by datová sada budov z~celého území Prahy byla moc velká (až v~řádů
+V sekci Budovy 3D je dále uloženo 128 datových sad. Tyto datové sady obsahují budovy jen z malé oblasti, protože
+by datová sada budov pro~celé území Prahy byla moc velká (až v~řádů
 GB). Každá datová sada je přibližně obdélníková oblast z území Prahy a
 má svůj originální název.
 
-V~tomto příkladě popisu procesu práce bude pracováno s~datovou sadou
+%%% ML: pridat odkaz na schema v priloze
+V rámci této práce bude pracováno s~datovou sadou
 {\tt BD\_Prah73}. Po~vybrání této jedné datové sady (oblasti) byla
 vytvořena minimální ohraničující oblast okolo ní a přidán přesah o
 100~metrů na každou stranu. Tedy byl vytvořen obdélník okolo všech dat
