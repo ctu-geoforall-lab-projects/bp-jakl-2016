@@ -2,35 +2,36 @@
 \label{5-zaver}
 
 V~bakalářské práci bylo popsáno základní dělení prvků v~databázi
-OpenStreetMap, licencování a hlavní zdroje dat. Vysvětlen termín
-Opendata (otevřená data) a jeho rozdělení.
-Při~řešení licenční otázky byl zjištěn problém, protože licence dat
-OSM a IPR jsou rozdílné, neumožňují prozatím v~současné době začlenění
-dat IPR do~databáze OSM a popsány hlavní rozdíly mezi těmito licencemi.
+OpenStreetMap, licencování a hlavní zdroje dat. Dále byl vysvětlen termín
+Opendata (otevřená data).
+Při~řešení licenční otázky byl zjištěn problém. Licence dat
+OSM a IPR nejsou kompatibilní. Nelze tedy v~současné době začlenit
+data IPR do~databáze OSM. V rámci práci byly popsány hlavní rozdíly mezi těmito licencemi.
 Problém byl řešen tak, že se vyčká na~změnu licence u~dat IPR, a
 v~tomto mezičase se import připraví, aby se poté mohl už jen provést.
 
 
 Pro~snadnější práci s~daty byl vytvořen program, který umožňuje hledání
-všech distribuovaných dat od~IPR a dále umožňuje jejich stažení a
-následný import do~geodatabáze PostgreSQL. Program byl napsán v~jazyce
+všech distribuovaných dat IPR a dále jejich stažení a
+následný import do~geodatabáze PostGIS. Program byl napsán v~jazyce
 Python.
 
 
 Všechna data zveřejněná IPR byla prozkoumána (v~programu QGIS)
 a bylo posouzeno, zdali jsou či nejsou vhodná začlenit je do~databáze
-OpenStreeMap. Po~vybrání vhodných začlenění do~databáze OSM byla
+%%% ML: zacleneni ?
+OpenStreetMap. Po~vybrání vhodných začlenění do~databáze OSM byla
 provedena rešerše aktuálního stavu v~databázi OSM.
-Po~porovnání vzešly čtyři datové sady vhodné pro~import.
+Na základě toho vzešly čtyři datové sady vhodné pro~import.
 Jmenovitě Parkovací automaty, Parkoviště P+R, Odpadní zařízení
 pro~občany a Veřejné toalety. Následně z~nich byla vytvořena a upravena
 data s~ohledem doporučených atributů OSM.
-Na~diskuzním Talk-cz byl tento záměr zveřejněn a v~diskuzi dále bylo
+Na~diskuzním fóru Talk-cz byl tento záměr zveřejněn a v~diskuzi dále bylo
 navrženo, zabývat se ještě importem výšek budov.
 
 
 Po~změně licence u~dat zveřejňovaných IPR se samotný import může provést
 v~programu {\tt osmosis}.
 Jako zajímavé by se do~budoucna jevilo zpracovat 3D modely budov
-z~datasetu Budovy 3D. Navrhnout program (skript), který by vytvořil
+z~datasetu Budovy 3D. Což by znamenalo navrhnout program (skript), který by vytvořil
 modely budov v~OSM.
