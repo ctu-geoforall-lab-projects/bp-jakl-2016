@@ -1,17 +1,72 @@
+\chapter{Typy vykreslení OSM dat}
+\label{vykresleni_dat}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm]{pictures/osm_standard.png} 
+    \caption{Standardní mapa (Standard)}
+    \label{fig:standard}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm]{pictures/osm_cyclemap.png} 
+    \caption{Cyklistická mapa (Cycle Map)}
+    \label{fig:cycle}
+\end{figure}
+
+% new list
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm]{pictures/osm_transport.png} 
+    \caption{Transport Map}
+    \label{fig:transport}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm]{pictures/osm_mapquest.png} 
+    \caption{MapQuest Open}
+    \label{fig:mapquest}
+\end{figure}
+
+% new list
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm]{pictures/osm_humanitarian.png} 
+    \caption{Humanitární mapa (Humanitarian)}
+    \label{fig:humanitarian}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=11.5cm]{pictures/F4.png} 
+    \caption{projekt F4 (zdroj \url{http://demo.f4map.com/}}
+    \label{fig:F4}
+\end{figure}
+
+% new list
+
 \chapter{Diagramy}
 \label{digramy}
 
-\begin{figure}[hbt]
+\begin{figure}[H]
   \centering
-  \includegraphics[scale=0.6,angle=90]{pictures/diagram_building_height.png}
+  \includegraphics[scale=0.60,angle=90]{pictures/WorkFlow.png}
+  \caption{Diagram postupu práce.}
+  \label{fig:diagram_workflow}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.60,angle=90]{pictures/diagram_building_height.png}
   \caption{Diagram postupu práce pro získání výšky budov.}
   \label{fig:diagram_building}
 \end{figure}
 
-
-
-
-
+% new list
 
 \chapter{Obsah CD}
 \label{priloha-obsahCD}
@@ -40,6 +95,7 @@
 
           \put( 29, 140){\line(0, 1){8}}
           \put( 29, 140){\line(1, 0){10} { pgis\_osm\_bp.style}}
+          \put(150, 140){ vlastní schema dat z OSM}
           \put( 29, 130){\line(0, 1){10}}
           \put( 29, 130){\line(1, 0){10} { upgrade\_pgis\_osm\_bp.sql}}
           

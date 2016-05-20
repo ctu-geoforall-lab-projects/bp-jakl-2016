@@ -94,13 +94,11 @@ jeden a více prvků. Mohou se do nich spojit prvky stejného druhu (uzel a uzel
 nebo různého (uzly, cesty nebo i relace).
 Například dálnice je tvořena několika cestami (way), které
 jsou zahrnuty do společné relace, např. \uv{Dálnice D1}. Nebo například turistická trasa
-%%% ML: KCT jsem odstranil, nebo tato organizace data do OSM neposkytuje
 může být relace sdružující jak liniové 
 (cesty, pěšiny), tak i bodové (rozcestníky, vyhlídky, apod.) prvky.
 
-%%% ML: nejde o wikipedii, ale wiki, vetu jsem zjednodusil (3x je, navic bez carrky)
 Na wiki OpenStreetMap \cite{OSMfeatures} je uvedeno, které atributy jsou pro daný druhu prvku vhodné (dle komunity uživatelů OSM). Pokud je daný atribut použit nevhodně, tak mohou být související prvky v některých vykreslovačích chybně zobrazeny, viz kap. \ref{Vykreslovače}.
-\begin{figure}[hbt]%[p]
+\begin{figure}[hbt]
     \centering
     \includegraphics[scale=0.55]{./pictures/OSMelements.png}
     \caption{Rozdělení prvků OSM, vlastní tvorba (zdroj: vlastní)}
@@ -137,7 +135,7 @@ Nemusí však uvolnit přímo data, která pro tvorbu mapy použil.
 %%% ML: ta licence muze byt opravdu jina, mel jsem pocit, ze to musi
 %%% byt opet ODbL?
 Data OSM pod novou (ODbL) licencí, je možné jakkoli použít, upravit
-a následně zveřejnit pod~jakoukoli licencí,       % která je kompatibilní s~ODbL,
+a následně zveřejnit pod~jakoukoli licencí,
 avšak za~podmínky, že dojde k~uvolnění souvisejících doplňků a vylepšení. \cite{OSMlicenceChange}.
 
 Změna licence přinesla problém
@@ -187,7 +185,6 @@ velice rozšířený a známý jako GeoCashing (GC). Projekt GC začal užívat 
 podklady OSM a zároveň jeho uživatelé začali sami přispívat do OSM. 
 
 Přispěvatelé dat do OSM musí respektovat licenci projektu ODbL.
-%%% ML: nebo s ni kompatibilni?
 Tudíž i jejich zdroj dat musí splňovat podmínky této licence.
 Proto by měli
 všechny svoje změny, které v OSM vytvoří, řádně ozdrojovat atributem
@@ -204,8 +201,6 @@ Druhým významným zdrojem dat jsou soukromé subjekty (společnosti).
 Většinou jde o podkladové zdroje dat, například ortofoto, které jsou
 vhodné pro obkreslování silničních sítí z~leteckých nebo
 satelitních snímků a pod.
-%%% ML: navrhuji tuto vetu preskocit
-% V~jejich případě to bylo řešeno písemným svolením, nebo smlouvou.
 Významným zdrojem těchto dat jsou mapy vyhledávače Bing od společnosti
 Microsoft. Ta svolila použít jejich letecké snímky většiny
 obydlené pevniny \footnote{\url{http://wiki.openstreetmap.org/wiki/Bing}}.
@@ -216,10 +211,8 @@ dat pro OSM.
 
 \subsection{Importy}
 \label{Importy}
-%%% ML: neobratne receno, ale muzeme nechat
 Výraz import v tomto případě znamená začlenění většího množství dat z datové sady nebo datových sad
 z~jednoho datového úložiště do jiného uložiště (např. databázových serverů). Při velkých objemech dat
-%%% ML: o bezchybnosti bych nemluvil, zkusil jsem alespon minimalne preformulovat
 se využívá automatizace pomocí skriptů nebo programů, které samotný proces importu provednou.
 
 Datové importy z veřejných databází do databáze OSM jsou velmi cenné. 
@@ -236,7 +229,6 @@ na~diskuzní konferenci Talk-cz.
 
 \subsection{Talk-cz}
 \label{Talk-cz}
-%%% ML: prilis polopatisticke, ale nechte to tak
 Tato diskuze probíhá posíláním emailových zpráv do společné konference (diskuzního fóra). 
 Uživatelům chodí emaily z probíhající diskuze. Pokud na nějaký
 chtějí reagovat, tak pošlou zprávu na emailovou adresu konference. Musí ale do předmětu zprávy (emailu) napsat Re: a předmět zprávy, na kterou reagují.
@@ -247,36 +239,32 @@ předmětu a času. Diskuze je poté k dispozici na webových stránkách.\footn
 \label{Vykreslovače}
 Na hlavní stránce OSM (\url{http://www.openstreetmap.org}) je k dispozici mapová aplikace. Ta nabízí pět
 „základních“ přednastavených vrstev vykreslených z~dat OSM.
-%%%: SRS nijak neusnadnuje vykreslovani, slovo jsem vynechal
 Pro vykreslení dat do grafických dlaždic se používá takzvané pseudo Mercatorovo
 zobrazení nebo Web Mercator (EPSG 3857). Toto zobrazení je vhodné pro celý povrch Země (až na velké zkreslení u pólů). 
 První, kdo zobrazení Web Mercartor použil, byla společnost Google pro svoje mapy Google Maps.\cite{WebMercator}
-%%% ML: mozna dodat screenshoty do prilohy?
 
 \begin{itemize}
-  \item Standardní vrstva - vykresluje všechny prvky kartograficky \uv{přiměřeně}.
-  \item Cyklomapa - zdůrazňuje cyklostezky, výškopis. 
-  \item Dopravní mapa - zdůrazňuje silniční a železniční sítě.
-  \item MapQuest Open - podkladová mapa pro potřeby GeoCaching.
-  \item Humanitární mapa - zdůrazňuje důležité veřejné služby a potlačuje ostatní prvky. 
+  \item Standardní vrstva - vykresluje všechny prvky kartograficky \uv{přiměřeně} \obrazek{fig:standard}.
+  \item Cyklomapa - zdůrazňuje cyklostezky, výškopis \obrazek{fig:cycle}.
+  \item Dopravní mapa - zdůrazňuje silniční a železniční sítě \obrazek{fig:transport}.
+  \item MapQuest Open - podkladová mapa pro potřeby GeoCaching \obrazek{fig:mapquest}.
+  \item Humanitární mapa - zdůrazňuje důležité veřejné služby a potlačuje ostatní prvky \obrazek{fig:humanitarian}. 
 \end{itemize}
 
 Existují další projekty, jež kombinují data OSM a jiných zdrojů, s cílem tvorby tematických map.
 Například mapu turistických a cyklistických tras vykresluje
 pro celou Evropu projekt \textit{mtbmap}.\footnote{mtbmap.cz}
 
-%%% priklad? mozna dodat hezky screenshot?
 Dalšími zajímavými projekty jsou například ty, které k 2D polohopisných datům přidávají „třetí“ rozměr a
 vytvářejí tzv. 2.5D mapu. Většinou jde o 3D zobrazení budov, mostů (dle
-atributů), popřípadě i stromů.
+atributů), popřípadě i stromů \obrazek{fig:F4}.
 
 %%% http://demo.f4map.com/#lat=50.1036063&lon=14.3898880&zoom=19
-
+%%% http://demo.f4map.com/#lat=50.1010538&lon=14.3944604&zoom=19&camera.theta=80&camera.phi=49.504
 
 \section{Otevřená data}
 \label{opendata}
 
-%%% ML: chybi mi tu reference pro tuto kapitolu, ze ktere jste cerpal (stupne otevrenosti)
 Myšlenka otevřených dat (open data) vznikla v USA.
 Pokud vzniknou jakákoli data z veřejných peněz, měla by tedy být
 veřejně přístupná. Některé studie uvádí, že tento jev měl kladný efekt na tamní ekonomiku.
@@ -284,8 +272,8 @@ veřejně přístupná. Některé studie uvádí, že tento jev měl kladný efe
 \footnote{\url{http://www.worldbank.org/content/dam/Worldbank/document/Open-Data-for-Economic-Growth.pdf}}
 \footnote{\url{http://www.otevrenadata.cz/res/data/001/003498.pdf}}
 
-Proto jako první hlavní zdroj pro OSM byly satelitní snímky povrchu Země (Landsat) %\footnote{\url{http://landsat.usgs.gov/}}
-a digitální model terénu (projekt SRTM) %\footnote{\url{http://www2.jpl.nasa.gov/srtm/}}
+Proto jako první hlavní zdroj pro OSM byly satelitní snímky povrchu Země (Landsat) 
+a digitální model terénu (projekt SRTM)
 s~rozlišením 30x30 m od NASA (pro pozdější vykreslení vrstevnic).
 
 Trend otevírání dat se začal rozšiřovat zprvu do zemí západní Evropy
@@ -301,7 +289,7 @@ placena z~veřejných zdrojů.
 Otevřená data lze dělit na 5 stupňů,
 dle otevřenosti.
 
-\begin{figure}[hbt]%[p]
+\begin{figure}[hbt]
     \centering
     \includegraphics[width=0.8\textwidth]{./pictures/5star-steps.png}
     \caption{Stupně otevřenosti dat, převzato z \url{http://5stardata.info}}
@@ -337,7 +325,6 @@ dle otevřenosti.
             Data). \cite{OpendataStupne}
 
 \end{itemize}
-%% http://opendata.gov.cz/standardy:stupne-otevrenosti
 
 Díky této iniciativě došlo v rámci České republiky ke zveřejnění
 dat státních úřadů s různým úspěchem a stupněm otevřenosti.
@@ -357,7 +344,6 @@ V rámci tzv. Pražského geoportálu došlo k jejich většímu využívání.
 Na~základě platných Pravidel pro poskytování dat a výstupů z~datových
 souborů a datového skladu Geografického byly ode dne 1.~4.~2015
 zveřejněny datové soubory a další webové služby poskytované IPR. Data byla
-%%% ML: snazil jsem se v cele praci sjednotit zapis na CC BY-SA (mate to ruzne snad ve vsech moznych variantach)
 uveřejněna pod licencí CC BY-SA 4.0. \cite{IPR}
 
 \subsection{Licence CC BY-SA 4.0}
