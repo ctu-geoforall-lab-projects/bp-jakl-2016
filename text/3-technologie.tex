@@ -53,9 +53,8 @@ zpracovává ho pro~další použití v programu.\cite{argparse}
 \subsection{Knihovna xmltodict}
 \label{xmltodict} 
 Tato Python knihovna umí číst soubory ve formátu XML a zpracovat jejich obsah do datové struktury, která je jednodušší pro manipulaci v samotném
-%%% ML: rady? nejedna se o slovniky - dictionary, respektive slovníky s řazením klíčových slov? Zkuste preformulovat
-programu. Data z~XML zpracuje do~formy datového pole (array), kde každý
-člen této řady může být opět řada dat.\cite{xmltodict}
+programu. Data z~XML zpracuje do~slovníku (dictionary), kde klíčové slovo (key) reprezentuje hodnota(value) ve slovníku.
+Hodnotami mohou být dále i řady dalších klíčových slov (key).\cite{xmltodict}
 
 Příklad zpracování dat ve formátu XML.
 
@@ -97,20 +96,17 @@ ele1
 \end{lstlisting}
 }
 
-\subsection{Knihovna GDAL} %%% ML: dnes se oznacuje spis jako GDAL a ne GDAL/OGR
-\label{GDAL/OGR}
+\subsection{Knihovna GDAL}
+\label{GDAL}
 Jedná se o knihovnu pro práci s geografickými daty umožňující jejich
 čtení a~zápis. Je napsána v programovacím jazyce C++. Je považována
 za~jeden z hlavních open~source projektů hojně využívaných ve~sféře
-%%% ML: nejen souborovych, zmeneno
 GIS. Podporuje velkou škálu rastrových a vektorových formátů.
-%%% ML: to se tyka knihovny PROJ.4
 Díky knihovně PROJ.4 podporuje celou škálu souřadnicových systémů a umožňuje transformaci dat mezi nimi. \cite{GDAL}
 
 \section{QGIS}
 \label{QGIS}
 QGIS je program vytvořený za~účelem prohlížení a editace geografických
-%%% ML: vsechny nasledujici vety zacinaji na Je, zkusil jsem preformulovat
 dat. Jedná se o open source software. Je tedy možné, aby na~jeho vývoji
 spolupracoval kdokoli. Vlastní uživatelské nástroje se píší ve formě tzv. zásuvných modulů, které je možné implementovat v jazyce C++ nebo Python.
 Tyto moduly si ostatní uživatelé mohou poté stáhnout a začlenit do své instalace QGISu. QGIS také umožňuje využívat jazyk Python v rámci vestavěné konzole. Lze tak vytvářet vlastní jednoduché skripty v jazyku Python a spouštět

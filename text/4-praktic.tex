@@ -2,21 +2,16 @@
 \label{4-Praktická část}
 
 \section{Geodatabáze PostGIS}
-\label{Server PostGIS} 
+\label{Geodatabaze PostGIS} 
 V rámci této bakalářské práce byla zřízena geodatabáze PostGIS na školním
 serveru {\em geo102}. Data z OSM jsou do školní databáze nahrávána pomocí programu {\tt osm2pgsql}.\footnote{dostupné z \url{http://wiki.openstreetmap.org/wiki/Osm2pgsql}}
-%%% ML: to neni pravda, shellovy skript (viz git) pracuje primo s daty CR
-%Ten nejprve stáhne aktuální data pro celou Evropu a následně je ořeže
-%jen na území ČR.
-%%% ML: neskodilo by zminit, ze tyto aktualnize zajistuje shellovy skript, ktyery je soucasti prilohy na cd
 Obsah databáze je každý den pravidelně aktualizován podle aktuálního stavu OSM.
+Tuto každodenní aktualizaci zajištuje shellový skript, který je součástí přílohy.
 
-%%% ML: my jsme to zakladni schema ale upravovali (height)
 Tabulky v databázi byly vytvořeny podle základního schématu. Pro~každou třídu prvků (uzel, cesta
 a relace) je vytvořena samostatná tabulka. Pro~uzly je vytvořena
 tabulka {\tt czech\_point}, pro~cesty tabulka {\tt czech\_line} a pro~plošné prvky (uzavřené cesty s atributy
 pro~plochy) tabulka {\tt czech\_polygon}. Relace jsou
-%%% ML: plochami a ne plochamy! (to uz me prekvapilo, rikal jste, ze text projde jazykovou korekci)
 řešeny tak, že pokud jsou tvořeny plochami, vytvoří z~nich program
 {\tt osm2pgsql} multipolygon a ten vloží do~tabulky {\tt czech\_polygon}. Stejně jsou
 řešeny i relace tvořené cestami (tabulka~{\tt czech\_line}), respektive body
@@ -33,9 +28,8 @@ Takto vytvořená databáze bude použita pro~analýzu dat IPR a~jejich přípra
 
 \section{Data IPR}
 \label{IPR data}
-%%% ML: zde by se hodila reference na kap., kde o tom pisete
-IPR na svém webu od~jara roku 2015 zveřejňuje svá data v režimu otevřených dat. Vektorová data zveřejňuje ve formátech GeoJSON, DXF, GML a ESRI Shapefile. Dále je na~výběr mezi dvěma
-%%% ML: jsou to srs ane kartograficka zobrazeni (jste studenten geodezie!)
+IPR na svém webu od~jara roku 2015 zveřejňuje svá data v režimu otevřených dat.\ref{IPR Praha}
+Vektorová data zveřejňuje ve formátech GeoJSON, DXF, GML a ESRI Shapefile. Dále je na~výběr mezi dvěma
 souřadnicovými systémy S-JTSK (EPSG:5514) nebo WGS 84 (EPSG:4326).
 
 Celkem IPR zveřejňuje (toho času) 96 datových setů, které jsou rozděleny
@@ -51,8 +45,8 @@ Těmito kategoriemi jsou:
 
             Z těchto dat by se pro OSM dala využít poloha budov
             ze~souboru Budovy 3D. Budovy byly do OSM již importovány
-            %%% ML: mate nekde zkratku vysvetlenu
-            ze~zdroje RÚIAN, není třeba je tedy importovat znovu.
+            ze~zdroje RÚIAN(Registr územní identifikace, adres a nemovitostí),
+            není třeba je tedy importovat znovu.
 
     \item   Digitální technická mapa Prahy - zde jsou k dispozici
             ve~vektorové podobě všechny inženýrské sítě v~Praze,
@@ -60,22 +54,14 @@ Těmito kategoriemi jsou:
 
             Do OSM se, možná zatím, nepřidávají inženýrské sítě.
             V~současnosti lze ale do OSM přidávat zdroje veřejného osvětlení.
-            %%% ML: nasledujici veta je uplne zbytecna, jsou takovato data v IPR?
-            %Takže pokud by nějaký soubor dat obsahoval
-            %značky veřejného osvětlení, mohla by se tato
-            %data importovat do OSM.
             Hranice města Prahy a jeho městských
             částí již v~OSM jsou dostupná. Datovou sada Technické budovy by bylo
             možné použít jako zdroj pro budoucí aktualizaci OSM.
-            %%% ML: no prubehy hranic parcel obsahuje RUIAN, neni treba nic obkreslovat, to se mozna delo drive, dnes jiz rozhodne ne...
-            Průběhy hranic parcel lze již nyní bezproblémově
-            obkreslovat z rastrových podkladů, které veřejně
-            poskytuje ČÚZK. 
+            Průběhy hranic parcel lze již nyní získat z RÚIAN, který poskytuje ČÚZK. 
 
     \item   Doprava - obsahuje cyklistické trasy a značky, pěší trasy,
             parkovací zóny, automaty, P+R parkoviště a mapy zón PID.
             Cyklistické trasy v Praze lze do OSM importovat, jsou ale
-            %%% ML: uzivateli (a ne uzivately)! vedouci prace neni jazykovy korektor ;-)
             již velmi dobře zmapované samotnými uživateli. Datová sada
             obsahuje bodové značky, z~těch by se některé mohly
             importovat. V~případě datové sady 
@@ -166,9 +152,8 @@ Těmito kategoriemi jsou:
 Jak již bylo řečeno výše, IPR svá data zveřejnil a stále zveřejňuje
 (v době tvorby této práce) pod~licencí CC~BY-SA~4.0, viz kapitola \ref{licence CC BY-SA 4.0}.
 
-%%% ML: tak co, vete chybi druha polovina (duvod: tyto dve licence nejsou kompatibbilni)
-Jelikož jsou ale data OSM distribuována pod licencí ODbL (v1.0), která
-neumožňuje začletnit data z licencí CC BY-SA. 
+Jelikož jsou ale data OSM distribuována pod licencí ODbL (v1.0),
+která není kompatibilní s licencí CC~BY-SA, tak neumožňují začletnit data z IPR. 
 
 Na některá data (informace), jako například místní názvy, ulice atd.
 se nemohou vztahovat autorská práva. Neboť nevyžadují žádnou 
@@ -206,25 +191,17 @@ uvolní veškerá data, která k tomu použil.
 Vhodnější by tedy bylo, změnit licenci dat zveřejňovaných IPR
 na~ODbL.
 
-%%% ML: nepredbihal bych, je to spise spekulace
-%Dle vyjádření se tato situace bude ze strany IPR řešit tak,
-%že se změní licence u distribuovaných dat na ODbL. Tato změna
-%licencování se očekává v~několika měsících.
-
-
 \section{IprDownloader}
 \label{IprDownloader}
 Jak již bylo řečeno, tak IPR distribuje geografická data ve formě datových souborů stažitelných z webových stránek organizace.
 Kromě samotných datových souborů je k~dispozici kanál ve formátu ATOM ({\tt http://opendata.iprpraha.cz/feed.xml}).
 Pomocí něho se lze také dostat ke všem distribuovaným datům. Jelikož
 by bylo zdlouhavé stahovat všechny tyto soubory ručně, byl
-v rámci práce vytvořen program, který umožňuje stahování a také import dat primárně do geodatabáze PostGIS. Skript byl
-%%% ML: zde by se hodil odkaz do teoreticke casti
-napsán v~programovacím jazyce Python a využívá knihovny GDAL.
+v rámci práce vytvořen program, který umožňuje stahování a také import dat primárně do geodatabáze PostGIS.
+Skript byl napsán v~programovacím jazyce Python (\ref{Python}) a využívá knihovny GDAL.
 
 Zdrojový kód programu je rozdělen do tří souborů: 
 {\tt IprDownloader.py}, \newline {\tt IprBase.py} a {\tt IprPg.py}.
-
 
 \subsection{IprDownloader}
 Skript {\tt IprDowloader.py} parsuje vstupní údaje a
@@ -233,14 +210,6 @@ zpracovává je k~dalšímu použití v programu, viz \ref{argparse}. Základní
 Dalšími vstupními parametry mohou údaje o databázi, kam se mají data
 importovat. Jde o 
 {\tt ---dbname, ---dbschema, ---dbhost, ---dbport, ---dbuser, ---dbpassword}.
-
-%%% ML: kartografickych souradnic ? (student geodezie by mel znat
-%%% rozdil mezi kartografickym zobrazenim a souradnicovym systeme)
-%%% Cely odstavec mi neda smysl, zatim jsem jej zakomentoval
-%% Skript hlídá vstupní formát kartografických souřadnic, a pokud se
-%% neshodují s~možnými, oznámí chybu o špatném vstupu. Pokud uživatel
-%% vloží kartografické zobrazení ve formě EPGS kódu, program jej převede
-%% na~jeho název.
 
 
 \subsection{IprBase}
@@ -338,8 +307,7 @@ OSM wiki. \cite{OSMfeatures}
 
 Vybraná data IPR byla prohledána a porovnána s aktuálním stavem v~OSM.
 Byly navrženy vhodné atributy, které by se ze~zdrojových dat daly
-%%% ML: jako poznamka pod carou link na diskuzi
-naplnit. Vybraná data s navrženými atributy byla uveřejněna na Talk-cz.
+naplnit. Vybraná data s navrženými atributy byla uveřejněna na Talk-cz.\footnote{https://lists.openstreetmap.org/pipermail/talk-cz/2016-April/013887.html}
 
 
 \subsection{Výstupy PID}
@@ -361,11 +329,10 @@ body mazat a vytvářet nové. Bylo potřeba najít mezi stávajícími body
 v~OSM a IPR adekvátní dvojice. To znamená, že se jedná o body, které
 reprezentují stejný objekt v~realitě.
 
-%%% ML: obcas mluvite o vstupech a jindy o vystupech, coz je to same
-Ani editace stávajících elementů není příliš přínosná. Vstupy
-do~metra jsou minimálně 3 metry široké a případné změny by byly v řádů
+Ani editace stávajících elementů není příliš přínosná. Výstupy
+z~metra jsou minimálně 3~metry široké a případné změny by byly v~řádů
 cm až dm. Bylo by ale vhodné přidat výstupy z metra tam, kde nejsou
-v~databázi OSM. Jedná se o stanice metra Zličín, Luka, Kačerov, Rajská
+v~databázi OSM. Jedná se o~stanice metra Zličín, Luka, Kačerov, Rajská
 zahrada a Černý most. Celkem se tedy jedná pouze o 26 bodů, které by
 bylo snadnější přidat ručně, protože výstupy jsou dostatečně zmapované,
 pouze občas chybí v uzlech atribut {\tt railway~=~subway\_entrance}.
@@ -411,9 +378,7 @@ Dále byly navrženy atributy
     recycling:wood = yes
     recycling: ... = yes
 \end{verbatim}
-Podle toho co zde lze recyklovat, dle hodnoty ve~sloupci
-%%% ML: odpadprijem
-{\tt odpadprije}.
+Podle toho co zde lze recyklovat, dle hodnoty ve~sloupci {\tt odpadprije}.
 
 
 \subsection{Veřejné toalety}
@@ -428,12 +393,14 @@ Záznamy odpovídající toaletám byly v~OSM vyhledány podle atributu
     amenity = toilets
 \end{verbatim}
 
-%%% ML: nasledujici odstavec prosim cely prepiste
-a bylo zjištěno, toho času, 185 záznamů. Překrytí dat IPR a OSM bylo.
-Buď k bodu z IPR nebyl v okruhu 5 metrů žádný bod z OSM, nebo
-byl, ale měl jiné souřadnice. Také nastaly situace, kdy v OSM
-datech byl jen jeden bod, ale z dat od IPR tam bylo více (záznamů) 
-bodů. Bylo by tedy vhodné stávající data doplnit daty z IPR.
+Dle těchto atributů bylo nalezeno na~území Prahy 185 záznamů v~OSM. Při porovnání polohy záznamů (bodů) z~OSM a z~IPR
+se hledaly nejdříve body z IPR do vzdálenosti 5~m. V~této oblasti bylo nalezeno naprosté minimum bodů.
+Proto byla použita vzdálenost 20~m, v~tomto případě bylo nalezeno již více bodů z~IPR v~okruhu bodu z~OSM.
+Pokud by se do~vzdálenosti 20~m od bodu OSM nacházel pouze jeden bod z~IPR, bylo by vhodné opravit jeho pozici (geometrii) a atributy.
+Ale v~případě, že bylo nalezeno více bodů z~IPR, bylo nutné jeden nich vybrat
+a upravit jeho polohu (geometrii) a ostatní body nově vytvořit v~OSM.
+Protože bylo těžké rozhodnout, který bod přesunout a které body nově vytvořit,
+byl zvolen postup vytvořit nové body v~OSM pro~všechny záznamy (body) z~datasetu IPR.
 
 Na základě rešerše dat z IPR a doporučených atributů byly vybrány tyto
 \begin{verbatim}
@@ -525,10 +492,6 @@ Navržené atributy jsou
     source:loc = IPR
 \end{verbatim}
 
-%%% ML: odkaz na diskuzi, proc je to zmineno pouze u P+R, ta diskuze
-%%% tykala vsech datovych sad predpokladam
-Výše zmíněné návrhy byly takto zveřejněny v diskuzi na stránkách
-Talk-cz.
 
 \subsection{Budovy 3D - výšky budov}
 \label{Budovy 3D - výšky budov}
@@ -560,13 +523,12 @@ by datová sada budov pro~celé území Prahy byla moc velká (až v~řádů
 GB). Každá datová sada je přibližně obdélníková oblast z území Prahy a
 má svůj originální název.
 
-%%% ML: pridat odkaz na schema v priloze
-V rámci této práce bude pracováno s~datovou sadou
-{\tt BD\_Prah73}. Po~vybrání této jedné datové sady (oblasti) byla
+V rámci této práce bude pracováno s~datovou sadou {\tt BD\_Prah73}.
+Pro větší přehledost byl přidán diagram v příloze \obrazek{fig:diagram_building}.
+Po~vybrání této jedné datové sady (oblasti) byla
 vytvořena minimální ohraničující oblast okolo ní přidán přesah o
 100~metrů na každou stranu. Byl zvolen tento postup, aby se z~dat
-%%% ML: uvnitr ceho?
-OSM nevyřadily polygony, které by nebyly celým objemem uvnitř.
+OSM nevyřadily polygony, které by nebyly celým objemem uvnitř oblasti (jedné datové sady Budovy 3D).
 
 Pomocí tohoto obdélníku byly vybrány budovy z OSM a poté byla vytvořena nárazníková zóna (buffer) s hodnotou
 3~m pro~každou budovu. Tento postup byl zvolen jelikož budovy z IPR a
@@ -613,9 +575,10 @@ Těmito hodnotami jsou
  .. a další
 \end{verbatim}
 
-%%% ML: neni vysvetleno proc...
 Poté byly z~datové sady {\tt BD\_Prah73} vybrány všechny polygony,
 které měly ve~sloupci {\tt typ} obsahují frázi {\tt stresni}.
+Byly vybrány pouze polygony tvořící střechu,
+protože bylo potřeba získat 2D polygon, který by nejlépe reprezentoval budovu v rovině \uv{xy}.
 Geometrie těchto vybraných 3D polygonů byly opraveny funkcí
 {\tt ST\_MakeValid()} a následně \uv{přetvořeny} na 2D polygony funkcí
 {\tt ST\_Force\_2D()}. Vynechala se jen Z-ová souřadnice z~geometrie.
@@ -632,9 +595,8 @@ byla nazvána {\tt bud73\_IPR}.
 Následně byly pro každý polygon z~{\tt bud73\_OSM} hledány
 všechny polygony z~{\tt bud73\_IPR}, které by byly uvnitř.
 Na~tuto operaci byla použita funkce
-%%% ML: tady mate podle vseho chybu, argumenty funkce jsou stejne
 \begin{verbatim}
-    ST_Within( bud73_OSM.geom , bud73_OSM.geom )
+    ST_Within( bud73_ipr.geom , bud73_osm.geom )
 \end{verbatim}
 Tímto byly nalezeny prvky z dat IPR, které jsou \uv{přibližně na stejném místě} jako budovy z OSM. Do tabulky o dvou sloupcích byly
 uloženy pouze údaje {\tt gid} pro budovy z OSM a {\tt id\_bud}
@@ -667,6 +629,4 @@ Ve skriptu je tato dočasná tabulka označena {\tt osm\_height}.
 Nakonec se získané hodnoty výšek budov přidají do původního datasetu
 (tabulky) {\tt praha\_building\_osm}. 
 Dočasné tabulky {\tt bud73\_osm, bud73\_ipr, gid\_id} a
-{\tt osm\_height} jsou nakonec vymazány.
-
-%%% ML: pridat odkaz - priloha
+{\tt osm\_height} jsou nakonec vymazány.\ref{priloha-obsahCD}
