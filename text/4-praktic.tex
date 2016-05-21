@@ -19,7 +19,7 @@ pro~plochy) tabulka {\tt czech\_polygon}. Relace jsou
 {\tt czech\_roads}, která obsahuje všechny silnice v~ČR.
 
 Každý prvek má přiřazen, v~rámci tabulky, jedinečné číslo {\tt gid}.
-Dále je vytvořena pro každý prvek geometrie a pro~každý
+Dále je vytvořen pro každý prvek geometrie a pro~každý
 atribut (dle schématu) stejnojmenný sloupec s~hodnotou. Například
 bod s~atributem {\tt landuse=forest} má ve~sloupci {\tt landuse}
 hodnotu {\tt forest}.
@@ -205,9 +205,9 @@ Zdrojový kód programu je rozdělen do tří souborů:
 
 \subsection{IprDownloader}
 Skript {\tt IprDowloader.py} parsuje vstupní údaje a
-zpracovává je k~dalšímu použití v programu, viz \ref{argparse}. Základními parametry programy jsou
+zpracovává je k~dalšímu použití v programu, viz \ref{argparse}. Základními parametry programu jsou
 {\tt ---alike, ---crs, ---format, ---outdir, ---d}.
-Dalšími vstupními parametry mohou údaje o databázi, kam se mají data
+Dalšími vstupními parametry mohou být údaje o databázi, kam se mají data
 importovat. Jde o 
 {\tt ---dbname, ---dbschema, ---dbhost, ---dbport, ---dbuser, ---dbpassword}.
 
@@ -341,7 +341,7 @@ pouze občas chybí v uzlech atribut {\tt railway~=~subway\_entrance}.
 \subsection{Odpadní zařízení pro občany}
 \label{Odpadní zařízení pro občany}
 Data od IPR obsahují seznam 36 sběrných dvorů s velmi detailním
-popsání (příjem, otevírací doba, zřizovatel). 
+popsáním (příjem, otevírací doba, zřizovatel). 
 
 Z~OSM tabulky {\tt osm.czech\_point} byly záznamy filtrovány podle
 hodnot
@@ -518,7 +518,7 @@ není polygon vytvořen z relace budovy, protože v rámci této relace
 {\tt building\::height}) pouze její části, ze~kterých je složena.
 K~tomuto rozeznání byl použit atribut {\tt builing\::part}.
 
-V sekci Budovy 3D je dále uloženo 128 datových sad. Tyto datové sady obsahují budovy jen z malé oblasti, protože
+V sekci Budovy 3D je dále uloženo 128 datových sad. Tyto datové sady obsahují budovy jen z~malé oblasti, protože
 by datová sada budov pro~celé území Prahy byla moc velká (až v~řádů
 GB). Každá datová sada je přibližně obdélníková oblast z území Prahy a
 má svůj originální název.
@@ -526,8 +526,8 @@ má svůj originální název.
 V rámci této práce bude pracováno s~datovou sadou {\tt BD\_Prah73}.
 Pro větší přehledost byl přidán diagram v příloze \obrazek{fig:diagram_building}.
 Po~vybrání této jedné datové sady (oblasti) byla
-vytvořena minimální ohraničující oblast okolo ní přidán přesah o
-100~metrů na každou stranu. Byl zvolen tento postup, aby se z~dat
+vytvořena minimální ohraničující oblast okolo ní a přidán přesah
+o~100~metrů na~každou stranu. Byl zvolen tento postup, aby se z~dat
 OSM nevyřadily polygony, které by nebyly celým objemem uvnitř oblasti (jedné datové sady Budovy 3D).
 
 Pomocí tohoto obdélníku byly vybrány budovy z OSM a poté byla vytvořena nárazníková zóna (buffer) s hodnotou
@@ -537,7 +537,7 @@ datasest byl nazván {\tt bud73\_OSM}.
 
 Pro velikost nárazníkové zóny kolem budov z OSM se provedla analýza.
 Modelováno bylo s hodnotami po~0.5~m od~0.5~m až do vzdálenosti 5~m.
-Při malé velikost nárazníkové zóny nastávala situace, že v~této zóně
+Při malé velikosti nárazníkové zóny nastávala situace, že v~této zóně
 nebyla nalezena žádná budova (polygon budovy) z datasetu IPR. Mohlo by
 se zdát, že čím větší nárazníková zóna kolem budov z OSM, tím lépe.
 Avšak, čím byla velikost nárazníkové zóny zvolena větší, tím více se
@@ -583,7 +583,7 @@ Geometrie těchto vybraných 3D polygonů byly opraveny funkcí
 {\tt ST\_MakeValid()} a následně \uv{přetvořeny} na 2D polygony funkcí
 {\tt ST\_Force\_2D()}. Vynechala se jen Z-ová souřadnice z~geometrie.
 Kvůli některým situacím, kdy k~sobě polygony přesně nedoléhaly, bylo
-nutné kolem nich vytvořit nárazníkovou zónu (buffer). Jako ostačující
+nutné kolem nich vytvořit nárazníkovou zónu (buffer). Jako dostačující
 byla zvolena hodnota 0.1~m. Následně byly tyto polygony takzvaně
 \uv{rozpuštěny}. To znamená, že polygony, které se dotýkají
 minimálně jednou společnou stranou, se sloučí do~jednoho polygonu.
@@ -600,8 +600,7 @@ Na~tuto operaci byla použita funkce
 \end{verbatim}
 Tímto byly nalezeny prvky z dat IPR, které jsou \uv{přibližně na stejném místě} jako budovy z OSM. Do tabulky o dvou sloupcích byly
 uloženy pouze údaje {\tt gid} pro budovy z OSM a {\tt id\_bud}
-polygonu budovy (z dat IPR). Tato dočasná tabulka byla nazvána {\tt
-  gid\_id}.
+polygonu budovy (z dat IPR). Tato dočasná tabulka byla nazvána {\tt gid\_id}.
 
 Dále tedy bylo možné k těmto prvkům ({\tt gid} OSM budov) přiřadit
 výšku podle hodnoty {\tt id\_bud}, kterou mají všechny polygony
@@ -629,4 +628,4 @@ Ve skriptu je tato dočasná tabulka označena {\tt osm\_height}.
 Nakonec se získané hodnoty výšek budov přidají do původního datasetu
 (tabulky) {\tt praha\_building\_osm}. 
 Dočasné tabulky {\tt bud73\_osm, bud73\_ipr, gid\_id} a
-{\tt osm\_height} jsou nakonec vymazány.\ref{priloha-obsahCD}
+{\tt osm\_height} jsou nakonec vymazány.\priloha{priloha-obsahCD}
