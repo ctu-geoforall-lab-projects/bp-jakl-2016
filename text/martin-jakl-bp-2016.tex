@@ -93,6 +93,9 @@
 
 \renewcommand{\figurename}{Obrázek}
 \def\figurename{Obrázek}
+
+\newcommand{\obrazek}[1]{(viz obr. \ref{#1}/s\pageref{#1})}
+
 \pagestyle{empty} % vypne číslování stránek
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -125,18 +128,30 @@
 
 %% Abstrakt
 \abstrakt{
-Bakalářská práce se věnuje rešerši problematiky začleňování geografických datových sad kompatibilních s licencí
-Open Database License (ODbL) do databáze projektu OpenStreetMap (OSM). Cílem práce je vytvoření metodiky
-dávkových importů datových sad publikovaných jako tzv. “opendata” státními institucemi a samosprávou v~ČR do
-OSM. Praktická část je zaměřena na problematiku začlenění dat IPR (Institut plánování a rozvoje hl. m. Prahy) a
-dalších relevatních zdrojů dat do projektu OSM.
+Tato bakalářská práce se zabývá problematikou datových importů
+do~projektu  OpenStreetMap. Nejprve vysvětluje problematiku
+licencování dat OSM a nastiňuje myšlenku OpenData. Dále se zabývá
+možností začlenit datových sad ze~IPR Praha. Rozebírá nekompatibilitu
+licencí ODbL a CC BY-SA. V~praktické části se zabývá vytvořením
+programu pro~stahování dat z~IPR Praha a importem do~PostGIS databáze.
+Následně se zabývá řešerší a vlastním návrhem vhodných dat
+pro~začlenění do projektu OpenStreetMap.
 }%
-{english/ abstract}
+{This bachelor thesis deals with problems of data imports
+OpenStreetMap. First explains issues of licensing OSM data and
+outlines the idea of OpenData. It also deals with the~possibility to
+integrate data sets from IPR Prague. It analyzes the~incompatibility
+of licenses ODbL and CC BY-SA. The~practical part deals with
+the~creation of a program for downloading data from IPR Prague and
+importing them into PostGIS database. Subsequently deals with the
+researches and own draft of appropriate data for inclusion in
+OpenStreetMap.
+}
 
 %% Klíčová slova
 \klicovaslova
-{OpenStreetMap, import, IPR, Python, GDAL}%
-{OpenStreetMap, import, IPR, Python, GDAL}
+{OpenStreetMap, import, IPR, Python, Opendata}%
+{OpenStreetMap, import, IPR, Python, Opendata}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -190,9 +205,9 @@ dalších relevatních zdrojů dat do projektu OSM.
 	\vspace{1em}
 		%\noindent
 	\par\hspace{2ex}
-	{Chtěl bych poděkovat vedoucímu mé bakalářské práce, Ing. Martinu Landovi,~Ph.D.,
-	za odborné rady a~pomoc při zpracování této práce. Dále bych chtěl 
-	poděkovat své rodině za projevenou podporu a~trpělivost.}
+	{Chtěl bych poděkovat vedoucímu mé bakalářské práce,
+ \\ Ing. Martinu Landovi,~Ph.D., za~odborné rady a~pomoc při zpracování této práce.
+    Dále bych chtěl poděkovat své rodině za projevenou podporu a~trpělivost.}
 }
 
 % Vysázení obsahu
