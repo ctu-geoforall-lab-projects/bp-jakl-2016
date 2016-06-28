@@ -1,0 +1,89 @@
+\documentclass[czech,11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage[pdftex,breaklinks=true,colorlinks=true,urlcolor=blue,
+  pagecolor=black,linkcolor=black]{hyperref}
+\usepackage[czech]{babel}
+
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{center}
+  {\Large --- Posudek vedoucího bakalářské práce ---}
+\end{center}
+
+\vspace{.2cm}
+
+\noindent \begin{tabular}{rp{.9\textwidth}}
+  {\bf Název:} & Začleňování geografických datových sad do OpenStreetMap \\
+  {\bf Student:} & Martin Jákl \\
+  {\bf Vedoucí:} & Ing. Martin Landa, Ph.D. \\
+  {\bf Fakulta:} & Fakulta stavební ČVUT v Praze \\ 
+  {\bf Katedra:} & Katedra geomatiky \\
+  {\bf Oponent:} & Ing. Jáchym Čepický \\
+  {\bf Pracoviště oponenta:} & OpenGeoLabs s.r.o. \\
+\end{tabular}
+
+\vspace{1cm}
+
+Téma práce vychází ze zájmu studenta o projekt OpenStreetMap (dále
+OSM), do něhož přispíval již dříve jako aktivní \uv{maper}. Práce se
+věnuje problematice začlenění dat, která v~dubnu 2015 uvolnil Institut
+plánování a rozvoje hlavního města Prahy (dále IPR) jako
+tzv. \uv{otevřená data}. Kromě seznámení se s novými technologiemi a
+postupy se musel student věnovat i licenční otázce, díky níž nelze v
+současné době data IPR do projektu OSM fyzicky začlenit. Vzhledem k
+tomu nemohl být tento proces dotažen do finálního stavu (což by bylo
+pravděpodobně i nad rámec práce tohoto formátu). Cílem bylo vytvořit
+metodiku, kterou by bylo možné využít ve chvíli, kdy bude licenční
+problém na straně IPR vyřešen. \newline
+
+Úvodní část práce poskytuje nutný vhled do projektu OSM, jeho
+historie, zdrojů dat a~především hromadných importů, kterých se do
+značné míry dotýká. Dále jsou popsány datové sady, které IPR uvolnil v
+režimu otevřených dat, přičemž je tento termín podrobně vysvětlen v
+kapitole 2.2. Kromě toho jsou zmíněny technologie, které byly použity
+pro zpracování praktické části. Tu lze rozdělit do několika sekcí. IPR
+vystavuje datové sady v souborových formátech jako je Esri Shapefile
+či DXF. Data poskytuje většinou ve dvou souřadni\-cových systémech --
+S-JTSK a WGS-84. Pro strojové zpravování poskytuje tzv. ATOM
+feed. Prvotním cílem bylo vybrané datové sady stáhnout a naimportovat
+do geodatabáze PostGIS, která byla pro tento účel vytvořena na
+oborovém serveru geo102. Tento úkol vyřešil student navržením
+vlastního nástroje v programovacím jazyce Python, který umožňuje
+z~příkazové řádky filtrovat poskytovaná data, dávkově je stahovat a
+importovat do geodatabáze PostGIS. Tento nástroj považuji za zásadní
+praktický výstup práce. V dalším kroku student vybral vhodná data pro
+import a~navrhl pro ně metodiku začlenění do databáze OSM. Výsledek
+můžeme považovat za úvodní rešerši či nástin metodiky. Nejlépe student
+zpracoval začlení datové sady \uv{3D budov}, jejímž výsledkem jsou i
+reprodukovatelné SQL dávky. Výsledek hodnotím jako průměrný. \newline
+
+Student docházel na pravidelné schůzky připraven a plnil úkoly dle
+domluvy. Bohužel vývoj nástroje pro stahování dat IPR zabralo více
+času než bylo původně plánováno. Na podstatnou druhou část návrhu
+metodiky začleňování dat IPR do databáze OSM nezbylo dostatek
+času. To se na celkovém praktickém výstupu podepsalo. Celou práci
+ještě snižuje necitlivá práce autora s českým jazykem. Přes všechny
+výtky je celkové hodnocení velmi mírné, a to především díky snaze
+studenta podat své maximum. \newline
+
+\newpage
+
+Na základě výše uvedeného doporučuji předloženou práci k obhajobě a
+hodnotím ji klasifikačním stupněm
+
+\begin{center}
+  {\bf --- B (velmi dobře) --- }
+\end{center}
+
+\vskip 2cm
+
+\begin{tabular}{lp{.2\textwidth}r}
+& & \ldots\ldots\ldots\ldots\ldots\ldots\ldots \\
+V~Praze dne 24. června 2016 & & Ing. Martin Landa, Ph.D. \\
+& & Fakulta stavební, ČVUT v Praze \\
+\end{tabular}
+
+\end{document}
