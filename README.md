@@ -12,6 +12,10 @@ Martin Jákl
 
 Ing. Martin Landa, Ph.D.
 
+## Oponent
+
+Ing. Jáchym Čepický
+
 ## Obhajoba
 
 06/2016
